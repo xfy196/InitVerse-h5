@@ -1,6 +1,6 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import "./utils/autoflex";
+import "amfe-flexible"
 import router from "./router";
 import "./style.css";
 import fastclick from "fastclick";

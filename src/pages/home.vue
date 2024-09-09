@@ -5,4 +5,7 @@
 <script setup>
 </script>
 <style lang="scss" scoped>
+div{
+  font-size: 0.43rem;
+}
 </style>
