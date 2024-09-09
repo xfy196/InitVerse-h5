@@ -6,6 +6,6 @@ import "./style.css";
 import fastclick from "fastclick";
 import { createPinia } from "pinia";
 const pinia = createPinia();
-fastclick.attach(document.body);
+fastclick(document.body);
 
 createApp(App).use(router).use(pinia).mount("#app");
