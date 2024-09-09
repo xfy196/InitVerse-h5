@@ -1,0 +1,11 @@
+import { createApp } from "vue";
+import App from "./App.vue";
+import "./utils/autoflex";
+import router from "./router";
+import "./style.css";
+import fastclick from "fastclick";
+import { createPinia } from "pinia";
+const pinia = createPinia();
+fastclick.attach(document.body);
+
+createApp(App).use(router).use(pinia).mount("#app");
