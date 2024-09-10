@@ -1,19 +1,19 @@
 <template>
   <van-nav-bar :border="false" class="nav-bar" left-arrow>
     <template #left>
-      <img class="logo" src="@/assets/images/logo.svg" alt="" />
+      <img class="logo" src="@/assets/images/icons/logo.svg" alt="" />
     </template>
     <template #right>
       <img
         @click="logout"
         class="icon"
-        src="@/assets/images/logout.svg"
+        src="@/assets/images/icons/logout.svg"
         alt=""
       />
       <img
         @click="changeLang"
         class="icon"
-        src="@/assets/images/lang.svg"
+        src="@/assets/images/icons/lang.svg"
         alt=""
       />
     </template>
@@ -51,7 +51,7 @@ const changeLang = () => {
 </script>
 <style lang="scss" scoped>
 .nav-bar {
-  height: 133px;
+  height: 108px;
   background-color: rgba(255, 255, 255, 0);
   .logo {
     width: 224px;

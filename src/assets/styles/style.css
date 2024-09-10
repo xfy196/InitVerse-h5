@@ -6,8 +6,8 @@
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 ::-webkit-scrollbar {
-    display: none;
-  }
+  display: none;
+}
 body {
   height: 100vh;
   overscroll-behavior: none;
@@ -17,4 +17,48 @@ body {
   touch-action: none;
   -webkit-user-select: none;
   user-select: none;
+  font-family: MiSans, MiSans;
+}
+.px-30 {
+  padding: 0 30px;
+}
+
+input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  border: none;
+}
+.input {
+  width: 100%;
+  height: 70px;
+  background: #636176;
+  border-radius: 20px 20px 20px 20px;
+  padding-left: 20px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+}
+
+.input::placeholder {
+  color: #aeaec3;
+  font-size: 24px;
+}
+
+.c-input {
+  width: 100%;
+  height: 70px;
+  background: #636176 !important;
+  border-radius: 20px 20px 20px 20px;
+  padding-top: 0;
+  padding-bottom: 0;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  .van-field__control {
+    color: #ffffff;
+  }
 }

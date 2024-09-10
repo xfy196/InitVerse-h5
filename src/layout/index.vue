@@ -20,7 +20,7 @@ import TabBar from "./tab-bar.vue";
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, purple 0%, #000000 100%);
+  background: linear-gradient( 215deg, #2B2934 0%, #25283F 40%, #27272B 100%);
   .main {
     padding-bottom: 142px;
     flex: 1;
