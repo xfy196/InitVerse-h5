@@ -185,8 +185,8 @@ const links = ref([
           }
           .button {
             margin-left: 12px;
-            width: 100px;
-            height: 50px;
+            min-width: 100px;
+            min-height: 50px;
             border-radius: 40px 40px 40px 40px;
             display: flex;
             align-items: center;
@@ -194,6 +194,7 @@ const links = ref([
             border: 2px solid;
             font-size: 26px;
             color: #ffffff;
+            padding: 0 24px;
             line-height: 30px;
           }
         }
@@ -241,8 +242,8 @@ const links = ref([
         display: flex;
         justify-content: center;
         .button {
-          width: 280px;
-          height: 56px;
+          min-width: 280px;
+          min-height: 56px;
           display: flex;
           align-items: center;
           justify-content: center;
