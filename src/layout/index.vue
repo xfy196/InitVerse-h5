@@ -20,10 +20,9 @@ onMounted(() => {
 <style lang="scss" scoped>
 .layout-container {
   width: 100vw;
-  height: 100vh;
   background: linear-gradient(180deg, purple 0%, #000000 100%);
   .main {
-    height: calc(100% - 133px - 126px);
+    height: calc(100vh - 133px - 126px);
     background-color: rgba(255, 255, 255, 0);
     padding-bottom: 16px;
     box-sizing: border-box;
