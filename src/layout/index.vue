@@ -18,7 +18,6 @@ import TabBar from "./tab-bar.vue";
 .layout-container {
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
   background: linear-gradient(180deg, purple 0%, #000000 100%);
   .main {
     height: calc(100vh - 133px - 126px);
