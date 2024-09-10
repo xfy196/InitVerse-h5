@@ -18,11 +18,13 @@ import TabBar from "./tab-bar.vue";
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(180deg, purple 0%, #000000 100%);
   .main {
-    height: calc(100vh - 133px);
+    padding-bottom: 142px;
+    flex: 1;
     box-sizing: border-box;
-    padding-bottom: calc(142px + env(safe-area-inset-bottom));
     overflow: auto;
   }
 }
