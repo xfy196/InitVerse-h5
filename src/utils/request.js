@@ -1,9 +1,9 @@
 import axios from "axios";
 import { showFailToast } from "vant";
 const CancelToken = axios.CancelToken;
-const baseURL = "https://api.zjgame.xyz/api/v1";
+// const baseURL = "/";
 const request = axios.create({
-  baseURL,
+  // baseURL,
 });
 const pending = new Map();
 const gKey = (config) => {

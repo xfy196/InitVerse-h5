@@ -1,17 +1,34 @@
 <template>
   <div>
     transaction
-    <div @touchmove.stop.prevent="() => {}" @touchstart.stop.prevent="() => {}" class="chart" ref="chartRef"></div>
-    <div style="height: 300px;"></div>
+    <div
+      @touchmove.stop.prevent="() => {}"
+      @touchstart.stop.prevent="() => {}"
+      class="chart"
+      ref="chartRef"
+    ></div>
+    <div style="height: 300px"></div>
   </div>
 </template>
 
 <script setup>
 import Hammer from "hammerjs";
-import { onMounted, useTemplateRef } from "vue";
+import { onBeforeMount, onMounted, useTemplateRef } from "vue";
 import * as echarts from "echarts";
+import { getBalance } from "@/api/etc";
 const chartRef = useTemplateRef("chartRef");
 let chart = null;
+
+onBeforeMount(async () => {
+  // const res = await getBalance({ticker: 'BTC/USD', exchange_code: 'Binance'})
+  const res = await getBalance(
+    {
+      ticker: 'BTC/USD',
+    }
+  );
+  console.log(res);
+});
+
 onMounted(() => {
   chart = echarts.init(chartRef.value);
   const option = {
@@ -28,11 +45,12 @@ onMounted(() => {
         "2017-10-29",
       ],
     },
-    dataZoom: [{
-      borderColor: "transparent", //组件边框颜色
-    }],
-    yAxis: {
-    },
+    dataZoom: [
+      {
+        borderColor: "transparent", //组件边框颜色
+      },
+    ],
+    yAxis: {},
     tooltip: {
       show: true,
       trigger: "none",
@@ -59,16 +77,16 @@ onMounted(() => {
     ],
   };
   chart.setOption(option);
-  onTouch()
+  onTouch();
   window.addEventListener("resize", () => {
     chart && chart.resize();
   });
 });
 const onTouch = () => {
-  const hammer = new Hammer(chartRef.value)
+  const hammer = new Hammer(chartRef.value);
   hammer.on("pinch", (event) => {
     const scale = event.scale; // 获取缩放比例
-    if (scale <= 0.5) return //缩放比例不足0.5，不调整范围
+    if (scale <= 0.5) return; //缩放比例不足0.5，不调整范围
 
     // 根据缩放比例调整 dataZoom 的范围
     const start = Math.max(0, 100 - scale * 100); // 计算起始位置
@@ -81,8 +99,8 @@ const onTouch = () => {
       start, // 设置dataZoom的起始位置
       end, // 设置dataZoom的结束位置
     });
-  })
-}
+  });
+};
 </script>
 <style lang="scss" scoped>
 .chart {

@@ -82,7 +82,7 @@
 <script setup>
 import { ref } from "vue";
 import x from "@/assets/images/icons/x.svg";
-import twitter from "@/assets/images/icons/twitter.svg";
+import tg from "@/assets/images/icons/tg.svg";
 import discord from "@/assets/images/icons/discord.svg";
 import email from "@/assets/images/icons/email.svg";
 import { useClipboard } from "@vueuse/core";
@@ -93,7 +93,7 @@ const links = ref([
     url: "https://x.com/zj_nft_game",
   },
   {
-    icon: twitter,
+    icon: tg,
     url: "https://x.com/zj_nft_game",
   },
   {

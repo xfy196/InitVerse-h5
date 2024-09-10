@@ -32,4 +32,15 @@ export default defineConfig({
       },
     },
   },
+  server: {
+    proxy: {
+      "/tsanghiApi": {
+        target: 'https://tsanghi.com',
+        changeOrigin: true,
+        rewrite: (path) => {
+            return path.replace(/\/tsanghiApi/, '')
+        }
+    }
+    }
+  }
 });
