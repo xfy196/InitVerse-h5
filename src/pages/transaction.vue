@@ -1,7 +1,7 @@
 <template>
   <div>
     transaction
-    <div @touchstart.stop="() => {}" class="chart" ref="chartRef"></div>
+    <div @touchmove.stop="() => {}" @touchstart.stop="() => {}" class="chart" ref="chartRef"></div>
   </div>
 </template>
 
