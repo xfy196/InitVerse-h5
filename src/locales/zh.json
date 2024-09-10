@@ -1,5 +1,31 @@
 {
-    "home": {
-        "key": "键"
-    }
+    
+    "tab": {
+    "tab1": "算力租赁",
+    "tab2": "交易",
+    "tab3": "资产",
+    "tab4": "我的"
+  },
+  "back": {
+    "title": "返回" 
+  },
+  "login": {
+    "title": "登录",
+    "account": "账号",
+    "password": "密码",
+    "loginBtn": "登录",
+    "cancel": "取消"
+  },
+  "home": {
+    "notice": "关于开启算力租赁活动的通知",
+    "rentalTitle": "算力租赁",
+    "rentalRecord": "租赁记录",
+    "rentalPower": "租赁算力",
+    "balanceKey": "可用余额",
+    "balanceBtn": "充值",
+    "balancePlaceholder": "最小投资金额为100，且金额需为10的倍数",
+    "expectTitle": "预期获得:",
+    "expectValue": "价值",
+    "expectBtn": "租赁算力"
+  }
 }

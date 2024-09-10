@@ -11,7 +11,7 @@
       background="linear-gradient( 90deg, rgba(39,39,43,0) 0%, rgba(145,96,255,0.5) 33%, rgba(94,117,255,0.5) 66%, rgba(39,39,43,0) 100%)"
       class="notice-bar"
       left-icon="volume-o"
-      text="关于开启算力租赁活动的通知"
+      :text="$t('home.notice')"
     >
       <template #left-icon>
         <img
@@ -23,9 +23,9 @@
     </van-notice-bar>
     <div class="rental-container">
       <div class="head">
-        <div class="title">算力租赁</div>
+        <div class="title">{{ $t("home.rentalTitle") }}</div>
         <div class="record">
-          <div class="txt">租赁记录</div>
+          <div class="txt">{{ $t("home.rentalRecord") }}</div>
           <img src="@/assets/images/icons/copy.svg" alt="" />
         </div>
       </div>
@@ -34,20 +34,16 @@
       </div>
       <div class="edit-container">
         <div class="balance-box">
-          <div class="left">可用余额</div>
+          <div class="left">{{ $t("home.balanceKey") }}</div>
           <div class="right">
             <div class="balance van-ellipsis">111111&nbsp;USDT</div>
-            <Button border class="button">充值</Button>
+            <div class="button borderColorActive">
+              {{ $t("home.balanceBtn") }}
+            </div>
           </div>
         </div>
         <van-divider class="divider" />
         <div class="input-box">
-          <!-- <input
-            type="number"
-            class="input"
-            v-model="fee"
-            placeholder="最小投资金额为100，且金额需为10的倍数"
-          /> -->
           <van-field
             class="c-input"
             v-model="fee"
@@ -56,19 +52,19 @@
             :border="false"
             clearable
             center
-            placeholder="最小投资金额为100，且金额需为10的倍数"
+            :placeholder="$t('home.balancePlaceholder')"
           />
           <div class="unit">USDT</div>
         </div>
         <div class="expect-box">
           <div class="top">
-            <div class="left">预计得到</div>
-            <div class="right">1POR (价值: 100 USDT)</div>
+            <div class="left">{{ $t("home.expectTitle") }}</div>
+            <div class="right">{{ $t("home.expectValue") }}</div>
           </div>
           <div class="ini">--INI</div>
         </div>
         <div class="rental-power-btn">
-          <Button size="large" class="button">租赁算力</Button>
+          <div size="large" class="button">{{ $t("home.expectBtn") }}</div>
         </div>
       </div>
     </div>
@@ -90,7 +86,6 @@ import twitter from "@/assets/images/icons/twitter.svg";
 import discord from "@/assets/images/icons/discord.svg";
 import email from "@/assets/images/icons/email.svg";
 import { useClipboard } from "@vueuse/core";
-import Button from "../components/button.vue";
 const fee = ref();
 const links = ref([
   {
@@ -190,6 +185,16 @@ const links = ref([
           }
           .button {
             margin-left: 12px;
+            width: 100px;
+            height: 50px;
+            border-radius: 40px 40px 40px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid;
+            font-size: 26px;
+            color: #ffffff;
+            line-height: 30px;
           }
         }
       }
@@ -235,6 +240,19 @@ const links = ref([
         margin-top: 30px;
         display: flex;
         justify-content: center;
+        .button {
+          width: 280px;
+          height: 56px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 40px 40px 40px 40px;
+          border: 4px solid #626176;
+          font-weight: 400;
+          font-size: 30px;
+          color: #ffffff;
+          line-height: 35px;
+        }
       }
     }
   }

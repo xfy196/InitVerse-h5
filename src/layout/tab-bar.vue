@@ -9,22 +9,22 @@
     <van-tabbar-item
       to="/rental-power"
       :icon="isActive(['/rental-power', '/']) ? tabIcon1Active : tabIcon1"
-      >算力租凭</van-tabbar-item
+      >{{ $t("tab.tab1") }}</van-tabbar-item
     >
     <van-tabbar-item
       to="/transaction"
       :icon="isActive(['/transaction']) ? tabIcon2Active : tabIcon2"
-      >交易</van-tabbar-item
+      >{{ $t("tab.tab2") }}</van-tabbar-item
     >
     <van-tabbar-item
       to="/assets"
       :icon="isActive(['/assets']) ? tabIcon3Active : tabIcon3"
-      >资产</van-tabbar-item
+      >{{ $t("tab.tab3") }}</van-tabbar-item
     >
     <van-tabbar-item
       to="/my"
       :icon="isActive(['/my']) ? tabIcon4Active : tabIcon4"
-      >我的</van-tabbar-item
+      >{{ $t("tab.tab4") }}</van-tabbar-item
     >
   </van-tabbar>
 </template>

@@ -1,5 +1,30 @@
 {
-    "home": {
-        "key": "key"
-    }
+  "tab": {
+    "tab1": "Power Rental",
+    "tab2": "Trade",
+    "tab3": "Assets",
+    "tab4": "My Account"
+  },
+  "back": {
+    "title": "Back"
+  },
+  "login": {
+    "title": "Login",
+    "account": "Account",
+    "password": "Password",
+    "loginBtn": "Login",
+    "cancel": "Cancel"
+  },
+  "home": {
+    "notice": "Notice regarding the launch of the power rental activity",
+    "rentalTitle": "Power Rental",
+    "rentalRecord": "Rental Record",
+    "rentalPower": "Rental Power",
+    "balanceKey": "Available Balance",
+    "balanceBtn": "Recharge",
+    "balancePlaceholder": "Minimum investment amount is 100, and the amount must be a multiple of 10",
+    "expectTitle": "Expected to receive:",
+    "expectValue": "Value",
+    "expectBtn": "Rent Power"
+  }
 }

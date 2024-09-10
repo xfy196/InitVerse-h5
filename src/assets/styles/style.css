@@ -62,3 +62,7 @@ input {
     color: #ffffff;
   }
 }
+
+.borderColorActive {
+  border-color: rgba(145, 96, 255, 1) !important;
+}
