@@ -1,7 +1,7 @@
 <template>
   <div>
     transaction
-    <div class="chart" ref="chartRef"></div>
+    <div @touchstart="() => {}" class="chart" ref="chartRef"></div>
   </div>
 </template>
 
@@ -14,23 +14,41 @@ onMounted(() => {
   chart = echarts.init(chartRef.value);
   const option = {
     xAxis: {
-      data: ["2017-10-24", "2017-10-25", "2017-10-26", "2017-10-27"],
+      data: [
+        "2017-10-21",
+        "2017-10-22",
+        "2017-10-23",
+        "2017-10-24",
+        "2017-10-25",
+        "2017-10-26",
+        "2017-10-27",
+        "2017-10-28",
+        "2017-10-29",
+      ],
     },
-    yAxis: {},
+    yAxis: {
+    },
     tooltip: {
-      trigger: "axis",
+      show: true,
+      trigger: "none",
       axisPointer: {
         type: "cross",
+        show: false,
       },
     },
     series: [
       {
         type: "candlestick",
         data: [
+          [14, 17, 21, 28],
+          [14, 17, 21, 28],
+          [13, 24, 10, 38],
           [20, 34, 10, 38],
           [40, 35, 30, 50],
           [31, 38, 33, 44],
           [38, 15, 5, 42],
+          [14, 17, 21, 28],
+          [14, 17, 21, 28],
         ],
       },
     ],
