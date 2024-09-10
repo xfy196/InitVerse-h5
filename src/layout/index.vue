@@ -22,7 +22,7 @@ import TabBar from "./tab-bar.vue";
   .main {
     height: calc(100vh - 133px);
     box-sizing: border-box;
-    padding-bottom: 142px;
+    padding-bottom: calc(142px + env(safe-area-inset-bottom));
     overflow: auto;
   }
 }
