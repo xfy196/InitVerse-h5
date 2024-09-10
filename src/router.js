@@ -4,15 +4,16 @@ import Layout from "./layout/index.vue";
 import { RouterLink } from "vue-router";
 import { RouterView } from "vue-router";
 import { h } from "vue";
-const LayoutComponent = {
-  render(h) {
-    // 使用 h 函数创建一个 div 元素
-    return h("div", {}, this.$slots.default);
-  },
-};
 const routes = [
   {
     path: "/",
+    component: HomeView,
+    meta: {
+      layout: Layout,
+    },
+  },
+  {
+    path: "/rental-power",
     component: HomeView,
     meta: {
       layout: Layout,
@@ -30,6 +31,27 @@ const routes = [
     component: () => import("./pages/register.vue"),
     meta: {
       layout: "div",
+    },
+  },
+  {
+    path: "/transaction",
+    component: () => import("./pages/transaction.vue"),
+    meta: {
+      layout: Layout,
+    },
+  },
+  {
+    path: "/assets",
+    component: () => import("./pages/assets.vue"),
+    meta: {
+      layout: Layout,
+    },
+  },
+  {
+    path: "/my",
+    component: () => import("./pages/my.vue"),
+    meta: {
+      layout: Layout,
     },
   },
 ];

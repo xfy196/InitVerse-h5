@@ -9,14 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vueuse/core": "^11.0.3",
     "amfe-flexible": "^2.2.1",
     "fastclick": "^1.0.6",
     "pinia": "^2.2.2",
     "vant": "^4.9.5",
     "vue": "^3.4.37",
+    "vue-i18n": "^9.14.0",
     "vue-router": "4"
   },
   "devDependencies": {
+    "@intlify/unplugin-vue-i18n": "^4.0.0",
     "@vant/auto-import-resolver": "^1.2.1",
     "@vitejs/plugin-vue": "^5.1.2",
     "autoprefixer": "^10.4.20",
@@ -25,6 +28,6 @@
     "sass-embedded": "^1.78.0",
     "unplugin-auto-import": "^0.18.2",
     "unplugin-vue-components": "^0.27.4",
-    "vite": "^5.4.1"
+    "vite": "^5.4.3"
   }
 }
