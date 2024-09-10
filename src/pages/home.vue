@@ -61,9 +61,8 @@
   }
   .link-list {
     display: flex;
-    // margin-top: 70px;
-    // margin-bottom: 54px;
-    height: 300px;
+    margin-top: 70px;
+    margin-bottom: 54px;
     justify-content: center;
     li {
       margin-left: 20px;
