@@ -23,7 +23,8 @@ import TabBar from "./tab-bar.vue";
   background: linear-gradient(180deg, purple 0%, #000000 100%);
   .main {
     padding-bottom: 142px;
-    flex: 1;
+    // flex: 1;
+    height: calc(100% - 133px);
     box-sizing: border-box;
     overflow: auto;
   }
