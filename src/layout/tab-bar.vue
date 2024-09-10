@@ -24,9 +24,9 @@ import tabIcon4 from "@/assets/images/tab4.svg";
 <style lang="scss" scoped>
 
 .tababar {
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  height: 1.92rem;
+  border-top-left-radius: 36px;
+  border-top-right-radius: 36px;
+  height: 126px;
   overflow: hidden;
   background: $tab-bg;
   .van-tabbar-item--active {
@@ -34,11 +34,12 @@ import tabIcon4 from "@/assets/images/tab4.svg";
   }
   :deep(.van-icon__image){
 
-    height: 0.65rem;
+    height: 43px;
   }
   :deep(.van-tabbar-item__text){
 
-    margin-top: 0.24rem;
+    margin-top: 6px;
+    font-size: 19px;
   }
 }
 </style>

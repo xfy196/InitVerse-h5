@@ -1,13 +1,21 @@
 <template>
-  <Head />
-  <div>
-    <RouterView />
+  <div class="layout-container">
+    <Head />
+    <div>
+      <RouterView />
+    </div>
+    <TabBar />
   </div>
-  <TabBar />
 </template>
 
 <script setup lang="ts">
 import Head from "./head.vue";
 import TabBar from "./tab-bar.vue";
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.layout-container {
+  width: 100%;
+  height: 100%;
+  padding-bottom: 126px;
+}
+</style>
