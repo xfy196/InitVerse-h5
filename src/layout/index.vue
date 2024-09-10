@@ -22,6 +22,8 @@ import TabBar from "./tab-bar.vue";
   .main {
     height: calc(100vh - 133px - 126px);
     background-color: rgba(255, 255, 255, 0);
+    padding-bottom: 16px;
+    box-sizing: border-box;
     overflow: auto;
   }
 }

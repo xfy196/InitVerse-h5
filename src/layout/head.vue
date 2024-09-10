@@ -1,7 +1,7 @@
 <template>
   <van-nav-bar :border="false" class="nav-bar" left-arrow>
     <template #left>
-      <van-icon v-if="showBack" @click="back" size="0.6rem" color="#ffffff" name="arrow-left" />
+      <van-icon v-if="showBack" @click="back" size="0.5rem" color="#ffffff" name="arrow-left" />
       <img class="logo" src="@/assets/images/logo.png" alt="" />
     </template>
     <template #right>
