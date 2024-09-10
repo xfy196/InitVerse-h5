@@ -59,6 +59,7 @@ onMounted(() => {
     ],
   };
   chart.setOption(option);
+  onTouch()
   window.addEventListener("resize", () => {
     chart && chart.resize();
   });
