@@ -68,7 +68,7 @@
           <div class="ini">--INI</div>
         </div>
         <div class="rental-power-btn">
-          <Button border size="large" class="button">租赁算力</Button>
+          <Button size="large" class="button">租赁算力</Button>
         </div>
       </div>
     </div>
