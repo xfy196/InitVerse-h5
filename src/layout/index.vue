@@ -14,8 +14,9 @@ import TabBar from "./tab-bar.vue";
 </script>
 <style lang="scss" scoped>
 .layout-container {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: calc(100vh);
   padding-bottom: 126px;
+  background: linear-gradient(180deg, purple 0%, #000000 100%);
 }
 </style>

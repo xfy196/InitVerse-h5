@@ -1,5 +1,5 @@
 <template>
-  <van-nav-bar class="nav-bar" left-arrow>
+  <van-nav-bar :border="false" class="nav-bar" left-arrow>
     <template #left>
       <img class="logo" src="@/assets/images/logo.png" alt=""/>
     </template>
@@ -11,8 +11,8 @@
 </script>
 <style lang="scss" scoped>
 .nav-bar {
-  background-color: #000;
   height: 133px;
+  background-color: rgba(255,255,255, 0);
     .logo {
       width: 196px;
       height: 40px;

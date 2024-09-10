@@ -1,7 +1,7 @@
 <template>
   <van-tabbar
+    :border="false"
     route
-    safe-area-inset-bottom
     inactive-color="white"
     active-color="white"
     class="tababar"
@@ -22,7 +22,6 @@ import tabIcon3 from "@/assets/images/tab3.svg";
 import tabIcon4 from "@/assets/images/tab4.svg";
 </script>
 <style lang="scss" scoped>
-
 .tababar {
   border-top-left-radius: 36px;
   border-top-right-radius: 36px;
@@ -32,12 +31,10 @@ import tabIcon4 from "@/assets/images/tab4.svg";
   .van-tabbar-item--active {
     background-color: $tab-bg;
   }
-  :deep(.van-icon__image){
-
+  :deep(.van-icon__image) {
     height: 43px;
   }
-  :deep(.van-tabbar-item__text){
-
+  :deep(.van-tabbar-item__text) {
     margin-top: 6px;
     font-size: 19px;
   }
