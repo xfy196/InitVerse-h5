@@ -2,7 +2,9 @@
   <div class="layout-container">
     <Head />
     <div>
-      <RouterView />
+      <div class="main">
+          <RouterView />
+      </div>
     </div>
     <TabBar />
   </div>
@@ -15,8 +17,12 @@ import TabBar from "./tab-bar.vue";
 <style lang="scss" scoped>
 .layout-container {
   width: 100vw;
-  height: calc(100vh);
-  padding-bottom: 126px;
+  height: 100vh;
   background: linear-gradient(180deg, purple 0%, #000000 100%);
+  .main {
+    height: calc(100vh - 133px - 126px);
+    background-color: rgba(255, 255, 255, 0);
+    overflow: auto;
+  }
 }
 </style>
