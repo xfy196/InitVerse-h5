@@ -42,13 +42,13 @@
         </div>
         <van-divider class="divider" />
         <div class="input-box">
-          <input
+          <!-- <input
             type="number"
             class="input"
             v-model="fee"
             placeholder="最小投资金额为100，且金额需为10的倍数"
-          />
-          <!-- <van-field
+          /> -->
+          <van-field
             class="c-input"
             v-model="fee"
             type="digit"
@@ -57,7 +57,7 @@
             clearable
             center
             placeholder="最小投资金额为100，且金额需为10的倍数"
-          /> -->
+          />
           <div class="unit">USDT</div>
         </div>
         <div class="expect-box">
