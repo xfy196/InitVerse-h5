@@ -2,6 +2,7 @@
   <div>
     transaction
     <div @touchmove.stop="() => {}" @touchstart.stop="() => {}" class="chart" ref="chartRef"></div>
+    <div style="height: 300px;"></div>
   </div>
 </template>
 
