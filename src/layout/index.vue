@@ -1,9 +1,9 @@
 <template>
   <div class="layout-container">
     <Head />
-      <div class="main">
-          <RouterView />
-      </div>
+    <div class="main">
+      <RouterView />
+    </div>
     <TabBar />
   </div>
 </template>
@@ -20,10 +20,10 @@ import TabBar from "./tab-bar.vue";
   overflow: hidden;
   background: linear-gradient(180deg, purple 0%, #000000 100%);
   .main {
-    height: calc(100vh - 133px - 126px);
+    height: calc(100vh - 133px);
     box-sizing: border-box;
-    padding-bottom: 16px;
-      overflow: auto;
+    padding-bottom: 142px;
+    overflow: auto;
   }
 }
 </style>
