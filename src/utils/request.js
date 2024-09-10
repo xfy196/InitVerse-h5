@@ -38,9 +38,12 @@ request.interceptors.request.use((config) => {
 */
 request.interceptors.response.use(
   (response) => {
-    if (response.status == 200) {
+    if (response.status == 200 || response.data.code == 200) {
       return Promise.resolve(response.data);
     } else {
+      showFailToast({
+        message: response.data.msg,
+      });
       return Promise.reject(response.data);
     }
   },
