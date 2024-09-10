@@ -20,6 +20,9 @@ dependencies:
   fastclick:
     specifier: ^1.0.6
     version: 1.0.6
+  hammerjs:
+    specifier: ^2.0.8
+    version: 2.0.8
   pinia:
     specifier: ^2.2.2
     version: 2.2.2(vue@3.5.3)
@@ -1005,6 +1008,11 @@ packages:
     dependencies:
       is-glob: 4.0.3
     dev: true
+
+  /hammerjs@2.0.8:
+    resolution: {integrity: sha512-tSQXBXS/MWQOn/RKckawJ61vvsDpCom87JgxiYdGwHdOa0ht0vzUWDlfioofFCRU0L+6NGDt6XzbgoJvZkMeRQ==}
+    engines: {node: '>=0.8.0'}
+    dev: false
 
   /has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
