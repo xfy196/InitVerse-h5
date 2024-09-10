@@ -10,5 +10,6 @@ export default {
       // 配置哪些文件中的尺寸需要转化为rem *表示所有的都要转化
       propList: ["*"],
     },
+    "postcss-100vh-fix": {},
   },
 };

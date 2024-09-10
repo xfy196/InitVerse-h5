@@ -21,7 +21,6 @@ onMounted(() => {
 .layout-container {
   width: 100vw;
   height: 100vh;
-  min-height: -webkit-fill-available; 
   background: linear-gradient(180deg, purple 0%, #000000 100%);
   .main {
     height: calc(100vh - 133px - 126px);

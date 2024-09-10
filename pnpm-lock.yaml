@@ -49,6 +49,9 @@ devDependencies:
   postcss:
     specifier: ^8.4.45
     version: 8.4.45
+  postcss-100vh-fix:
+    specifier: ^1.0.2
+    version: 1.0.2(postcss@8.4.45)
   postcss-pxtorem:
     specifier: ^6.1.0
     version: 6.1.0(postcss@8.4.45)
@@ -1169,6 +1172,15 @@ packages:
       confbox: 0.1.7
       mlly: 1.7.1
       pathe: 1.1.2
+    dev: true
+
+  /postcss-100vh-fix@1.0.2(postcss@8.4.45):
+    resolution: {integrity: sha512-t7vqk9AfjI4fXmWlQCEiMZFFhi1hro4WlECINI1TV6Qh1XapUJE++gCmNr95F5Hen/+bz1OmO+SiSB9TZmFmSg==}
+    engines: {node: '>=10.0'}
+    peerDependencies:
+      postcss: ^8.1.0
+    dependencies:
+      postcss: 8.4.45
     dev: true
 
   /postcss-pxtorem@6.1.0(postcss@8.4.45):
