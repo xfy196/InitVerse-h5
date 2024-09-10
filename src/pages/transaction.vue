@@ -8,7 +8,7 @@
 
 <script setup>
 import Hammer from "hammerjs";
-import { onMounted, useTemplateRef, ref } from "vue";
+import { onMounted, useTemplateRef } from "vue";
 import * as echarts from "echarts";
 const chartRef = useTemplateRef("chartRef");
 let chart = null;
