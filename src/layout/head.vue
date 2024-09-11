@@ -1,7 +1,7 @@
 <template>
   <van-nav-bar :border="false" class="nav-bar" left-arrow>
     <template #left>
-      <img class="logo" src="@/assets/images/icons/logo.svg" alt="" />
+      <img class="logo" @click="goHome" src="@/assets/images/icons/logo.svg" alt="" />
     </template>
     <template #right>
       <img
@@ -31,8 +31,10 @@ import {computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useStorage } from "@vueuse/core";
 import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 const { locale } = useI18n();
 const route = useRoute();
+const router = useRouter();
 const showLangSelect = ref(false);
 const lang = useStorage("lang", "zh");
 const actions = [
@@ -51,6 +53,9 @@ const logout = () => {
 const changeLang = () => {
   showLangSelect.value = true;
 };
+const goHome = () => {
+  router.push("/");
+};
 </script>
 <style lang="scss" scoped>
 .nav-bar {
@@ -59,7 +64,6 @@ const changeLang = () => {
   .logo {
     width: 224px;
     height: 45px;
-    margin-left: 12px;
   }
   .icon {
     width: 48px;

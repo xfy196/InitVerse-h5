@@ -36,7 +36,7 @@ const handleClick = () => {
 <style lang="scss" scoped>
 .c-button {
 min-width: 280px;
-  min-height: 70px;
+  height: 70px;
   border-radius: 40px 40px 40px 40px;
   border: 4px solid;
   box-sizing: border-box;

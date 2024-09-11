@@ -24,9 +24,9 @@
     <div class="rental-container">
       <div class="head">
         <div class="title">{{ $t("home.rentalTitle") }}</div>
-        <div class="record">
-          <div class="txt">{{ $t("home.rentalRecord") }}</div>
-          <img src="@/assets/images/icons/copy.svg" alt="" />
+        <div @click="toRentalRecords" class="record">
+          <div  class="txt">{{ $t("home.rentalRecord") }}</div>
+          <img src="@/assets/images/icons/record.svg" alt="" />
         </div>
       </div>
       <div class="rental-bg">
@@ -85,8 +85,10 @@ import x from "@/assets/images/icons/x.svg";
 import tg from "@/assets/images/icons/tg.svg";
 import discord from "@/assets/images/icons/discord.svg";
 import email from "@/assets/images/icons/email.svg";
+import { useRouter } from "vue-router";
 import { useClipboard } from "@vueuse/core";
 const fee = ref();
+const router = useRouter();
 const links = ref([
   {
     icon: x,
@@ -105,6 +107,9 @@ const links = ref([
     url: "https://x.com/zj_nft_game",
   },
 ]);
+const toRentalRecords = () => {
+  router.push("/rental-records");
+};
 </script>
 <style lang="scss" scoped>
 .home-container {

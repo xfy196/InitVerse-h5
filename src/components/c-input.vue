@@ -53,13 +53,13 @@ const props = defineProps({
 const value = defineModel("value", { required: true });
 const emit = defineEmits(["focus", "blur"]);
 const isFocus = ref(false);
-const handleFocus = () => {
+const handleFocus = (e) => {
   isFocus.value = true;
-  emit("focus");
+  emit("focus", e);
 };
-const handleBlur = () => {
+const handleBlur = (e) => {
   isFocus.value = false;
-  emit("blur");
+  emit("blur", e);
 };
 </script>
 <style lang="scss" scoped>

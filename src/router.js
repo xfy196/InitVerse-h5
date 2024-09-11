@@ -34,6 +34,13 @@ const routes = [
     },
   },
   {
+    path: "/forget",
+    component: () => import("./pages/forget.vue"),
+    meta: {
+      layout: "div",
+    },
+  },
+  {
     path: "/transaction",
     component: () => import("./pages/transaction.vue"),
     meta: {
@@ -50,6 +57,13 @@ const routes = [
   {
     path: "/my",
     component: () => import("./pages/my.vue"),
+    meta: {
+      layout: Layout,
+    },
+  },
+  {
+    path: "/rental-records",
+    component: () => import("./pages/rental-records.vue"),
     meta: {
       layout: Layout,
     },
