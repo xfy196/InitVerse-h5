@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useUserStore } from "../stores/user";
 const CancelToken = axios.CancelToken;
 // const baseURL = "/";
 const request = axios.create({
@@ -22,6 +23,10 @@ const removePending = (config) => {
   }
 };
 request.interceptors.request.use((config) => {
+  const userStore = useUserStore();
+  if (userStore.token) {
+    config.headers.Authorization = `Bearer ${userStore.token}`;
+  }
   removePending(config);
 
   addPending(config);

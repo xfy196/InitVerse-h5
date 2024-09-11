@@ -12,6 +12,10 @@ export const useUserStore = defineStore("user", {
     setToken(token) {
       this.token = token;
     },
+    logout() {
+      this.token = "";
+      this.userInfo = {};
+    },
     setUserInfo(userInfo) {
       this.userInfo = userInfo;
     },
