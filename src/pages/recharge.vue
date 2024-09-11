@@ -17,7 +17,12 @@
         <div class="address-title">
           <div class="address-title-text">接收地址</div>
           <div class="address-title-copy">
-            <img src="@/assets/images/icons/copy.svg" alt="" />
+            <img
+              v-if="isSupported"
+              @click.stop="handleCopy"
+              src="@/assets/images/icons/copy.svg"
+              alt=""
+            />
           </div>
         </div>
         <div class="address">0xD8155eC59A04c34406946B527167ec17af0Ec5F9</div>
@@ -33,6 +38,8 @@
 import Back from "@/layout/back.vue";
 import qrcode from "qrcode";
 import { onMounted, ref } from "vue";
+import { useClipboard } from "@vueuse/core";
+const { copy, isSupported } = useClipboard();
 const imgUrl = ref("");
 const tab = ref("BSC");
 onMounted(async () => {
@@ -47,6 +54,13 @@ const generateQR = async (text) => {
 };
 const changeTab = (value) => {
   tab.value = value;
+};
+const handleCopy = async () => {
+  await copy("0xD8155eC59A04c34406946B527167ec17af0Ec5F9");
+  showToast({
+    position: "top",
+    message: "复制成功",
+  });
 };
 </script>
 <style lang="scss" scoped>
@@ -74,16 +88,16 @@ const changeTab = (value) => {
     border-radius: 20px 20px 20px 20px;
     padding: 30px;
     .tabs {
-        display: flex;
+      display: flex;
       .tab-item {
-        .c-button{
-            min-width: 190px;
-            height: 50px;
-            width: 142px;
-            font-size: 26px;
-            color: #ffffff;
-        }
         margin-right: 20px;
+        .c-button {
+          min-width: 190px;
+          height: 50px;
+          width: 142px;
+          font-size: 26px;
+          color: #ffffff;
+        }
         &:last-child {
           min-width: 228px;
           margin-right: 0;

@@ -88,6 +88,7 @@
     "nodeLevel": "节点等级",
     "getCode": "获取验证码",
     "afterGetCode": "后可重新获取",
+    "myCommunity": "我的社区",
     "placeholderCode": "请输入验证码",
     "placeholderTransactionPassword": "请输入新的交易密码",
     "submit": "确认",

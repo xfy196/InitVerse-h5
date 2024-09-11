@@ -1,5 +1,4 @@
 import axios from "axios";
-import { showFailToast } from "vant";
 const CancelToken = axios.CancelToken;
 // const baseURL = "/";
 const request = axios.create({
