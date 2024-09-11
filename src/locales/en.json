@@ -8,13 +8,7 @@
   "back": {
     "title": "Back"
   },
-  "login": {
-    "title": "Login",
-    "account": "Account",
-    "password": "Password",
-    "loginBtn": "Login",
-    "cancel": "Cancel"
-  },
+
   "home": {
     "notice": "Notice regarding the launch of the power rental activity",
     "rentalTitle": "Power Rental",
@@ -26,5 +20,33 @@
     "expectTitle": "Expected to receive:",
     "expectValue": "Value",
     "expectBtn": "Rent Power"
+  },
+  "register": {
+    "title": "Register",
+    "username": "Username",
+    "placeholderUsername": "Please enter your username",
+    "password": "Password",
+    "placeholderPassword": "Please enter your password",
+    "confirmPassword": "Confirm Password",
+    "placeholderConfirmPassword": "Please enter your password again",
+    "inviteCode": "Invite Code",
+    "placeholderInviteCode": "Please enter your invite code",
+    "email": "Email",
+    "placeholderEmail": "Please enter your email",
+    "code": "Code",
+    "placeholderCode": "Please enter your code",
+    "submit": "Confirm Register",
+    "getCode": "Get Code",
+    "afterGetCode": "After Get Code"
+  },
+  "login": {
+    "welcome": "Welcome",
+    "forgetPassword": "Forget Password, Find Back",
+    "register": "No Account, Register Now",
+    "username": "Username",
+    "placeholderUsername": "Please enter your username",
+    "password": "Password",
+    "placeholderPassword": "Please enter your password",
+    "submit": "Confirm Login"
   }
 }

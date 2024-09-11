@@ -5,6 +5,7 @@
     </template>
     <template #right>
       <img
+        v-if="showLogout"
         @click="logout"
         class="icon"
         src="@/assets/images/icons/logout.svg"
@@ -26,17 +27,19 @@
 </template>
 
 <script setup>
-import {ref } from "vue";
+import {computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useStorage } from "@vueuse/core";
+import { useRoute } from "vue-router";
 const { locale } = useI18n();
+const route = useRoute();
 const showLangSelect = ref(false);
 const lang = useStorage("lang", "zh");
 const actions = [
   { name: "English", value: "en" },
   { name: "简体中文", value: "zh" },
 ];
-
+const showLogout = computed(() => !['/login', '/register'].includes(route.path));
 const onSelectLang = (item) => {
   lang.value = item.value;
   locale.value = item.value;

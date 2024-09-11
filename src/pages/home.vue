@@ -196,6 +196,7 @@ const links = ref([
             color: #ffffff;
             padding: 0 24px;
             line-height: 30px;
+            background-color: #37394e;
           }
         }
       }
@@ -253,6 +254,7 @@ const links = ref([
           font-size: 30px;
           color: #ffffff;
           line-height: 35px;
+          background-color: #37394e;
         }
       }
     }
