@@ -51,6 +51,8 @@ const password = ref("");
 <style lang="scss" scoped>
 .login-container {
   height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(215deg, #2b2934 0%, #25283f 40%, #27272b 100%);
 
   .title {
@@ -64,10 +66,9 @@ const password = ref("");
     width: 702px;
     margin: 0 auto;
     margin-top: 30px;
-    height: 582px;
     background: linear-gradient(223deg, #353342 0%, #383b52 100%);
     border-radius: 20px 20px 20px 20px;
-    padding: 24px 30px;
+    padding: 24px 30px 40px 30px;
     .form-item {
       .c-input {
         margin-top: 12px;
@@ -83,12 +84,6 @@ const password = ref("");
         font-size: 30px;
         color: #ffffff;
         line-height: 35px;
-      }
-    }
-    .form-item {
-      .label {
-      }
-      .c-input {
       }
     }
 
