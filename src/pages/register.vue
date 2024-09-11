@@ -51,7 +51,6 @@
         <c-input
           :label="$t('register.email')"
           clearable
-          type="email"
           :border="false"
           :placeholder="$t('register.email')"
           v-model:value="email"
@@ -98,7 +97,9 @@
 
 <script setup>
 import Head from "@/layout/head.vue";
-import { ref, watch } from "vue";
+import { ref } from "vue";
+import { isEmail } from "@/utils/validate";
+
 const passwordVisible = ref(true);
 const username = ref("");
 const password = ref("");
@@ -107,7 +108,41 @@ const inviteCode = ref("");
 const email = ref("");
 const code = ref("");
 const countDownTime = ref(60 * 1000);
+const loading = ref(false);
 const handleSubmit = () => {
+  if (username.value.length === 0) {
+    showToast("请输入用户名");
+    return;
+  }
+  if (password.value.length === 0) {
+    showToast("请输入密码");
+    return;
+  }
+  if (confirmPassword.value.length === 0) {
+    showToast("请输入确认密码");
+    return;
+  }
+  if (password.value !== confirmPassword.value) {
+    showToast("两次密码不一致");
+    return;
+  }
+  if (inviteCode.value.length === 0) {
+    showToast("请输入邀请码");
+    return;
+  }
+  if (email.value.length === 0) {
+    showToast("请输入邮箱");
+    return;
+  }
+  if (!isEmail(email.value)) {
+    showToast("邮箱格式不正确");
+    return;
+  }
+  if (code.value.length === 0) {
+    showToast("请输入验证码");
+    return;
+  }
+  loading.value = true;
   console.log(
     username.value,
     password.value,

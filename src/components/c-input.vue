@@ -5,6 +5,7 @@
       :class="{ focus: isFocus }"
       class="c-input"
       v-model="value"
+      autocomplete="off"
       :clearable="clearable"
       :type="type"
       :border="border"

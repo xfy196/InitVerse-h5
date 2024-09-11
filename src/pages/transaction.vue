@@ -1,6 +1,5 @@
 <template>
   <div>
-    transaction
     <div
       @touchmove.stop.prevent="() => {}"
       @touchstart.stop.prevent="() => {}"

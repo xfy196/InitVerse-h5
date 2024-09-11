@@ -26,14 +26,13 @@
         </template>
       </c-input>
       <div class="forget-password">
-        <div class="forget-password-item">{{ $t("login.forgetPassword") }}</div>
+        <div class="forget-password-item" @click="handleForgetPassword">{{ $t("login.forgetPassword") }}</div>
         <router-link class="register-link" to="/register"
           >{{ $t("login.register") }}</router-link
         >
       </div>
       <div class="submit-btn-container">
-        <!-- <van-button class="submit-btn" round type="primary"> 提交 </van-button> -->
-        <CButton :disabled="username.length === 0 || password.length === 0">
+        <CButton @click="handleSubmit" :disabled="username.length === 0 || password.length === 0">
           {{ $t("login.submit") }}
         </CButton>
       </div>
@@ -44,9 +43,28 @@
 <script setup>
 import Head from "@/layout/head.vue";
 import { ref } from "vue";
+import { useUserStore } from "../stores/user";
+import { useRouter } from "vue-router";
 const passwordVisible = ref(true);
 const username = ref("");
 const password = ref("");
+const userStore = useUserStore();
+const router = useRouter();
+console.log(userStore.token)
+
+const handleForgetPassword = () => {
+  router.push("/forget");
+};
+const handleSubmit = () => {
+  if (username.value.length === 0) {
+    showToast("请输入用户名");
+    return;
+  }
+  if (password.value.length === 0) {
+    showToast("请输入密码");
+    return;
+  }
+};
 </script>
 <style lang="scss" scoped>
 .login-container {

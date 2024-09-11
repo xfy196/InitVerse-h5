@@ -73,6 +73,13 @@ const routes = [
       layout: BaseLayout,
     },
   },
+  {
+    path: "/invite/:code",
+    component: () => import("./pages/invite.vue"),
+    meta: {
+      layout: BaseLayout,
+    },
+  },
 ];
 
 const router = createRouter({

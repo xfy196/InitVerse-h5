@@ -6,7 +6,11 @@ import fastclick from "fastclick";
 import { createPinia } from "pinia";
 import "./assets/styles/style.css";
 import { i18nPlugin } from "./plugins/i18n.plugins";
-const pinia = createPinia();
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 fastclick(document.body);
-
-createApp(App).use(router).use(pinia).use(i18nPlugin).mount("#app");
+setToastDefaultOptions({
+    position: "top",
+  });
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
+createApp(App).use(pinia).use(router).use(i18nPlugin).mount("#app");
