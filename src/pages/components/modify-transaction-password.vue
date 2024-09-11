@@ -1,7 +1,7 @@
 <template>
-  <van-overlay v-model:show="show" @click="handleClose">
+  <van-overlay v-model:show="show" @click.stop="handleClose">
     <div class="wrapper">
-      <div class="form">
+      <div class="form" @click.stop>
         <van-icon name="cross" color="#ffffff" class="close-icon" @click="handleClose" />
         <div class="title">{{ $t("my.setTransactionPassword") }}</div>
         <c-input
@@ -27,7 +27,7 @@
           </template>
         </c-input>
         <div class="submit-btn-container">
-          <c-button @click="handleSubmit" :disabled="!code || !newPassword">{{
+          <c-button @click.stop="handleSubmit" :disabled="!code || !newPassword">{{
             $t("my.submit")
           }}</c-button>
         </div>

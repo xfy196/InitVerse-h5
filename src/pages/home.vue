@@ -37,7 +37,7 @@
           <div class="left">{{ $t("home.balanceKey") }}</div>
           <div class="right">
             <div class="balance van-ellipsis">111111&nbsp;USDT</div>
-            <div class="button borderColorActive">
+            <div @click="toRecharge" class="button borderColorActive">
               {{ $t("home.balanceBtn") }}
             </div>
           </div>
@@ -109,6 +109,9 @@ const links = ref([
 ]);
 const toRentalRecords = () => {
   router.push("/rental-records");
+};
+const toRecharge = () => {
+  router.push("/recharge");
 };
 </script>
 <style lang="scss" scoped>
@@ -267,7 +270,7 @@ const toRentalRecords = () => {
   .link-list {
     display: flex;
     margin-top: 30px;
-    margin-bottom: 80px;
+    margin-bottom: 40px;
     justify-content: center;
     li {
       margin-left: 40px;

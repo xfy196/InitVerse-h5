@@ -1,12 +1,12 @@
 <template>
-  <van-overlay v-model:show="show" @click="handleClose">
-    <div class="wrapper">
-      <div class="form">
+  <van-overlay v-model:show="show" @click.stop="handleClose">
+    <div class="wrapper" >
+      <div class="form" @click.stop>
         <van-icon
           name="cross"
           color="#ffffff"
           class="close-icon"
-          @click="handleClose"
+          @click.stop="handleClose"
         />
 
         <div class="title">{{ $t("my.setWithdrawalAddress") }}</div>
@@ -33,7 +33,7 @@
           </template>
         </c-input>
         <div class="submit-btn-container">
-          <c-button @click="handleSubmit" :disabled="!code || !newAddress">{{
+          <c-button @click.stop="handleSubmit" :disabled="!code || !newAddress">{{
             $t("my.submit")
           }}</c-button>
         </div>
@@ -60,6 +60,7 @@ const handleClose = () => {
   show.value = false;
 };
 const handleSubmit = () => {
+  console.log("handleSubmit");
   show.value = false;
 };
 watch(show, (val) => {

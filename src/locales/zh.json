@@ -93,5 +93,14 @@
     "submit": "确认",
     "placeholderWithdrawalAddress": "请输入新的提现地址",
     "code": "邮箱验证码"
+  },
+  "retanlRecords": {
+    "title": "算力租赁记录",
+    "empty": "暂无数据",
+    "rentalTime": "租赁时间",
+    "rentalNumber": "租赁数量",
+    "getPower": "获得算力",
+    "getINI": "获得INI",
+    "value": "价值"
   }
 }

@@ -1,9 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import HomeView from "./pages/home.vue";
 import Layout from "./layout/index.vue";
-import { RouterLink } from "vue-router";
-import { RouterView } from "vue-router";
-import { h } from "vue";
+import BaseLayout from "./layout/base-layout.vue";
 const routes = [
   {
     path: "/",
@@ -65,7 +63,14 @@ const routes = [
     path: "/rental-records",
     component: () => import("./pages/rental-records.vue"),
     meta: {
-      layout: Layout,
+      layout: BaseLayout,
+    },
+  },
+  {
+    path: "/recharge",
+    component: () => import("./pages/recharge.vue"),
+    meta: {
+      layout: BaseLayout,
     },
   },
 ];

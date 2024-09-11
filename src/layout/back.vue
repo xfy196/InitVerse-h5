@@ -2,7 +2,7 @@
   <div class="back-container">
     <div @click.stop="back">
       <van-icon size="0.4rem" color="#ffffff" name="arrow-left" />
-      <span class="back-text">返回</span>
+      <span class="back-text">{{ $t('back.title') }}</span>
     </div>
   </div>
 </template>

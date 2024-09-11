@@ -92,5 +92,14 @@
     "submit": "Confirm",
     "placeholderWithdrawalAddress": "Please enter your new withdrawal address",
     "code": "Email Verification Code"
+  },
+  "retanlRecords": {
+    "title": "Rental Records",
+    "empty": "No data",
+    "rentalTime": "Rental Time",
+    "rentalNumber": "Rental Number",
+    "getPower": "Get Power",
+    "getINI": "Get INI",
+    "value": "Value"
   }
 }

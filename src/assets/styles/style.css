@@ -66,3 +66,8 @@ input {
 .borderColorActive {
   border-color: rgba(145, 96, 255, 1) !important;
 }
+.van-empty__description {
+  font-weight: 400 !important;
+  font-size: 28px !important;
+  color: #aeaec3 !important;
+}
