@@ -64,9 +64,13 @@
           v-model:value="code"
         >
           <template #button>
-            <div v-if="!countDownTime" class="get-code-btn">{{ $t("register.getCode") }}</div>
+            <div v-if="!countDownTime" class="get-code-btn">
+              {{ $t("register.getCode") }}
+            </div>
             <div v-else class="count-down-text">
-              <van-count-down format="sss" :time="countDownTime" />{{ $t("register.afterGetCode") }}
+              <van-count-down format="sss" :time="countDownTime" />{{
+                $t("register.afterGetCode")
+              }}
             </div>
           </template>
         </c-input>
@@ -104,13 +108,22 @@ const email = ref("");
 const code = ref("");
 const countDownTime = ref(60 * 1000);
 const handleSubmit = () => {
-  console.log(username.value, password.value, confirmPassword.value, inviteCode.value, email.value, code.value);
+  console.log(
+    username.value,
+    password.value,
+    confirmPassword.value,
+    inviteCode.value,
+    email.value,
+    code.value
+  );
 };
 </script>
 <style lang="scss" scoped>
 .register-container {
   height: 100vh;
   background: linear-gradient(215deg, #2b2934 0%, #25283f 40%, #27272b 100%);
+  display: flex;
+  flex-direction: column;
 
   .content {
     height: calc(100vh - 108px);
@@ -128,11 +141,11 @@ const handleSubmit = () => {
     width: 702px;
     margin: 0 auto;
     margin-top: 30px;
-    height: 1210px;
 
     background: linear-gradient(223deg, #353342 0%, #383b52 100%);
     border-radius: 20px 20px 20px 20px;
-    padding: 24px 30px;
+    padding: 24px 30px 40px 30px;
+
     .form-item {
       .c-input {
         margin-top: 12px;
