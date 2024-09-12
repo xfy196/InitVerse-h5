@@ -4,6 +4,7 @@ import router from "../router"
 import { showToast } from "vant";
 const CancelToken = axios.CancelToken;
 const baseURL = import.meta.env.VITE_BASE_URL;
+console.log("🚀 ~ baseURL:", baseURL)
 const request = axios.create({
   baseURL,
   headers: {
