@@ -4,14 +4,14 @@
     <div class="title">{{ $t("login.welcome") }}</div>
     <div class="form">
       <c-input
-        v-model="username"
+        v-model:value="username"
         :label="$t('login.username')"
         clearable
         :border="false"
         :placeholder="$t('login.placeholderUsername')"
       />
       <c-input
-        v-model="password"
+        v-model:value="password"
         :type="passwordVisible ? 'text' : 'password'"
         :label="$t('login.password')"
         clearable
@@ -26,13 +26,15 @@
         </template>
       </c-input>
       <div class="forget-password">
-        <div class="forget-password-item" @click="handleForgetPassword">{{ $t("login.forgetPassword") }}</div>
-        <router-link class="register-link" to="/register"
-          >{{ $t("login.register") }}</router-link
-        >
+        <div class="forget-password-item" @click="handleForgetPassword">
+          {{ $t("login.forgetPassword") }}
+        </div>
+        <router-link class="register-link" to="/register">{{
+          $t("login.register")
+        }}</router-link>
       </div>
       <div class="submit-btn-container">
-        <CButton @click="handleSubmit" :disabled="username.length === 0 || password.length === 0">
+        <CButton @click="handleSubmit" :disabled="validate">
           {{ $t("login.submit") }}
         </CButton>
       </div>
@@ -42,7 +44,7 @@
 
 <script setup>
 import Head from "@/layout/head.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useUserStore } from "../stores/user";
 import { useRouter } from "vue-router";
 const passwordVisible = ref(true);
@@ -50,8 +52,11 @@ const username = ref("");
 const password = ref("");
 const userStore = useUserStore();
 const router = useRouter();
-console.log(userStore.token)
+console.log(userStore.token);
 
+const validate = computed(() => {
+  return username.value.length === 0 || password.value.length === 0;
+});
 const handleForgetPassword = () => {
   router.push("/forget");
 };
