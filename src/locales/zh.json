@@ -1,13 +1,12 @@
 {
-    
-    "tab": {
+  "tab": {
     "tab1": "算力租赁",
     "tab2": "交易",
     "tab3": "资产",
     "tab4": "我的"
   },
   "back": {
-    "title": "返回" 
+    "title": "返回"
   },
   "home": {
     "notice": "关于开启算力租赁活动的通知",
@@ -105,6 +104,29 @@
     "value": "价值"
   },
   "transaction": {
-    
+    "title": "INI期货",
+    "priceTrend": "INI期货价格走势",
+    "onlyINI": "仅代表INI期货行情",
+    "name": "代币名称",
+    "price": "最新价格",
+    "change": "24H涨跌幅",
+    "buy": "买入",
+    "sell": "卖出",
+    "exchange": "兑换",
+    "expected": "预计获得",
+    "availableBalance": "可用余额",
+    "placeholder": "请输入您要兑换的 INI 数量",
+    "flashExchange": "闪兑",
+    "flashExchangeRecord": "闪兑记录",
+    "exchangeRate": "汇率"
+  },
+  "exchangeRecords": {
+    "title": "闪兑记录",
+    "empty": "暂无数据",
+    "exchangeTime": "闪兑时间",
+    "exchangeNumber": "闪兑数量",
+    "exchangeINI": "闪兑INI",
+    "exchangeUSDT": "闪兑USDT",
+    "exchangeRate": "闪兑汇率"
   }
 }

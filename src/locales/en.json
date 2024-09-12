@@ -101,5 +101,31 @@
     "getPower": "Get Power",
     "getINI": "Get INI",
     "value": "Value"
+  },
+  "exchangeRecords": {
+    "title": "Exchange Records",
+    "empty": "No data",
+    "exchangeTime": "Exchange Time",
+    "exchangeNumber": "Exchange Number",
+    "exchangeINI": "Exchange INI",
+    "exchangeUSDT": "Exchange USDT",
+    "exchangeRate": "Exchange Rate"
+  },
+  "transaction": {
+    "title": "INI Futures",
+    "priceTrend": "INI Futures Price Trend",
+    "onlyINI": "Only INI Futures",
+    "name": "Token Name",
+    "price": "Latest Price",
+    "change": "24H Change",
+    "buy": "Buy",
+    "sell": "Sell",
+    "exchange": "Exchange",
+    "expected": "Expected",
+    "availableBalance": "Available Balance",
+    "placeholder": "Please enter the INI quantity you want to exchange",
+    "flashExchange": "Exchange",
+    "flashExchangeRecord": "Exchange Record",
+    "exchangeRate": "Exchange Rate"
   }
 }

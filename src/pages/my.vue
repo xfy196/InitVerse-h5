@@ -26,37 +26,52 @@
         </div>
       </div>
       <div class="bottom">
-        <div class="vip-level">{{ $t('my.vipLevel') }}：V5</div>
-        <div class="node-level">{{ $t('my.nodeLevel') }}：V5</div>
+        <div class="vip-level">{{ $t("my.vipLevel") }}：V5</div>
+        <div class="node-level">{{ $t("my.nodeLevel") }}：V5</div>
       </div>
     </div>
-    <div class="cell-box">
-      <div class="cell-item">
-        <div class="label">{{ $t('my.withdrawalAddress') }}</div>
-        <div class="right" @click="handleSetWithdrawalAddress">
-          <div class="status">{{ $t('my.notSet') }}</div>
-          <van-icon class="icon" color="#ffffff" size="0.503rem" name="arrow" />
+    <div class="setting-box">
+      <div class="cell-box">
+        <div class="cell-item">
+          <div class="label">{{ $t("my.withdrawalAddress") }}</div>
+          <div class="right" @click="handleSetWithdrawalAddress">
+            <div class="status">{{ $t("my.notSet") }}</div>
+            <van-icon
+              class="icon"
+              color="#ffffff"
+              size="0.503rem"
+              name="arrow"
+            />
+          </div>
         </div>
-      </div>
-      <van-divider
-        style="margin: 0; border-color: rgba(39, 39, 43, 1)"
-      ></van-divider>
-      <div class="cell-item">
-        <div class="label">{{ $t('my.transactionPassword') }}</div>
-        <div class="right" @click="handleSetTransactionPassword">
-          <div class="status">{{ $t('my.notSet') }}</div>
-          <van-icon class="icon" color="#ffffff" size="0.503rem" name="arrow" />
+        <van-divider
+          style="margin: 0; border-color: rgba(39, 39, 43, 1)"
+        ></van-divider>
+        <div class="cell-item">
+          <div class="label">{{ $t("my.transactionPassword") }}</div>
+          <div class="right" @click="handleSetTransactionPassword">
+            <div class="status">{{ $t("my.notSet") }}</div>
+            <van-icon
+              class="icon"
+              color="#ffffff"
+              size="0.503rem"
+              name="arrow"
+            />
+          </div>
         </div>
       </div>
     </div>
     <!-- 我的团队 -->
     <div class="my-team">
-      <div class="title">{{ $t('my.myTeam') }} <span class="sub-title">({{ $t('my.direct') }})</span></div>
+      <div class="title">
+        {{ $t("my.myTeam") }}
+        <span class="sub-title">({{ $t("my.direct") }})</span>
+      </div>
       <div class="cell-box" style="margin-top: 20px">
         <div class="cell-item">
-          <div class="label">{{ $t('my.userID') }}</div>
+          <div class="label">{{ $t("my.userID") }}</div>
           <div class="right">
-            <div class="status">{{ $t('my.teamPower') }}</div>
+            <div class="status">{{ $t("my.teamPower") }}</div>
           </div>
         </div>
         <van-divider
@@ -74,17 +89,19 @@
         ></van-divider>
         <div class="cell-item">
           <div class="label van-ellipsis">
-            {{ $t('my.myCommunity') }}：7000 USDT（{{ $t('my.totalPower') }}-{{ $t('my.regionPower') }}）
+            {{ $t("my.myCommunity") }}：7000 USDT（{{ $t("my.totalPower") }}-{{
+              $t("my.regionPower")
+            }}）
           </div>
         </div>
       </div>
     </div>
     <!-- 邀请好友 -->
     <div class="invite-friend">
-      <div class="title">{{ $t('my.inviteFriend') }}</div>
-      <div class="cell-box" style="margin-top: 20px">
+      <div class="title">{{ $t("my.inviteFriend") }}</div>
+      <div class="cell-box">
         <div class="cell-item">
-          <div class="label">{{ $t('my.inviteCode') }}</div>
+          <div class="label">{{ $t("my.inviteCode") }}</div>
           <div class="right">
             <div class="status">UDA76SS</div>
             <img class="icon" src="@/assets/images/icons/copy.svg" alt="" />
@@ -98,7 +115,7 @@
             http://www.inichain.com/uetsce
           </div>
           <div class="copy-link">
-            {{ $t('my.copyLink') }}
+            {{ $t("my.copyLink") }}
             <img
               class="icon"
               src="@/assets/images/icons/copy-white.svg"
@@ -109,14 +126,14 @@
       </div>
     </div>
     <div class="social-box">
-      <div class="title">{{ $t('my.socialLink') }}</div>
+      <div class="title">{{ $t("my.socialLink") }}</div>
       <div class="cell-box">
         <template v-for="(link, index) in links" :key="link.url">
           <div class="cell-item">
             <div class="label">
               <img class="icon" :src="link.icon" alt="" />
               <span class="van-ellipsis"
-                >{{ index === links.length - 1 ? $t('my.officialEmail') : ""
+                >{{ index === links.length - 1 ? $t("my.officialEmail") : ""
                 }}{{ link.url }}</span
               >
             </div>
@@ -254,6 +271,11 @@ const handleSetTransactionPassword = () => {
       }
     }
   }
+  .setting-box {
+    .cell-box {
+      margin-top: 58px;
+    }
+  }
   .my-team {
     margin-top: 38px;
     .cell-item {
@@ -279,7 +301,7 @@ const handleSetTransactionPassword = () => {
     }
   }
   .invite-friend {
-    margin-top: 38px;
+    margin-top: 30px;
     .cell-item {
       .right {
         .status {

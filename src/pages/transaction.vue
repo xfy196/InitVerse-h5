@@ -3,7 +3,7 @@
     <div class="header">
       <div class="top">
         <div class="left van-ellipsis">8888.8</div>
-        <div class="right">INI期货价格走势</div>
+        <div class="right">{{ $t('transaction.priceTrend') }}</div>
       </div>
       <div class="bottom">
         <div class="left">
@@ -14,7 +14,7 @@
           </div>
           <div class="proportion">8888&nbsp;(+1.2%)</div>
         </div>
-        <div class="right">仅代表INI期货行情</div>
+        <div class="right">{{ $t('transaction.onlyINI') }}</div>
       </div>
     </div>
     <div
@@ -27,13 +27,13 @@
       <div class="head">
         <van-row>
           <van-col span="8">
-            <div class="cell">代币名称</div>
+            <div class="cell">{{ $t('transaction.name') }}</div>
           </van-col>
           <van-col span="8">
-            <div style="justify-content: center" class="cell">最新价格</div>
+            <div style="justify-content: center" class="cell">{{ $t('transaction.price') }}</div>
           </van-col>
           <van-col span="8">
-            <div style="justify-content: flex-end" class="cell">24H涨跌幅</div>
+            <div style="justify-content: flex-end" class="cell">{{ $t('transaction.change') }}</div>
           </van-col>
         </van-row>
         <div class="currency-list">
@@ -86,14 +86,14 @@
     </div>
     <div class="flash-exchange-box">
       <div class="head">
-        <div class="title">闪兑</div>
+        <div class="title">{{ $t('transaction.flashExchange') }}</div>
         <div @click.stop="toExchangeRecords" class="recod">
-          <div>闪兑记录</div>
+          <div>{{ $t('transaction.flashExchangeRecord') }}</div>
           <img src="@/assets/images/icons/record.svg" alt="" />
         </div>
       </div>
       <div class="content">
-        <div class="title">今日汇率</div>
+        <div class="title">{{ $t('transaction.exchangeRate') }}</div>
         <div class="translate-box">
           <div class="img-box">
             <img src="@/assets/images/icons/ini.svg" alt="" />
@@ -112,7 +112,7 @@
           </div>
           <!-- 可用余额 -->
           <div class="balance">
-            <div>可用余额</div>
+            <div>{{ $t('transaction.availableBalance') }}</div>
             <div class="value">8888.88 INI</div>
           </div>
         </div>
@@ -127,7 +127,7 @@
             :border="false"
             clearable
             center
-            placeholder="请输入您要兑换的 INI 数量"
+            :placeholder="$t('transaction.placeholder')"
           >
             <template #button>
               <div @click.stop="handleMaxNum" class="max">Max</div>
@@ -138,11 +138,11 @@
         </div>
         <!-- 预计获得 -->
         <div class="expected">
-          <div class="title">预计获得</div>
+          <div class="title">{{ $t('transaction.expected') }}</div>
           <div class="value">--&nbsp;USDT</div>
         </div>
         <div class="exchange-btn">
-          <CButton :disabled="!iniNum">兑换</CButton>
+          <CButton :disabled="!iniNum">{{ $t('transaction.exchange') }}</CButton>
         </div>
       </div>
     </div>
