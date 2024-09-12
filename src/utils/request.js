@@ -3,9 +3,9 @@ import { useUserStore } from "../stores/user";
 import router from "../router"
 import { showToast } from "vant";
 const CancelToken = axios.CancelToken;
-// const baseURL = "/";
+const baseURL = import.meta.env.VITE_BASE_URL;
 const request = axios.create({
-  // baseURL,
+  baseURL,
   headers: {
     "Content-Type": "application/json",
   }

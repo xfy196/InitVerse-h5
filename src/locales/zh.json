@@ -128,5 +128,12 @@
     "exchangeINI": "闪兑INI",
     "exchangeUSDT": "闪兑USDT",
     "exchangeRate": "闪兑汇率"
+  },
+  "recharge": {
+    "title": "充值",
+    "tips": "请扫描或复制您的USDT地址进行充值",
+    "receiveAddress": "接收地址",
+    "copy": "复制",
+    "scan": "扫描"
   }
 }

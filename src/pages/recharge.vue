@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <Back />
-    <div class="title">充值</div>
-    <div class="tips">请扫描或复制您的USDT地址进行充值</div>
+    <div class="title">{{ $t('recharge.title') }}</div>
+    <div class="tips">{{ $t('recharge.tips') }}</div>
     <div class="address-container">
       <div class="tabs">
         <div class="tab-item" @click="changeTab('BSC')">
@@ -15,7 +15,7 @@
       <van-divider />
       <div class="address-content">
         <div class="address-title">
-          <div class="address-title-text">接收地址</div>
+          <div class="address-title-text">{{ $t('recharge.receiveAddress') }}</div>
           <div class="address-title-copy">
             <img
               v-if="isSupported"

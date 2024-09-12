@@ -127,5 +127,10 @@
     "flashExchange": "Exchange",
     "flashExchangeRecord": "Exchange Record",
     "exchangeRate": "Exchange Rate"
+  },
+  "recharge": {
+    "title": "Recharge",
+    "tips": "Please scan or copy your USDT address to recharge",
+    "receiveAddress": "Receive Address"
   }
 }
