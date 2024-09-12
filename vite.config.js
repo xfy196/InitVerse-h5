@@ -43,13 +43,13 @@ export default defineConfig(({ mode }) => {
             return path.replace(/\/tsanghiApi/, "");
           },
         },
-        "/api": {
-          target: env.VITE_BASE_URL,
-          changeOrigin: true,
-          rewrite: (path) => {
-            return path.replace(/\/api/, "");
-          },
-        },
+        // "/api": {
+        //   target: env.VITE_BASE_URL,
+        //   changeOrigin: true,
+        //   rewrite: (path) => {
+        //     return path.replace(/\/api/, "");
+        //   },
+        // },
       },
     },
   };
