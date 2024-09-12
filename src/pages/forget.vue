@@ -63,8 +63,8 @@
           >
             <template #right-icon>
               <van-icon
-                :name="passwordVisible ? 'eye-o' : 'closed-eye'"
-                @click="passwordVisible = !passwordVisible"
+                :name="confirmPasswordVisible ? 'eye-o' : 'closed-eye'"
+                @click="confirmPasswordVisible = !confirmPasswordVisible"
               />
             </template>
           </c-input>
@@ -95,6 +95,7 @@
   import Head from "@/layout/head.vue";
   import { ref } from "vue";
   const passwordVisible = ref(true);
+  const confirmPasswordVisible = ref(true);
   const username = ref("");
   const password = ref("");
   const confirmPassword = ref("");
