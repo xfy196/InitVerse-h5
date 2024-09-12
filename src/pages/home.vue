@@ -64,7 +64,11 @@
           <div class="ini">--INI</div>
         </div>
         <div class="rental-power-btn">
-          <div size="large" class="button">{{ $t("home.expectBtn") }}</div>
+          <CButton
+            :disabled="!fee"
+            @click="rentalPower"
+            >{{ $t("home.expectBtn") }}</CButton
+          >
         </div>
       </div>
     </div>
@@ -129,7 +133,6 @@ const toRecharge = () => {
   }
   .rental-container {
     width: 690px;
-    height: 686px;
     background: linear-gradient(223deg, #353342 0%, #383b52 100%);
     border-radius: 20px 20px 20px 20px;
     margin: 0 auto;

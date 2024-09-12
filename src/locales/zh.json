@@ -103,5 +103,8 @@
     "getPower": "获得算力",
     "getINI": "获得INI",
     "value": "价值"
+  },
+  "transaction": {
+    
   }
 }

@@ -67,6 +67,13 @@ const routes = [
     },
   },
   {
+    path: "/exchange-records",
+    component: () => import("./pages/exchange-records.vue"),
+    meta: {
+      layout: BaseLayout,
+    },
+  },
+  {
     path: "/recharge",
     component: () => import("./pages/recharge.vue"),
     meta: {

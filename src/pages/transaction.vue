@@ -1,37 +1,206 @@
 <template>
-  <div>
+  <div class="container">
+    <div class="header">
+      <div class="top">
+        <div class="left van-ellipsis">8888.8</div>
+        <div class="right">INI期货价格走势</div>
+      </div>
+      <div class="bottom">
+        <div class="left">
+          <div>
+            <img src="@/assets/images/icons/ini.svg" alt="" />
+            <span>/</span>
+            <img src="@/assets/images/icons/power.svg" alt="" />
+          </div>
+          <div class="proportion">8888&nbsp;(+1.2%)</div>
+        </div>
+        <div class="right">仅代表INI期货行情</div>
+      </div>
+    </div>
     <div
       @touchmove.stop.prevent="() => {}"
       @touchstart.stop.prevent="() => {}"
       class="chart"
       ref="chartRef"
     ></div>
-    <div style="height: 300px"></div>
+    <div class="currency-box">
+      <div class="head">
+        <van-row>
+          <van-col span="8">
+            <div class="cell">代币名称</div>
+          </van-col>
+          <van-col span="8">
+            <div style="justify-content: center" class="cell">最新价格</div>
+          </van-col>
+          <van-col span="8">
+            <div style="justify-content: flex-end" class="cell">24H涨跌幅</div>
+          </van-col>
+        </van-row>
+        <div class="currency-list">
+          <van-row v-for="item in currencyList" :key="item.id">
+            <van-col span="8">
+              <div class="value van-ellipsis">
+                <img
+                  class="icon"
+                  v-if="item.type === 'BTC'"
+                  src="@/assets/images/icons/power.svg"
+                  alt=""
+                />
+                <img
+                  class="icon"
+                  v-else-if="item.type === 'ETH'"
+                  src="@/assets/images/icons/eth.svg"
+                  alt=""
+                />
+                <img
+                  class="icon"
+                  v-else-if="item.type === 'INI'"
+                  src="@/assets/images/icons/ini.svg"
+                  alt=""
+                />
+                <span>
+                  {{ item.name }}
+                </span>
+                <span style="color: #aeaec3">/USDT</span>
+              </div>
+            </van-col>
+            <van-col span="8">
+              <div style="justify-content: center" class="value van-ellipsis">
+                {{ item.price }}
+              </div>
+            </van-col>
+            <van-col span="8">
+              <div
+                :style="{
+                  color: item.chg > 0 ? '#ED5C42' : '#00C377',
+                  'justify-content': 'flex-end',
+                }"
+                class="value van-ellipsis"
+              >
+                {{ item.chg }}%
+              </div>
+            </van-col>
+          </van-row>
+        </div>
+      </div>
+    </div>
+    <div class="flash-exchange-box">
+      <div class="head">
+        <div class="title">闪兑</div>
+        <div @click.stop="toExchangeRecords" class="recod">
+          <div>闪兑记录</div>
+          <img src="@/assets/images/icons/record.svg" alt="" />
+        </div>
+      </div>
+      <div class="content">
+        <div class="title">今日汇率</div>
+        <div class="translate-box">
+          <div class="img-box">
+            <img src="@/assets/images/icons/ini.svg" alt="" />
+            <img src="@/assets/images/icons/translate.svg" alt="" />
+            <img src="@/assets/images/icons/power.svg" alt="" />
+          </div>
+          <div class="translate-content">
+            <div class="top">
+              <div>From</div>
+              <div>Receive</div>
+            </div>
+            <div class="bottom">
+              <div>&nbsp;INI</div>
+              <div>&nbsp;USDT</div>
+            </div>
+          </div>
+          <!-- 可用余额 -->
+          <div class="balance">
+            <div>可用余额</div>
+            <div class="value">8888.88 INI</div>
+          </div>
+        </div>
+        <van-divider class="divider" />
+        <!-- 兑换的 INI 数量 -->
+        <div class="ini-input">
+          <van-field
+            class="c-input"
+            v-model="iniNum"
+            type="digit"
+            label=""
+            :border="false"
+            clearable
+            center
+            placeholder="请输入您要兑换的 INI 数量"
+          >
+            <template #button>
+              <div class="max">Max</div>
+            </template>
+          </van-field>
+          <!-- 单位 -->
+          <div class="unit">INI</div>
+        </div>
+        <!-- 预计获得 -->
+        <div class="expected">
+          <div class="title">预计获得</div>
+          <div class="value">--&nbsp;USDT</div>
+        </div>
+        <div class="exchange-btn">
+          <CButton :disabled="!iniNum">兑换</CButton>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
 import Hammer from "hammerjs";
-import { onBeforeMount, onMounted, useTemplateRef } from "vue";
+import { onBeforeMount, onMounted, useTemplateRef, ref } from "vue";
+import CButton from "@/components/c-button.vue";
+import {useRouter} from "vue-router"
 import * as echarts from "echarts";
 import { getBalance } from "@/api/etc";
+const router = useRouter()
 const chartRef = useTemplateRef("chartRef");
+const iniNum = ref("");
+const currencyList = ref([
+  {
+    id: "1",
+    type: "BTC",
+    name: "BTC",
+    price: 10000,
+    chg: 1.11,
+  },
+  {
+    id: "2",
+    type: "ETH",
+    name: "ETH",
+    price: 10000,
+    chg: -1.11,
+  },
+  {
+    id: "3",
+    type: "INI",
+    name: "INI",
+    price: 10000,
+    chg: 1.11,
+  },
+]);
+
 let chart = null;
 
 onBeforeMount(async () => {
   // const res = await getBalance({ticker: 'BTC/USD', exchange_code: 'Binance'})
-  const res = await getBalance(
-    {
-      ticker: 'BTC/USD',
-    }
-  );
+  const res = await getBalance({
+    ticker: "BTC/USD",
+  });
   console.log(res);
 });
+const toExchangeRecords = () => {
+  router.push("/exchange-records")
+}
 
-onMounted(() => {
+const initChart = () => {
   chart = echarts.init(chartRef.value);
   const option = {
     xAxis: {
+      type: "category",
       data: [
         "2017-10-21",
         "2017-10-22",
@@ -42,14 +211,26 @@ onMounted(() => {
         "2017-10-27",
         "2017-10-28",
         "2017-10-29",
+        "2017-11-01",
+        "2017-11-02",
       ],
     },
-    dataZoom: [
-      {
-        borderColor: "transparent", //组件边框颜色
-      },
-    ],
-    yAxis: {},
+    grid: {
+      containLabel: true,
+      left: 0,
+      right: 0,
+      top: 10,
+      bottom: 0,
+    },
+
+    // dataZoom: [
+    //   {
+    //     borderColor: "transparent", //组件边框颜色
+    //   },
+    // ],
+    yAxis: {
+      splitLine: { show: false },
+    },
     tooltip: {
       show: true,
       trigger: "none",
@@ -60,7 +241,7 @@ onMounted(() => {
     },
     series: [
       {
-        type: "candlestick",
+        type: "k",
         data: [
           [14, 17, 21, 28],
           [14, 17, 21, 28],
@@ -71,11 +252,17 @@ onMounted(() => {
           [38, 15, 5, 42],
           [14, 17, 21, 28],
           [14, 17, 21, 28],
+          [14, 17, 21, 28],
+          [14, 17, 21, 28],
         ],
       },
     ],
   };
   chart.setOption(option);
+};
+
+onMounted(() => {
+  initChart();
   onTouch();
   window.addEventListener("resize", () => {
     chart && chart.resize();
@@ -102,8 +289,259 @@ const onTouch = () => {
 };
 </script>
 <style lang="scss" scoped>
-.chart {
-  width: 100%;
-  height: 800px;
+.divider{
+  border-color: #27272b;
+}
+.container {
+  padding: 0 30px;
+  .header {
+    margin-top: 30px;
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .left {
+        font-weight: 600;
+        font-size: 40px;
+        color: #ffffff;
+        line-height: 47px;
+      }
+      .right {
+        font-weight: 500;
+        font-size: 32px;
+        color: #ffffff;
+        line-height: 38px;
+      }
+    }
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      .left {
+        display: flex;
+        align-items: center;
+        div {
+          display: flex;
+          align-items: center;
+          img {
+            width: 28px;
+            height: 28px;
+          }
+          span {
+            margin: 0 8px;
+            font-weight: 400;
+            font-size: 24px;
+            color: #ffffff;
+            line-height: 28px;
+          }
+        }
+        .proportion {
+          margin-left: 8px;
+          font-weight: 400;
+          font-size: 24px;
+          color: #00c377;
+          line-height: 28px;
+        }
+      }
+      .right {
+        font-weight: 400;
+        font-size: 24px;
+        color: #aeaec3;
+        line-height: 28px;
+      }
+    }
+  }
+  .chart {
+    width: 100%;
+    height: 600px;
+    margin-top: 15px;
+  }
+  .currency-box {
+    margin-top: 30px;
+
+    .head {
+      .cell {
+        font-weight: 400;
+        font-size: 28px;
+        color: #aeaec3;
+        line-height: 33px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+      }
+    }
+    .currency-list {
+      .value {
+        display: flex;
+        align-items: center;
+        font-weight: 400;
+        font-size: 28px;
+        color: #ffffff;
+        line-height: 33px;
+        height: 60px;
+        .icon {
+          width: 32px;
+          height: 32px;
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+  .flash-exchange-box {
+    padding: 30px;
+    width: 690px;
+    margin-top: 45px;
+    background: linear-gradient(223deg, #353342 0%, #383b52 100%);
+    border-radius: 20px 20px 20px 20px;
+    .head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .title {
+        font-weight: 600;
+        font-size: 40px;
+        color: #ffffff;
+        line-height: 47px;
+      }
+      .recod {
+        display: flex;
+        div {
+          font-weight: 400;
+          font-size: 28px;
+          color: #aeaec3;
+          line-height: 33px;
+        }
+        img {
+          width: 36px;
+          height: 36px;
+          margin-left: 12px;
+        }
+      }
+    }
+    .content {
+      margin-top: 30px;
+
+      .title {
+        font-weight: 400;
+        font-size: 24px;
+        color: #aeaec3;
+        line-height: 28px;
+      }
+      .translate-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin: 0 auto;
+        .img-box {
+          display: flex;
+          align-items: center;
+          img {
+            width: 68px;
+            height: 68px;
+            &:nth-child(2) {
+              width: 104px;
+              height: 28px;
+              margin: 0 28px;
+            }
+          }
+          img {
+          }
+        }
+        .translate-content {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          justify-content: center;
+          .top {
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 6px;
+            min-width: 296px;
+
+            div {
+              min-width: 68px;
+              font-weight: 400;
+              font-size: 24px;
+              color: #aeaec3;
+              line-height: 28px;
+            }
+          }
+          .bottom {
+            display: flex;
+            margin-top: 6px;
+            justify-content: space-between;
+            min-width: 296px;
+            div {
+              min-width: 68px;
+              text-align: center;
+              font-weight: 400;
+              font-size: 26px;
+              color: #ffffff;
+              line-height: 30px;
+              margin-left: 10px;
+            }
+          }
+        }
+      }
+      .balance {
+        margin-top: 20px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: 400;
+        font-size: 28px;
+        color: #ffffff;
+        line-height: 33px;
+      }
+      .ini-input {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .c-input {
+          .max {
+            font-weight: 400;
+            font-size: 24px;
+            color: #ffffff;
+            line-height: 28px;
+          }
+        }
+        .unit {
+          font-weight: 400;
+          font-size: 28px;
+          color: #ffffff;
+          line-height: 33px;
+          margin-left: 20px;
+        }
+      }
+      .expected {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        .title {
+          font-weight: 400;
+          font-size: 24px;
+          color: #aeaec3;
+          line-height: 28px;
+        }
+        .value {
+          font-weight: 400;
+          font-size: 24px;
+          color: #aeaec3;
+          line-height: 28px;
+        }
+      }
+      .exchange-btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px
+      }
+    }
+  }
 }
 </style>

@@ -33,7 +33,7 @@
             <div class="cell-right van-ellipsis">
               <div class="por">
                 <div class="por-to-usdt">({{ $t('retanlRecords.value') }}: {{ item.por }} USDT)</div>
-                <div class="">{{ item.por }}&nbsp;&nbsp;POR</div>
+                <div class="">{{ item.por }} POR</div>
               </div>
             </div>
           </div>
@@ -41,7 +41,7 @@
             <div class="cell-title">{{ $t('retanlRecords.getINI') }}</div>
             <div class="cell-right">
               <div class="ini-to-usdt van-ellipsis">
-                {{ item.ini }}&nbsp;&nbsp;INI
+                {{ item.ini }} INI
               </div>
               <div class="ini-to-usdt-icon">
                 <img class="icon" src="@/assets/images/icons/ini.svg" alt="" />
