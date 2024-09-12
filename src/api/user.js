@@ -4,7 +4,7 @@ import { request } from "../utils/request";
  */
 export const login = (data) => {
   return request({
-    url: "/api/h5/login/",
+    url: "/api/h5/login",
     method: "POST",
     data,
   });
@@ -14,7 +14,7 @@ export const login = (data) => {
  */
 export const register = (data) => {
   return request({
-    url: "/api/h5/register/",
+    url: "/api/h5/register",
     method: "POST",
     data,
   });
@@ -25,7 +25,7 @@ export const register = (data) => {
  */
 export const getUserInfo = () => {
   return request({
-    url: "/api/h5/user/",
+    url: "/api/h5/user",
     method: "GET",
   });
 };
