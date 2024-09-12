@@ -84,13 +84,14 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import x from "@/assets/images/icons/x.svg";
 import tg from "@/assets/images/icons/tg.svg";
 import discord from "@/assets/images/icons/discord.svg";
 import email from "@/assets/images/icons/email.svg";
 import { useRouter } from "vue-router";
 import { useClipboard } from "@vueuse/core";
+import {getUserInfo} from "../api/user"
 const fee = ref();
 const router = useRouter();
 const links = ref([
@@ -117,6 +118,14 @@ const toRentalRecords = () => {
 const toRecharge = () => {
   router.push("/recharge");
 };
+onMounted(async () => {
+  try {
+    await getUserInfo()
+  } catch (error) {
+    console.log("🚀 ~ onMounted ~ error:", error)
+    
+  }
+})
 </script>
 <style lang="scss" scoped>
 .home-container {

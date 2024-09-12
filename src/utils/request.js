@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useUserStore } from "../stores/user";
+import router from "../router"
 const CancelToken = axios.CancelToken;
 // const baseURL = "/";
 const request = axios.create({
@@ -38,8 +39,15 @@ request.interceptors.request.use((config) => {
 */
 request.interceptors.response.use(
   (response) => {
-    if (response.status == 200 || response.data.code == 200) {
+    if (response.status == 200 && response.data.code == 200) {
       return Promise.resolve(response.data);
+    } else if (response.data.code == 401) {
+      // 未登录 或者登录失效
+      showFailToast({
+        message: response.data.msg,
+      });
+      router.push("/login");
+      return Promise.reject(response.data);
     } else {
       showFailToast({
         message: response.data.msg,

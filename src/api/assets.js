@@ -6,7 +6,7 @@ import { request } from "../utils/request";
  */
 export const getAssets = () => {
   return request({
-    url: "/h5/user/assert/list",
+    url: "/api/h5/user/assert/list",
     method: "GET",
   });
 };

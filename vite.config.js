@@ -1,46 +1,56 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
-import AutoImport from 'unplugin-auto-import/vite';
-import Components from 'unplugin-vue-components/vite';
-import { VantResolver } from '@vant/auto-import-resolver';
-import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite';
-import path from 'path';
+import AutoImport from "unplugin-auto-import/vite";
+import Components from "unplugin-vue-components/vite";
+import { VantResolver } from "@vant/auto-import-resolver";
+import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
+import path from "path";
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
-    vue(),
-    VueI18nPlugin({
-      include: [path.resolve(__dirname, './src/locales/**')]
-    }),
-    AutoImport({
-      resolvers: [VantResolver()],
-    }),
-    Components({
-      resolvers: [VantResolver()],
-    }),
-  ],
-  
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src')
-    }
-  },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@import "@/assets/styles/variables.scss";`,
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+  return {
+    plugins: [
+      vue(),
+      VueI18nPlugin({
+        include: [path.resolve(__dirname, "./src/locales/**")],
+      }),
+      AutoImport({
+        resolvers: [VantResolver()],
+      }),
+      Components({
+        resolvers: [VantResolver()],
+      }),
+    ],
+
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
       },
     },
-  },
-  server: {
-    proxy: {
-      "/tsanghiApi": {
-        target: 'https://tsanghi.com',
-        changeOrigin: true,
-        rewrite: (path) => {
-            return path.replace(/\/tsanghiApi/, '')
-        }
-    }
-    }
-  }
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@import "@/assets/styles/variables.scss";`,
+        },
+      },
+    },
+    server: {
+      proxy: {
+        "/tsanghiApi": {
+          target: env.VITE_TS_API,
+          changeOrigin: true,
+          rewrite: (path) => {
+            return path.replace(/\/tsanghiApi/, "");
+          },
+        },
+        "/api": {
+          target: env.VITE_BASE_URL,
+          changeOrigin: true,
+          rewrite: (path) => {
+            return path.replace(/\/api/, "");
+          },
+        },
+      },
+    },
+  };
 });
