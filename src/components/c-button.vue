@@ -1,8 +1,8 @@
 <template>
   <van-button
     :class="classNames"
-    @click="handleClick"
     :loading="loading"
+    :disabled="disabled"
     class="c-button"
     type="primary"
   >
@@ -22,16 +22,11 @@ const { disabled } = defineProps({
     default: false,
   },
 });
-const emit = defineEmits(["click"]);
 const classNames = computed(() => {
   return {
     active: disabled,
   };
 });
-const handleClick = () => {
-  if (disabled) return;
-  emit("click");
-};
 </script>
 <style lang="scss" scoped>
 .c-button {

@@ -1,4 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
+import { useUserStore } from "./stores/user";
 import HomeView from "./pages/home.vue";
 import Layout from "./layout/index.vue";
 import BaseLayout from "./layout/base-layout.vue";
@@ -92,5 +93,17 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+router.beforeEach((to, _from, next) => {
+  const userStore = useUserStore();
+  if (userStore.token) {
+    next();
+  } else {
+    if (to.path === "/login") {
+      next();
+    }else {
+      next("/login");
+    }
+  }
 });
 export default router;

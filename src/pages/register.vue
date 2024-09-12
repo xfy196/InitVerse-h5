@@ -9,7 +9,7 @@
           :border="false"
           clearable
           :placeholder="$t('register.placeholderUsername')"
-          v-model:value="username"
+          v-model:value.trim="username"
         />
         <c-input
           :label="$t('register.password')"
@@ -17,7 +17,7 @@
           :border="false"
           clearable
           :placeholder="$t('register.placeholderPassword')"
-          v-model:value="password"
+          v-model:value.trim="password"
         >
           <template #right-icon>
             <van-icon
@@ -32,7 +32,7 @@
           :type="passwordVisible ? 'text' : 'password'"
           :border="false"
           :placeholder="$t('register.confirmPassword')"
-          v-model:value="confirmPassword"
+          v-model:value.trim="confirmPassword"
         >
           <template #right-icon>
             <van-icon
@@ -46,24 +46,30 @@
           clearable
           :border="false"
           :placeholder="$t('register.placeholderInviteCode')"
-          v-model:value="inviteCode"
+          v-model:value.trim="shareCode"
         />
         <c-input
           :label="$t('register.email')"
           clearable
           :border="false"
           :placeholder="$t('register.email')"
-          v-model:value="email"
+          v-model:value.trim="email"
         />
         <c-input
           :label="$t('register.code')"
           clearable
           :border="false"
+          :maxlength="6"
           :placeholder="$t('register.placeholderCode')"
-          v-model:value="code"
+          v-model:value.trim="emailCode"
         >
           <template #button>
-            <div v-if="!countDownTime" class="get-code-btn">
+            <div
+              v-if="!countDownTime"
+              :class="{ disabled: !isEmail(email) }"
+              @click="handleGetCode"
+              class="get-code-btn"
+            >
               {{ $t("register.getCode") }}
             </div>
             <div v-else class="count-down-text">
@@ -76,17 +82,7 @@
 
         <div class="submit-btn-container">
           <!-- <van-button class="submit-btn" round type="primary"> 提交 </van-button> -->
-          <CButton
-            @click="handleSubmit"
-            :disabled="
-              username.length === 0 ||
-              password.length === 0 ||
-              confirmPassword.length === 0 ||
-              inviteCode.length === 0 ||
-              email.length === 0 ||
-              code.length === 0
-            "
-          >
+          <CButton @click="handleSubmit" :disabled="!validate">
             {{ $t("register.submit") }}
           </CButton>
         </div>
@@ -97,19 +93,35 @@
 
 <script setup>
 import Head from "@/layout/head.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { isEmail } from "@/utils/validate";
-
+import { useStorage } from "@vueuse/core";
+import { sendEmailGetCode, register } from "@/api/user";
+import { showSuccessToast } from "vant";
+import { useRouter } from "vue-router";
+const router = useRouter();
 const passwordVisible = ref(true);
 const username = ref("");
 const password = ref("");
 const confirmPassword = ref("");
-const inviteCode = ref("");
+const shareCode = useStorage("inviteCode", '');
 const email = ref("");
-const code = ref("");
-const countDownTime = ref(60 * 1000);
+const emailCode = ref("");
+const countDownTime = ref(0);
 const loading = ref(false);
-const handleSubmit = () => {
+
+const validate = computed(() => {
+  return (
+    username.value.length > 0 &&
+    password.value.length > 0 &&
+    confirmPassword.value.length > 0 &&
+    shareCode.value.length > 0 &&
+    email.value.length > 0 &&
+    emailCode.value.length > 0 &&
+    password.value === confirmPassword.value
+  );
+});
+const handleSubmit = async () => {
   if (username.value.length === 0) {
     showToast("请输入用户名");
     return;
@@ -126,7 +138,7 @@ const handleSubmit = () => {
     showToast("两次密码不一致");
     return;
   }
-  if (inviteCode.value.length === 0) {
+  if (shareCode.value.length === 0) {
     showToast("请输入邀请码");
     return;
   }
@@ -138,19 +150,47 @@ const handleSubmit = () => {
     showToast("邮箱格式不正确");
     return;
   }
-  if (code.value.length === 0) {
+  if (emailCode.value.length === 0) {
     showToast("请输入验证码");
     return;
   }
   loading.value = true;
+  try {
+    await register({
+      username: username.value,
+      password: password.value,
+      confirmPassword: confirmPassword.value,
+      shareCode: shareCode.value,
+      email: email.value,
+      emailCode: emailCode.value,
+    });
+    showSuccessToast("注册成功");
+    router.push("/");
+  } catch (error) {
+    console.log("🚀 ~ handleSubmit ~ error:", error);
+  } finally {
+    loading.value = false;
+  }
   console.log(
     username.value,
     password.value,
     confirmPassword.value,
-    inviteCode.value,
+    shareCode.value,
     email.value,
-    code.value
+    emailCode.value
   );
+};
+const handleGetCode = async () => {
+  try {
+    const res = await sendEmailGetCode({
+      type: "REGISTERED",
+      email: email.value,
+    });
+    showSuccessToast(res.msg);
+    countDownTime.value = 3 * 60 * 1000;
+  } catch (error) {
+    console.log(error);
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -205,6 +245,9 @@ const handleSubmit = () => {
       background: linear-gradient(90deg, #9160ff 0%, #5e75ff 100%);
       border-radius: 20px 20px 20px 20px;
       padding: 8px 20px;
+      &.disabled {
+        opacity: 0.5;
+      }
     }
     .count-down-text {
       font-size: 26px;

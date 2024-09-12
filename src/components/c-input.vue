@@ -12,6 +12,7 @@
       @focus="handleFocus"
       @blur="handleBlur"
       :placeholder="placeholder"
+      :maxlength="maxlength"
     >
       <template #right-icon>
         <slot name="right-icon"></slot>
@@ -29,6 +30,10 @@ const props = defineProps({
   label: {
     type: String,
     default: "",
+  },
+  maxlength: {
+    type: Number,
+    default: Infinity,
   },
   value: {
     type: String,

@@ -1,8 +1,9 @@
 import { defineStore } from "pinia";
+import router from "../router"
 export const useUserStore = defineStore("user", {
   state: () => ({
     userInfo: {},
-    token: "dad",
+    token: "",
   }),
   persist: {
     storage: localStorage,
@@ -15,6 +16,7 @@ export const useUserStore = defineStore("user", {
     logout() {
       this.token = "";
       this.userInfo = {};
+      router.push("/login");
     },
     setUserInfo(userInfo) {
       this.userInfo = userInfo;

@@ -1,10 +1,14 @@
 import axios from "axios";
 import { useUserStore } from "../stores/user";
 import router from "../router"
+import { showToast } from "vant";
 const CancelToken = axios.CancelToken;
 // const baseURL = "/";
 const request = axios.create({
   // baseURL,
+  headers: {
+    "Content-Type": "application/json",
+  }
 });
 const pending = new Map();
 const gKey = (config) => {
@@ -43,7 +47,7 @@ request.interceptors.response.use(
       return Promise.resolve(response.data);
     } else if (response.data.code == 401) {
       // 未登录 或者登录失效
-      showFailToast({
+      showToast({
         message: response.data.msg,
       });
       router.push("/login");

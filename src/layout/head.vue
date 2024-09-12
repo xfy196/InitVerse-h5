@@ -32,7 +32,9 @@ import { useI18n } from "vue-i18n";
 import { useStorage } from "@vueuse/core";
 import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";
+import { useUserStore } from "../stores/user";
 const { locale } = useI18n();
+const userStore = useUserStore()
 const route = useRoute();
 const router = useRouter();
 const showLangSelect = ref(false);
@@ -49,6 +51,7 @@ const onSelectLang = (item) => {
 };
 const logout = () => {
   // TODO 退出登录
+  userStore.logout()
 };
 const changeLang = () => {
   showLangSelect.value = true;

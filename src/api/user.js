@@ -1,42 +1,45 @@
-import { request } from "../utils/request"
+import { request } from "../utils/request";
 /**
  * 登录
  */
 export const login = (data) => {
-    return request({
-        url: "/api/h5/login/",
-        method: "POST",
-        data,
-    })
-}
+  return request({
+    url: "/api/h5/login/",
+    method: "POST",
+    data,
+  });
+};
 /**
  * 注册
  */
 export const register = (data) => {
-    return request({
-        url: "/api/h5/register/",
-        method: "POST",
-        data,
-    })
-}
+  return request({
+    url: "/api/h5/register/",
+    method: "POST",
+    data,
+  });
+};
 /**
  * 获取用户信息
- * @returns 
+ * @returns
  */
 export const getUserInfo = () => {
-    return request({
-        url: "/api/h5/user/",
-        method: "GET",
-    })
-}
+  return request({
+    url: "/api/h5/user/",
+    method: "GET",
+  });
+};
 /**
  * 发送邮箱获取验证码
- * @param {string} type 
- * @returns 
+ * @param {string} type
+ * @returns
  */
-export const sendEmail = (type) => {
-    return request({
-        url: `/api/h5/email/${type}/send`,
-        method: "POST",
-    })
-}
+export const sendEmailGetCode = ({ type, email }) => {
+  return request({
+    url: `/api/h5/email/${type}/send`,
+    method: "POST",
+    data: {
+      email,
+    },
+  });
+};

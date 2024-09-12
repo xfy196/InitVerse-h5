@@ -130,7 +130,7 @@
             placeholder="请输入您要兑换的 INI 数量"
           >
             <template #button>
-              <div class="max">Max</div>
+              <div @click.stop="handleMaxNum" class="max">Max</div>
             </template>
           </van-field>
           <!-- 单位 -->
@@ -153,10 +153,10 @@
 import Hammer from "hammerjs";
 import { onBeforeMount, onMounted, useTemplateRef, ref } from "vue";
 import CButton from "@/components/c-button.vue";
-import {useRouter} from "vue-router"
+import { useRouter } from "vue-router";
 import * as echarts from "echarts";
 import { getBalance } from "@/api/etc";
-const router = useRouter()
+const router = useRouter();
 const chartRef = useTemplateRef("chartRef");
 const iniNum = ref("");
 const currencyList = ref([
@@ -193,8 +193,8 @@ onBeforeMount(async () => {
   console.log(res);
 });
 const toExchangeRecords = () => {
-  router.push("/exchange-records")
-}
+  router.push("/exchange-records");
+};
 
 const initChart = () => {
   chart = echarts.init(chartRef.value);
@@ -287,9 +287,12 @@ const onTouch = () => {
     });
   });
 };
+const handleMaxNum = () => {
+  iniNum.value = "8888.88";
+}
 </script>
 <style lang="scss" scoped>
-.divider{
+.divider {
   border-color: #27272b;
 }
 .container {
@@ -535,11 +538,11 @@ const onTouch = () => {
           line-height: 28px;
         }
       }
-      .exchange-btn{
+      .exchange-btn {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 30px
+        margin-top: 30px;
       }
     }
   }

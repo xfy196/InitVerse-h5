@@ -333,6 +333,7 @@ const handleSetTransactionPassword = () => {
     }
   }
   .social-box {
+    margin-top: 30px;
     .cell-item {
       .label {
         flex: auto;
@@ -347,7 +348,7 @@ const handleSetTransactionPassword = () => {
     background: linear-gradient(223deg, #353342 0%, #383b52 100%);
     border-radius: 20px 20px 20px 20px;
     padding: 0 30px;
-    margin-top: 58px;
+    margin-top: 20px;
     .cell-item {
       display: flex;
       align-items: center;

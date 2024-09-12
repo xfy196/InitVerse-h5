@@ -34,7 +34,7 @@
         }}</router-link>
       </div>
       <div class="submit-btn-container">
-        <CButton @click="handleSubmit" :disabled="validate">
+        <CButton @click.stop="handleSubmit" :disabled="!validate">
           {{ $t("login.submit") }}
         </CButton>
       </div>
@@ -46,7 +46,10 @@
 import Head from "@/layout/head.vue";
 import { computed, ref } from "vue";
 import { useUserStore } from "../stores/user";
+import { login } from "@/api/user";
 import { useRouter } from "vue-router";
+import { showSuccessToast } from "vant";
+import {getUserInfo} from "../api/user"
 const passwordVisible = ref(true);
 const username = ref("");
 const password = ref("");
@@ -55,12 +58,12 @@ const router = useRouter();
 console.log(userStore.token);
 
 const validate = computed(() => {
-  return username.value.length === 0 || password.value.length === 0;
+  return username.value.length > 0 || password.value.length > 0;
 });
 const handleForgetPassword = () => {
   router.push("/forget");
 };
-const handleSubmit = () => {
+const handleSubmit = async () => {
   if (username.value.length === 0) {
     showToast("请输入用户名");
     return;
@@ -68,6 +71,19 @@ const handleSubmit = () => {
   if (password.value.length === 0) {
     showToast("请输入密码");
     return;
+  }
+  try {
+    const res = await login({
+      username: username.value,
+      password: password.value,
+    });
+    userStore.setToken(res.token);
+    const userData = await getUserInfo();
+    userStore.setUserInfo(userData.userInfo);
+    showSuccessToast("登录成功");
+    router.push("/");
+  } catch (error) {
+    console.log("🚀 ~ handleSubmit ~ error:", error);
   }
 };
 </script>
