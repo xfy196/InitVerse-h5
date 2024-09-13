@@ -124,6 +124,7 @@
             v-model="iniNum"
             type="digit"
             label=""
+            autocomplete="off"
             :border="false"
             clearable
             center
