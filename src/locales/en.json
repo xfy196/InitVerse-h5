@@ -150,6 +150,7 @@
   "assets": {
     "title": "My Order",
     "computingPowerOrder": "Computing Power Order",
+    "nodeOrder": "Node Order",
     "orderNumber": "Order Number",
     "startTime": "Start Time",
     "releaseRate": "Release Rate",
@@ -186,10 +187,9 @@
     "iniLock": "INI Lock"
   },
   "orderList": {
-    "usdtStatic": "USDT Static",
-    "usdtDynamic": "USDT Dynamic",
-    "iniUnlock": "INI Unlock",
-    "iniLock": "INI Lock",
+    "computingPowerOrder": "Computing Power Order",
+    "iniOrder": "INI Order",
+    "nodeOrder": "Node Order",
     "orderNumber": "Order Number",
     "startTime": "Start Time",
     "releaseRate": "Release Rate",

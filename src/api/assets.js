@@ -21,3 +21,23 @@ export const getUserOwnAssets = (userId) => {
     method: "GET",
   });
 };
+/**
+ * 获取用户已生效的节点列表
+ * @returns 
+ */
+export const getIneffectNodeOrderList = () => {
+  return request({
+    url: "/h5/user/node/inEffect",
+    method: "GET",
+  });
+}
+/**
+ * 获取用户所有节点列表
+ * @returns 
+ */
+export const getAllNodeOrderList = () => {
+  return request({
+    url: "/h5/user/node/list",
+    method: "GET",
+  });
+}

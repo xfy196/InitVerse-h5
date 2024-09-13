@@ -171,7 +171,7 @@ const handleSubmit = async () => {
       emailCode: emailCode.value,
     });
     showSuccessToast(t("register.registerSuccess"));
-    router.push("/");
+    router.push("/login");
   } catch (error) {
     console.log("🚀 ~ handleSubmit ~ error:", error);
   } finally {

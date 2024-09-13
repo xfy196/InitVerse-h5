@@ -205,40 +205,13 @@ const toExchangeRecords = () => {
 
 const initChart = () => {
   chart = echarts.init(chartRef.value);
+ 
   const option = {
-    xAxis: {
-      type: "category",
-      data: [
-        "2017-10-21",
-        "2017-10-22",
-        "2017-10-23",
-        "2017-10-24",
-        "2017-10-25",
-        "2017-10-26",
-        "2017-10-27",
-        "2017-10-28",
-        "2017-10-29",
-        "2017-11-01",
-        "2017-11-02",
-      ],
-    },
-    grid: {
-      containLabel: true,
-      left: 0,
-      right: 0,
-      top: 10,
-      bottom: 0,
-    },
-
-    // dataZoom: [
-    //   {
-    //     borderColor: "transparent", //组件边框颜色
-    //   },
-    // ],
-    yAxis: {
-      splitLine: { show: false },
-    },
-    tooltip: {
+  xAxis: {
+    type: 'category',
+    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  },
+      tooltip: {
       show: true,
       trigger: "none",
       axisPointer: {
@@ -246,25 +219,25 @@ const initChart = () => {
         show: false,
       },
     },
-    series: [
-      {
-        type: "k",
-        data: [
-          [14, 17, 21, 28],
-          [14, 17, 21, 28],
-          [13, 24, 10, 38],
-          [20, 34, 10, 38],
-          [40, 35, 30, 50],
-          [31, 38, 33, 44],
-          [38, 15, 5, 42],
-          [14, 17, 21, 28],
-          [14, 17, 21, 28],
-          [14, 17, 21, 28],
-          [14, 17, 21, 28],
-        ],
-      },
-    ],
-  };
+  grid: {
+      containLabel: true,
+      left: 0,
+      right: 0,
+      top: 10,
+      bottom: 0,
+    },
+  yAxis: {
+    splitLine: { show: false },
+    type: 'value'
+  },
+  series: [
+    {
+      data: [820, 932, 901, 934, 1290, 1330, 1320],
+      type: 'line',
+      smooth: true
+    }
+  ]
+};
   chart.setOption(option);
 };
 

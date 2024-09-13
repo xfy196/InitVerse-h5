@@ -2,8 +2,8 @@
   <div class="container">
     <Back />
     <div class="title">{{ $t("exchangeRecords.title") }}</div>
-    <div class="lists" v-if="lists.length > 0">
-      <template v-for="item in lists" :key="item.id">
+    <div class="lists" v-if="list.length > 0">
+      <template v-for="item in list" :key="item.id">
         <div class="list-item">
           <div class="cell">
             <div class="cell-title">
@@ -63,11 +63,12 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onBeforeMount, onMounted, ref } from "vue";
 import EmptyBg from "@/assets/images/empty.png";
 import { useDateFormat } from "@vueuse/core";
+import { getExchangeRecords } from "@/api/trade";
 import Back from "../components/back.vue";
-const lists = ref([
+const list = ref([
   {
     id: 1,
     date: useDateFormat(new Date(), "YYYY-MM-DD HH:mm:ss").value,
@@ -97,6 +98,15 @@ const lists = ref([
     ini: 200,
   },
 ]);
+onBeforeMount(async () => {
+  try {
+    const res = await getExchangeRecords()
+    list.value = res.data
+  } catch (error) {
+    console.log("🚀 ~ onMounted ~ error:", error)
+    
+  }
+})
 </script>
 <style lang="scss" scoped>
 .container {

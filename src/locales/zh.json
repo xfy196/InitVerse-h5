@@ -154,6 +154,7 @@
   "assets": {
     "title": "我的订单",
     "computingPowerOrder": "算力订单",
+    "nodeOrder": "节点订单",
     "orderNumber": "编号",
     "startTime": "开始时间",
     "releaseRate": "释放率",
@@ -180,7 +181,7 @@
     "recharge": "充值",
     "value": "价值",
     "lock": "锁定",
-    "unlock": "解锁"
+    "unlock": "未锁定"
   },
   "assetsDetail": {
     "title": "资产明细",
@@ -190,10 +191,9 @@
     "iniLock": "INI锁定"
   },
   "orderList": {
-    "usdtStatic": "USDT静态",
-    "usdtDynamic": "USDT动态",
-    "iniUnlock": "INI解锁",
-    "iniLock": "INI锁定",
+    "computingPowerOrder": "算力订单",
+    "iniOrder": "INI订单",
+    "nodeOrder": "节点订单",
     "orderNumber": "编号",
     "startTime": "开始时间",
     "releaseRate": "释放率",

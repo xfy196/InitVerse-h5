@@ -2,45 +2,47 @@
   <div class="container">
     <Back />
     <div class="title">{{ title }}</div>
-    <div class="list">
-      <div class="list-item">
+    <div class="list" v-if="list.length > 0">
+      <div class="list-item" v-for="(item, index) in list" :key="index">
         <div class="cell-box">
           <div class="cell">
             <div class="label">{{ $t("orderList.orderNumber") }}</div>
             <div class="right">
-              <div class="value">1234567890</div>
+              <div class="value">{{ item.nodeOrderNo }}</div>
             </div>
           </div>
           <div class="cell">
             <div class="label">{{ $t("orderList.startTime") }}</div>
             <div class="right">
-              <div class="value">2024/09/01 12:00:00</div>
+              <div class="value">{{ item.startTime }}</div>
             </div>
           </div>
           <div class="cell">
             <div class="label">{{ $t("orderList.releaseRate") }}</div>
             <div class="right">
-              <div class="value">0.7%/D</div>
+              <div class="value">{{ item.releaseRate }}%/D</div>
             </div>
           </div>
           <div class="cell">
             <div class="label">{{ $t("orderList.computingPowerTotal") }}</div>
             <div class="right">
-              <div class="value">1 POR≈200 USDT</div>
+              <div class="value">{{ item.total }} POR≈200 USDT</div>
               <img src="@/assets/images/icons/power.svg" alt="" />
             </div>
           </div>
           <div class="cell">
-            <div class="label">{{ $t("orderList.unreleasedComputingPower") }}</div>
+            <div class="label">
+              {{ $t("orderList.unreleasedComputingPower") }}
+            </div>
             <div class="right">
-              <div class="value">1 POR≈200 USDT</div>
+              <div class="value">{{ item.airDropNum }} POR≈200 USDT</div>
               <img src="@/assets/images/icons/power.svg" alt="" />
             </div>
           </div>
           <div class="cell">
             <div class="label">{{ $t("orderList.endTime") }}</div>
             <div class="right">
-              <div class="value">2024/09/01 12:00:00</div>
+              <div class="value">{{ item.endTime }}</div>
             </div>
           </div>
           <div class="cell">
@@ -52,15 +54,39 @@
         </div>
       </div>
     </div>
+    <van-empty
+    v-else
+      class="empty"
+      :image="EmptyBg"
+      :image-size="['6.32rem', '2.28rem']"
+      :description="$t('retanlRecords.empty')"
+    />
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import Back from "@/components/back.vue";
+import EmptyBg from "@/assets/images/empty.png";
 import { useI18n } from "vue-i18n";
+import { getAllNodeOrderList } from "@/api/assets";
+import { useRoute } from "vue-router";
+const route = useRoute();
+const type = ref(route.query.type ?? "computingPowerOrder");
 const { t } = useI18n();
-const title = ref(t("orderList.usdtStatic"));
+const title = ref(t("orderList.computingPowerOrder"));
+const list = ref([]);
+onBeforeMount(async () => {
+  try {
+    if (type.value == "nodeOrder") {
+      title.value = t("orderList.nodeOrder");
+      const res = await getAllNodeOrderList();
+      list.value = res.data.map(item => item.nodeStatus === 1);
+    }
+  } catch (error) {
+    console.log("🚀 ~ onBeforeMount ~ error:", error);
+  }
+});
 </script>
 <style lang="scss" scoped>
 .container {
@@ -71,6 +97,9 @@ const title = ref(t("orderList.usdtStatic"));
     color: #ffffff;
     line-height: 40px;
     text-align: center;
+  }
+  .empty {
+    margin-top: 120px;
   }
   .list {
     padding: 0 30px;

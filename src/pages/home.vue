@@ -25,7 +25,7 @@
       <div class="head">
         <div class="title">{{ $t("home.rentalTitle") }}</div>
         <div @click="toRentalRecords" class="record">
-          <div  class="txt">{{ $t("home.rentalRecord") }}</div>
+          <div class="txt">{{ $t("home.rentalRecord") }}</div>
           <img src="@/assets/images/icons/record.svg" alt="" />
         </div>
       </div>
@@ -49,6 +49,7 @@
             v-model="fee"
             type="digit"
             label=""
+            autocomplete="off"
             :border="false"
             clearable
             center
@@ -64,11 +65,9 @@
           <div class="ini">--INI</div>
         </div>
         <div class="rental-power-btn">
-          <CButton
-            :disabled="!fee"
-            @click="rentalPower"
-            >{{ $t("home.expectBtn") }}</CButton
-          >
+          <CButton :disabled="!fee" @click="rentalPower">{{
+            $t("home.expectBtn")
+          }}</CButton>
         </div>
       </div>
     </div>
@@ -117,8 +116,7 @@ const toRentalRecords = () => {
 const toRecharge = () => {
   router.push("/recharge");
 };
-onMounted(async () => {
-})
+onMounted(async () => {});
 </script>
 <style lang="scss" scoped>
 .home-container {

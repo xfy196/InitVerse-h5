@@ -50,12 +50,72 @@
               </div>
             </div>
           </div>
-          <div @click.stop="handleToOrderList" class="show-all">
+          <div
+            @click.stop="handleToOrderList('computingPowerOrder')"
+            class="show-all"
+          >
             <div class="text">{{ $t("assets.showAll") }}</div>
             <van-icon name="arrow-down" />
           </div>
         </div>
       </div>
+
+      <!-- 节点订单 -->
+      <div class="list">
+        <div class="list-item" v-for="(item, index) in nodeAssets" :key="index">
+          <div class="head">
+            <div class="title">{{ $t("assets.nodeOrder") }}</div>
+            <img src="@/assets/images/icons/tab1-active.svg" alt="" />
+          </div>
+          <div class="cell-box">
+            <div class="cell">
+              <div class="label">{{ $t("assets.orderNumber") }}</div>
+              <div class="right">
+                <div class="value">{{ item.nodeOrderNo }}</div>
+              </div>
+            </div>
+            <div class="cell">
+              <div class="label">{{ $t("assets.startTime") }}</div>
+              <div class="right">
+                <div class="value">{{ item.startTime }}</div>
+              </div>
+            </div>
+            <div class="cell">
+              <div class="label">{{ $t("assets.releaseRate") }}</div>
+              <div class="right">
+                <div class="value">{{ item.releaseRate }}%/D</div>
+              </div>
+            </div>
+            <div class="cell">
+              <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
+              <div class="right">
+                <div class="value">{{ item.totalPower }} POR≈200 USDT</div>
+                <img src="@/assets/images/icons/power.svg" alt="" />
+              </div>
+            </div>
+            <div class="cell">
+              <div class="label">
+                {{ $t("assets.unreleasedComputingPower") }}
+              </div>
+              <div class="right">
+                <div class="value">{{ item.airDropNum }} POR≈200 USDT</div>
+                <img src="@/assets/images/icons/power.svg" alt="" />
+              </div>
+            </div>
+            <div class="cell">
+              <div class="label">{{ $t("assets.status") }}</div>
+              <div class="right">
+                <div class="status">{{ $t("assets.processing") }}</div>
+              </div>
+            </div>
+          </div>
+          <div @click.stop="handleToOrderList('nodeOrder')" class="show-all">
+            <div class="text">{{ $t("assets.showAll") }}</div>
+            <van-icon name="arrow-down" />
+          </div>
+        </div>
+      </div>
+
       <!-- 各类资产 -->
       <div class="assets-list">
         <div
@@ -76,14 +136,23 @@
               </div>
 
               <div class="right">
-                <div class="value">{{ item.balance }}</div>
+                <div class="value" v-if="![4, 5].includes(item.assetType)">
+                  {{ item.balance }}
+                </div>
+                <div class="value" v-else>
+                  {{ rechargeAssets[3].balance + rechargeAssets[4].balance }}
+                </div>
                 <div class="unit">{{ item.coinName.toUpperCase() }}</div>
               </div>
             </div>
 
             <div class="btns cell-item">
-              <CButton>{{ $t("assets.recharge") }}</CButton>
-              <CButton>{{ $t("assets.withdrawal") }}</CButton>
+              <CButton @click="handleToRecharge">{{
+                $t("assets.recharge")
+              }}</CButton>
+              <CButton @click="handleShowWithdrawal(item.assetType)">{{
+                $t("assets.withdrawal")
+              }}</CButton>
             </div>
             <div class="tips cell-item">
               <div class="tip">
@@ -207,6 +276,7 @@
         </div>
       </div>
     </div>
+    <Withdrawal v-model:show="showWithdrawal" />
   </div>
 </template>
 
@@ -214,28 +284,41 @@
 import { getAssets } from "@/api/assets";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import Withdrawal from "./components/Withdrawal.vue";
+import { getIneffectNodeOrderList } from "@/api/assets";
 const router = useRouter();
 const rechargeAssets = ref([]);
 const computingPowerAssets = ref([]);
-const handleToOrderList = () => {
-  router.push("/order-list");
+const nodeAssets = ref([]);
+const showWithdrawal = ref(false);
+const handleToOrderList = (type) => {
+  router.push({
+    path: "/order-list",
+    query: {
+      type,
+    },
+  });
 };
 onMounted(async () => {
   try {
     const res = await getAssets();
     rechargeAssets.value = res.data.slice(0, 1);
-    console.log("🚀 ~ onMounted ~ rechargeAssets.value:", rechargeAssets.value);
     computingPowerAssets.value = res.data.slice(1, res.data.length);
-    console.log(
-      "🚀 ~ onMounted ~ computingPowerAssets.value:",
-      computingPowerAssets.value
-    );
+    const nodeRes = await getIneffectNodeOrderList();
+    nodeAssets.value = nodeRes.data;
   } catch (error) {
     console.log("🚀 ~ onMounted ~ error:", error);
   }
 });
+const handleToRecharge = () => {
+  router.push("/recharge");
+};
 const handleToAssetsDetail = () => {
   router.push("/assets-detail");
+};
+const handleShowWithdrawal = (type) => {
+  console.log("🚀 ~ handleShowWithdrawal ~ type:", type);
+  showWithdrawal.value = true;
 };
 </script>
 <style lang="scss" scoped>
@@ -251,6 +334,10 @@ const handleToAssetsDetail = () => {
   }
   .content {
     .list {
+      margin-top: 30px;
+      &:first-child {
+        margin-top: 0;
+      }
       .list-item {
         margin: top 30px;
         .head {
@@ -382,7 +469,7 @@ const handleToAssetsDetail = () => {
       }
       .assets-item {
         padding: 30px;
-    
+
         border-radius: 20px 20px 20px 20px;
         .assets-item-head {
           display: flex;
