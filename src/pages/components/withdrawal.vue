@@ -23,7 +23,6 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 defineProps({
   withdrawalType: {
     type: String,
