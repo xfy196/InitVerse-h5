@@ -26,7 +26,7 @@
           <div class="cell">
             <div class="label">{{ $t("orderList.computingPowerTotal") }}</div>
             <div class="right">
-              <div class="value">{{ item.total }} POR≈200 USDT</div>
+              <div class="value">{{ item.total / 100 }} POR≈{{ item.total }} USDT</div>
               <img src="@/assets/images/icons/power.svg" alt="" />
             </div>
           </div>
@@ -35,7 +35,7 @@
               {{ $t("orderList.unreleasedComputingPower") }}
             </div>
             <div class="right">
-              <div class="value">{{ item.airDropNum }} POR≈200 USDT</div>
+              <div class="value">{{ item.notReleased / 100 }} POR≈{{ item.notReleased }} USDT</div>
               <img src="@/assets/images/icons/power.svg" alt="" />
             </div>
           </div>
@@ -81,7 +81,7 @@ onBeforeMount(async () => {
     if (type.value == "nodeOrder") {
       title.value = t("orderList.nodeOrder");
       const res = await getAllNodeOrderList();
-      list.value = res.data.map(item => item.nodeStatus === 1);
+      list.value = res.data.filter((item) => item.nodeStatus !== "1");
     }
   } catch (error) {
     console.log("🚀 ~ onBeforeMount ~ error:", error);

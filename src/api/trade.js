@@ -17,7 +17,7 @@ export const getTradeCoinPrice = () => {
  */
 export const getExchangeRecords = () => {
   return request({
-    url: "/h5/user/node/list",
+    url: "/h5/coin/swap/list",
     method: "GET",
   });
 };

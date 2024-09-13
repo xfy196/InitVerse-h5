@@ -8,111 +8,124 @@
             <div class="title">{{ $t("assets.computingPowerOrder") }}</div>
             <img src="@/assets/images/icons/tab1-active.svg" alt="" />
           </div>
-          <div class="cell-box">
-            <div class="cell">
-              <div class="label">{{ $t("assets.orderNumber") }}</div>
-              <div class="right">
-                <div class="value">1234567890</div>
+          <template v-for="(item, index) in powerAssets" :key="index">
+            <div class="cell-box">
+              <div class="cell">
+                <div class="label">{{ $t("assets.orderNumber") }}</div>
+                <div class="right">
+                  <div class="value">{{ item.nodeOrderNo }}</div>
+                </div>
+              </div>
+              <div class="cell">
+                <div class="label">{{ $t("assets.startTime") }}</div>
+                <div class="right">
+                  <div class="value">{{ item.startTime }}</div>
+                </div>
+              </div>
+              <div class="cell">
+                <div class="label">{{ $t("assets.releaseRate") }}</div>
+                <div class="right">
+                  <div class="value">{{ item.releaseRate }}%/D</div>
+                </div>
+              </div>
+              <div class="cell">
+                <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
+                <div class="right">
+                  <div class="value">
+                    {{ item.total / 100 }} POR≈{{ item.total }} USDT
+                  </div>
+                  <img src="@/assets/images/icons/power.svg" alt="" />
+                </div>
+              </div>
+              <div class="cell">
+                <div class="label">
+                  {{ $t("assets.unreleasedComputingPower") }}
+                </div>
+                <div class="right">
+                  <div class="value">
+                    {{ item.notReleased / 100 }} POR≈{{ item.notReleased }} USDT
+                  </div>
+                  <img src="@/assets/images/icons/power.svg" alt="" />
+                </div>
+              </div>
+              <div class="cell">
+                <div class="label">{{ $t("assets.status") }}</div>
+                <div class="right">
+                  <div class="status">{{ $t("assets.processing") }}</div>
+                </div>
               </div>
             </div>
-            <div class="cell">
-              <div class="label">{{ $t("assets.startTime") }}</div>
-              <div class="right">
-                <div class="value">2024/09/01 12:00:00</div>
-              </div>
+            <div
+              @click.stop="handleToOrderList('computingPowerOrder')"
+              class="show-all"
+            >
+              <div class="text">{{ $t("assets.showAll") }}</div>
+              <van-icon name="arrow-down" />
             </div>
-            <div class="cell">
-              <div class="label">{{ $t("assets.releaseRate") }}</div>
-              <div class="right">
-                <div class="value">0.7%/D</div>
-              </div>
-            </div>
-            <div class="cell">
-              <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
-              <div class="right">
-                <div class="value">1 POR≈200 USDT</div>
-                <img src="@/assets/images/icons/power.svg" alt="" />
-              </div>
-            </div>
-            <div class="cell">
-              <div class="label">
-                {{ $t("assets.unreleasedComputingPower") }}
-              </div>
-              <div class="right">
-                <div class="value">1 POR≈200 USDT</div>
-                <img src="@/assets/images/icons/power.svg" alt="" />
-              </div>
-            </div>
-            <div class="cell">
-              <div class="label">{{ $t("assets.status") }}</div>
-              <div class="right">
-                <div class="status">{{ $t("assets.processing") }}</div>
-              </div>
-            </div>
-          </div>
-          <div
-            @click.stop="handleToOrderList('computingPowerOrder')"
-            class="show-all"
-          >
-            <div class="text">{{ $t("assets.showAll") }}</div>
-            <van-icon name="arrow-down" />
-          </div>
+          </template>
         </div>
       </div>
 
       <!-- 节点订单 -->
       <div class="list">
-        <div class="list-item" v-for="(item, index) in nodeAssets" :key="index">
+        <div class="list-item">
           <div class="head">
             <div class="title">{{ $t("assets.nodeOrder") }}</div>
-            <img src="@/assets/images/icons/tab1-active.svg" alt="" />
+            <img src="@/assets/images/icons/tab2-active.svg" alt="" />
           </div>
-          <div class="cell-box">
-            <div class="cell">
-              <div class="label">{{ $t("assets.orderNumber") }}</div>
-              <div class="right">
-                <div class="value">{{ item.nodeOrderNo }}</div>
+          <template v-for="(item, index) in nodeAssets" :key="index">
+            <div class="cell-box">
+              <div class="cell">
+                <div class="label">{{ $t("assets.orderNumber") }}</div>
+                <div class="right">
+                  <div class="value">{{ item.nodeOrderNo }}</div>
+                </div>
+              </div>
+              <div class="cell">
+                <div class="label">{{ $t("assets.startTime") }}</div>
+                <div class="right">
+                  <div class="value">{{ item.startTime }}</div>
+                </div>
+              </div>
+              <div class="cell">
+                <div class="label">{{ $t("assets.releaseRate") }}</div>
+                <div class="right">
+                  <div class="value">{{ item.releaseRate }}%/D</div>
+                </div>
+              </div>
+              <div class="cell">
+                <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
+                <div class="right">
+                  <div class="value">
+                    {{ item.total / 100 }} POR≈{{ item.total }} USDT
+                  </div>
+                  <img src="@/assets/images/icons/power.svg" alt="" />
+                </div>
+              </div>
+              <div class="cell">
+                <div class="label">
+                  {{ $t("assets.unreleasedComputingPower") }}
+                </div>
+                <div class="right">
+                  <div class="value">
+                    {{ item.notReleased / 100 }} POR≈{{ item.notReleased }} }}
+                    USDT
+                  </div>
+                  <img src="@/assets/images/icons/power.svg" alt="" />
+                </div>
+              </div>
+              <div class="cell">
+                <div class="label">{{ $t("assets.status") }}</div>
+                <div class="right">
+                  <div class="status">{{ $t("assets.processing") }}</div>
+                </div>
               </div>
             </div>
-            <div class="cell">
-              <div class="label">{{ $t("assets.startTime") }}</div>
-              <div class="right">
-                <div class="value">{{ item.startTime }}</div>
-              </div>
+            <div @click.stop="handleToOrderList('nodeOrder')" class="show-all">
+              <div class="text">{{ $t("assets.showAll") }}</div>
+              <van-icon name="arrow-down" />
             </div>
-            <div class="cell">
-              <div class="label">{{ $t("assets.releaseRate") }}</div>
-              <div class="right">
-                <div class="value">{{ item.releaseRate }}%/D</div>
-              </div>
-            </div>
-            <div class="cell">
-              <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
-              <div class="right">
-                <div class="value">{{ item.totalPower }} POR≈200 USDT</div>
-                <img src="@/assets/images/icons/power.svg" alt="" />
-              </div>
-            </div>
-            <div class="cell">
-              <div class="label">
-                {{ $t("assets.unreleasedComputingPower") }}
-              </div>
-              <div class="right">
-                <div class="value">{{ item.airDropNum }} POR≈200 USDT</div>
-                <img src="@/assets/images/icons/power.svg" alt="" />
-              </div>
-            </div>
-            <div class="cell">
-              <div class="label">{{ $t("assets.status") }}</div>
-              <div class="right">
-                <div class="status">{{ $t("assets.processing") }}</div>
-              </div>
-            </div>
-          </div>
-          <div @click.stop="handleToOrderList('nodeOrder')" class="show-all">
-            <div class="text">{{ $t("assets.showAll") }}</div>
-            <van-icon name="arrow-down" />
-          </div>
+          </template>
         </div>
       </div>
 
@@ -289,6 +302,7 @@ import { getIneffectNodeOrderList } from "@/api/assets";
 const router = useRouter();
 const rechargeAssets = ref([]);
 const computingPowerAssets = ref([]);
+const powerAssets = ref([]);
 const nodeAssets = ref([]);
 const showWithdrawal = ref(false);
 const handleToOrderList = (type) => {

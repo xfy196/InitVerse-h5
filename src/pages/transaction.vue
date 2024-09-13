@@ -3,7 +3,7 @@
     <div class="header">
       <div class="top">
         <div class="left van-ellipsis">{{ iniData.price }}</div>
-        <div class="right">{{ $t('transaction.priceTrend') }}</div>
+        <div class="right">{{ $t("transaction.priceTrend") }}</div>
       </div>
       <div class="bottom">
         <div class="left">
@@ -12,9 +12,11 @@
             <span>/</span>
             <img src="@/assets/images/icons/power.svg" alt="" />
           </div>
-          <div class="proportion">{{ iniData.price }}&nbsp;(+{{ iniData.chg }}%)</div>
+          <div class="proportion">
+            {{ iniData.price }}&nbsp;(+{{ iniData.chg }}%)
+          </div>
         </div>
-        <div class="right">{{ $t('transaction.onlyINI') }}</div>
+        <div class="right">{{ $t("transaction.onlyINI") }}</div>
       </div>
     </div>
     <div
@@ -27,13 +29,17 @@
       <div class="head">
         <van-row>
           <van-col span="8">
-            <div class="cell">{{ $t('transaction.name') }}</div>
+            <div class="cell">{{ $t("transaction.name") }}</div>
           </van-col>
           <van-col span="8">
-            <div style="justify-content: center" class="cell">{{ $t('transaction.price') }}</div>
+            <div style="justify-content: center" class="cell">
+              {{ $t("transaction.price") }}
+            </div>
           </van-col>
           <van-col span="8">
-            <div style="justify-content: flex-end" class="cell">{{ $t('transaction.change') }}</div>
+            <div style="justify-content: flex-end" class="cell">
+              {{ $t("transaction.change") }}
+            </div>
           </van-col>
         </van-row>
         <div class="currency-list">
@@ -86,14 +92,14 @@
     </div>
     <div class="flash-exchange-box">
       <div class="head">
-        <div class="title">{{ $t('transaction.flashExchange') }}</div>
+        <div class="title">{{ $t("transaction.flashExchange") }}</div>
         <div @click.stop="toExchangeRecords" class="recod">
-          <div>{{ $t('transaction.flashExchangeRecord') }}</div>
+          <div>{{ $t("transaction.flashExchangeRecord") }}</div>
           <img src="@/assets/images/icons/record.svg" alt="" />
         </div>
       </div>
       <div class="content">
-        <div class="title">{{ $t('transaction.exchangeRate') }}</div>
+        <div class="title">{{ $t("transaction.exchangeRate") }}</div>
         <div class="translate-box">
           <div class="img-box">
             <img src="@/assets/images/icons/ini.svg" alt="" />
@@ -112,7 +118,7 @@
           </div>
           <!-- 可用余额 -->
           <div class="balance">
-            <div>{{ $t('transaction.availableBalance') }}</div>
+            <div>{{ $t("transaction.availableBalance") }}</div>
             <div class="value">8888.88 INI</div>
           </div>
         </div>
@@ -139,11 +145,13 @@
         </div>
         <!-- 预计获得 -->
         <div class="expected">
-          <div class="title">{{ $t('transaction.expected') }}</div>
+          <div class="title">{{ $t("transaction.expected") }}</div>
           <div class="value">--&nbsp;USDT</div>
         </div>
         <div class="exchange-btn">
-          <CButton :disabled="!iniNum">{{ $t('transaction.exchange') }}</CButton>
+          <CButton :disabled="!iniNum">{{
+            $t("transaction.exchange")
+          }}</CButton>
         </div>
       </div>
     </div>
@@ -158,13 +166,14 @@ import { useRouter } from "vue-router";
 import * as echarts from "echarts";
 import { getBalance } from "@/api/etc";
 import { getTradeCoinPrice } from "@/api/trade";
+import { showLoadingToast } from "vant";
 const router = useRouter();
 const chartRef = useTemplateRef("chartRef");
 const iniNum = ref("");
 const iniData = ref({
   price: 0,
   chg: 0,
-})
+});
 const currencyList = ref([
   {
     id: "1",
@@ -189,15 +198,20 @@ onBeforeMount(async () => {
   //   ticker: "BTC/USD",
   // });
   // console.log(res);
+  const loadingToast = showLoadingToast({
+    message: "加载中...",
+    duration: 0,
+  });
   const res = await getTradeCoinPrice();
   currencyList.value.push({
     id: res.data.coinId,
     type: "INI",
     price: res.data.price,
     name: res.data.coin.toUpperCase(),
-  })
-  iniData.value.price = res.data.price
-  iniData.value.chg = res.data.chg
+  });
+  loadingToast.close()
+  iniData.value.price = res.data.price;
+  iniData.value.chg = res.data.chg;
 });
 const toExchangeRecords = () => {
   router.push("/exchange-records");
@@ -205,13 +219,13 @@ const toExchangeRecords = () => {
 
 const initChart = () => {
   chart = echarts.init(chartRef.value);
- 
+
   const option = {
-  xAxis: {
-    type: 'category',
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-  },
-      tooltip: {
+    xAxis: {
+      type: "category",
+      data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    },
+    tooltip: {
       show: true,
       trigger: "none",
       axisPointer: {
@@ -219,29 +233,30 @@ const initChart = () => {
         show: false,
       },
     },
-  grid: {
+    grid: {
       containLabel: true,
       left: 0,
       right: 0,
       top: 10,
       bottom: 0,
     },
-  yAxis: {
-    splitLine: { show: false },
-    type: 'value'
-  },
-  series: [
-    {
-      data: [820, 932, 901, 934, 1290, 1330, 1320],
-      type: 'line',
-      smooth: true
-    }
-  ]
-};
+    yAxis: {
+      splitLine: { show: false },
+      type: "value",
+    },
+    series: [
+      {
+        data: [820, 932, 901, 934, 1290, 1330, 1320],
+        type: "line",
+        smooth: true,
+      },
+    ],
+  };
   chart.setOption(option);
 };
 
 onMounted(() => {
+
   initChart();
   onTouch();
   window.addEventListener("resize", () => {
@@ -269,7 +284,7 @@ const onTouch = () => {
 };
 const handleMaxNum = () => {
   iniNum.value = "8888.88";
-}
+};
 </script>
 <style lang="scss" scoped>
 .divider {

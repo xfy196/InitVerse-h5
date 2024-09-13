@@ -101,7 +101,7 @@ const list = ref([
 onBeforeMount(async () => {
   try {
     const res = await getExchangeRecords()
-    list.value = res.data
+    list.value = res.rows
   } catch (error) {
     console.log("🚀 ~ onMounted ~ error:", error)
     
