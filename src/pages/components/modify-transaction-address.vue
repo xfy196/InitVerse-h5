@@ -30,7 +30,7 @@
               {{ $t("my.getCode") }}
             </div>
             <div v-else class="count-down-text">
-              <van-count-down format="sss" :time="countDownTime" />{{
+              <van-count-down @onFinish="handleCountDownFinish" format="sss" :time="countDownTime" />{{
                 $t("register.afterGetCode")
               }}
             </div>
@@ -69,6 +69,10 @@ const countDownTime = ref(0);
 const loading = ref(false);
 const handleClose = () => {
   show.value = false;
+};
+
+const handleCountDownFinish = () => {
+  countDownTime.value = 0;
 };
 const sendEmail = async () => {
   try {

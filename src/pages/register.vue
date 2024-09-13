@@ -73,7 +73,7 @@
               {{ $t("register.getCode") }}
             </div>
             <div v-else class="count-down-text">
-              <van-count-down format="sss" :time="countDownTime" />{{
+              <van-count-down @onFinish="handleCountDownFinish" format="sss" :time="countDownTime" />{{
                 $t("register.afterGetCode")
               }}
             </div>
@@ -123,6 +123,10 @@ const validate = computed(() => {
     password.value !== confirmPassword.value || !isEmail(email.value)
   );
 });
+
+const handleCountDownFinish = () => {
+  countDownTime.value = 0;
+};
 const handleSubmit = async () => {
   if (username.value.length === 0) {
     showToast("请输入用户名");

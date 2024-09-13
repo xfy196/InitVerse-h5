@@ -36,7 +36,7 @@
               {{ $t("forget.getCode") }}
             </div>
             <div v-else class="count-down-text">
-              <van-count-down format="sss" :time="countDownTime" />{{
+              <van-count-down @onFinish="handleCountDownFinish" format="sss" :time="countDownTime" />{{
                 $t("forget.afterGetCode")
               }}
             </div>
@@ -110,6 +110,10 @@ const validate = computed(() => {
     password.value !== confirmPassword.value || !isEmail(email.value)
   );
 });
+
+const handleCountDownFinish = () => {
+  countDownTime.value = 0;
+};
 const sendEmail = async () => {
   try {
     if (!isEmail(email.value)) return;

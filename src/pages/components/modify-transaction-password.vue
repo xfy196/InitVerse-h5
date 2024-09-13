@@ -2,7 +2,12 @@
   <van-overlay v-model:show="show" @click.stop="handleClose">
     <div class="wrapper">
       <div class="form" @click.stop>
-        <van-icon name="cross" color="#ffffff" class="close-icon" @click="handleClose" />
+        <van-icon
+          name="cross"
+          color="#ffffff"
+          class="close-icon"
+          @click="handleClose"
+        />
         <div class="title">{{ $t("my.setTransactionPassword") }}</div>
         <c-input
           v-model:value="newPassword"
@@ -16,22 +21,28 @@
           :placeholder="$t('my.placeholderCode')"
         >
           <template #button>
-            <div 
-            @click.stop="sendEmail"
-            v-if="!countDownTime" class="get-code-btn">
+            <div
+              @click.stop="sendEmail"
+              v-if="!countDownTime"
+              class="get-code-btn"
+            >
               {{ $t("my.getCode") }}
             </div>
             <div v-else class="count-down-text">
-              <van-count-down format="sss" :time="countDownTime" />{{
-                $t("my.afterGetCode")
-              }}
+              <van-count-down
+                @onFinish="handleCountDownFinish"
+                format="sss"
+                :time="countDownTime"
+              />{{ $t("my.afterGetCode") }}
             </div>
           </template>
         </c-input>
         <div class="submit-btn-container">
-          <c-button @click.stop="handleSubmit" :disabled="!code || !newPassword">{{
-            $t("my.submit")
-          }}</c-button>
+          <c-button
+            @click.stop="handleSubmit"
+            :disabled="!code || !newPassword"
+            >{{ $t("my.submit") }}</c-button
+          >
         </div>
       </div>
     </div>
@@ -41,7 +52,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import CInput from "@/components/c-input.vue";
-import { putUserTransactionPassword,sendEmailGetCode } from "@/api/user";
+import { putUserTransactionPassword, sendEmailGetCode } from "@/api/user";
 const { password } = defineProps({
   password: {
     type: String,
@@ -67,6 +78,10 @@ const sendEmail = async () => {
     console.log("🚀 ~ sendEmail ~ error:", error);
   }
 };
+
+const handleCountDownFinish = () => {
+  countDownTime.value = 0;
+};
 const handleSubmit = async () => {
   try {
     loading.value = true;
@@ -78,7 +93,7 @@ const handleSubmit = async () => {
     show.value = false;
   } catch (error) {
     console.log("🚀 ~ handleSubmit ~ error:", error);
-  }finally{
+  } finally {
     loading.value = false;
   }
 };
@@ -106,7 +121,7 @@ watch(show, (val) => {
     background: linear-gradient(223deg, #353342 0%, #383b52 100%);
     border-radius: 20px 20px 20px 20px;
     position: relative;
-    .close-icon{
+    .close-icon {
       position: absolute;
       top: 32px;
       right: 32px;
