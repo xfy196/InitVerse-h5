@@ -50,7 +50,7 @@ import { login } from "@/api/user";
 import { useRouter } from "vue-router";
 import { showSuccessToast } from "vant";
 import {getUserInfo} from "@/api/user"
-const passwordVisible = ref(true);
+const passwordVisible = ref(false);
 const username = ref("");
 const password = ref("");
 const userStore = useUserStore();
