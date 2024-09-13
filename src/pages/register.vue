@@ -82,7 +82,7 @@
 
         <div class="submit-btn-container">
           <!-- <van-button class="submit-btn" round type="primary"> 提交 </van-button> -->
-          <CButton @click="handleSubmit" :disabled="!validate">
+          <CButton @click="handleSubmit" :disabled="validate">
             {{ $t("register.submit") }}
           </CButton>
         </div>
@@ -112,12 +112,12 @@ const loading = ref(false);
 
 const validate = computed(() => {
   return (
-    username.value.length > 0 &&
-    password.value.length > 0 &&
-    confirmPassword.value.length > 0 &&
-    shareCode.value.length > 0 &&
-    email.value.length > 0 &&
-    emailCode.value.length > 0 &&
+    username.value.length === 0 ||
+    password.value.length === 0 ||
+    confirmPassword.value.length === 0 ||
+    shareCode.value.length === 0 ||
+    email.value.length === 0 ||
+    emailCode.value.length === 0 ||
     password.value === confirmPassword.value
   );
 });

@@ -26,7 +26,7 @@
         </template>
       </c-input>
       <div class="forget-password">
-        <div class="forget-password-item" @click="handleForgetPassword">
+        <div class="forget-password-item" @click.stop="handleForgetPassword">
           {{ $t("login.forgetPassword") }}
         </div>
         <router-link class="register-link" to="/register">{{
@@ -34,7 +34,7 @@
         }}</router-link>
       </div>
       <div class="submit-btn-container">
-        <CButton @click.stop="handleSubmit" :disabled="!validate">
+        <CButton @click.stop="handleSubmit" :disabled="validate">
           {{ $t("login.submit") }}
         </CButton>
       </div>
@@ -55,10 +55,9 @@ const username = ref("");
 const password = ref("");
 const userStore = useUserStore();
 const router = useRouter();
-console.log(userStore.token);
 
 const validate = computed(() => {
-  return username.value.length > 0 || password.value.length > 0;
+  return username.value.length === 0 || password.value.length == 0;
 });
 const handleForgetPassword = () => {
   router.push("/forget");

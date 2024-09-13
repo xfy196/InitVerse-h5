@@ -24,7 +24,7 @@ const { disabled } = defineProps({
 });
 const classNames = computed(() => {
   return {
-    active: disabled,
+    active: !disabled,
   };
 });
 </script>
@@ -36,9 +36,9 @@ const classNames = computed(() => {
   border: 4px solid;
   box-sizing: border-box;
   background-color: #37394e;
-  border-color: rgba(145, 96, 255, 1);
+  border-color: #626176;
   &.active {
-    border-color: #626176;
+    border-color: rgba(145, 96, 255, 1);
   }
 }
 </style>
