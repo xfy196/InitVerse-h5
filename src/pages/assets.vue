@@ -284,7 +284,7 @@
 import { getAssets } from "@/api/assets";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import Withdrawal from "./components/Withdrawal.vue";
+import Withdrawal from "./components/withdrawal.vue";
 import { getIneffectNodeOrderList } from "@/api/assets";
 const router = useRouter();
 const rechargeAssets = ref([]);
