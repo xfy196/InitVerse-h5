@@ -18,7 +18,7 @@ const back = () => {
 .back-container {
   display: flex;
   align-items: center;
-  // padding: 0 30px;
+  padding: 0 30px;
   height: 40px;
   .back-text {
     font-weight: 400;

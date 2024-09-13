@@ -62,7 +62,6 @@ const title = ref("INI订单");
 </script>
 <style lang="scss" scoped>
 .container {
-  padding: 0 30px 30px;
   .title {
     margin-top: 30px;
     font-weight: 500;
@@ -72,6 +71,7 @@ const title = ref("INI订单");
     text-align: center;
   }
   .list {
+    padding: 0 30px;
     .list-item {
       margin-top: 30px;
       .cell-box {
