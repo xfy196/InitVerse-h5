@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import Back from "@/layout/back.vue";
+import Back from "@/components/back.vue";
 import qrcode from "qrcode";
 import { onMounted, ref } from "vue";
 import { useClipboard } from "@vueuse/core";

@@ -65,7 +65,7 @@
 import { ref } from "vue";
 import EmptyBg from "@/assets/images/empty.png";
 import { useDateFormat } from "@vueuse/core";
-import Back from "../layout/back.vue";
+import Back from "../components/back.vue";
 const lists = ref([
     {
       id: 1,

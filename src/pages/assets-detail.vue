@@ -36,7 +36,7 @@
 
 <script setup>
 import { ref } from "vue";
-import Back from "../layout/back.vue";
+import Back from "../components/back.vue";
 import EmptyBg from "@/assets/images/empty.png";
 const finished = ref(true);
 const loading = ref(false);

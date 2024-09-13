@@ -57,7 +57,7 @@
 
 <script setup>
 import { ref } from "vue";
-import Back from "@/layout/back.vue";
+import Back from "@/components/back.vue";
 const title = ref("INI订单");
 </script>
 <style lang="scss" scoped>
