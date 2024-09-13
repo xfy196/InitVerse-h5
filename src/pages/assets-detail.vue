@@ -16,18 +16,22 @@
           :key="tab.name"
         >
           <van-list
-            v-if="list.length > 0"
             :finished="finished"
             v-model:loading="loading"
           >
-          </van-list>
+          <template
+          v-if"list.length > 0"
+          
+          >
+          </template>
           <van-empty
-            v-else
+            v-if="!list.length && !loading"
             class="empty"
             :image="EmptyBg"
             :image-size="['6.32rem', '2.28rem']"
             :description="$t('retanlRecords.empty')"
           />
+          </van-list>
         </van-tab>
       </van-tabs>
     </div>
@@ -35,7 +39,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import Back from "../components/back.vue";
 import EmptyBg from "@/assets/images/empty.png";
 const finished = ref(true);
@@ -60,6 +64,17 @@ const tabs = ref([
   },
 ]);
 const active = ref(0);
+onMounted(() => {
+  loading.value = true;
+  finished.value = false;
+  new Promise((resolve) => {
+    setTimeout(() => {
+      loading.value = false;
+      finished.value = true;
+      resolve();
+    }, 2000);
+  });
+});
 const onChange = (index) => {
   active.value = index;
 };
