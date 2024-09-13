@@ -34,7 +34,7 @@
         }}</router-link>
       </div>
       <div class="submit-btn-container">
-        <CButton @click.stop="handleSubmit" :disabled="validate">
+        <CButton :loading="loading" @click.stop="handleSubmit" :disabled="validate">
           {{ $t("login.submit") }}
         </CButton>
       </div>
@@ -49,13 +49,13 @@ import { useUserStore } from "../stores/user";
 import { login } from "@/api/user";
 import { useRouter } from "vue-router";
 import { showSuccessToast } from "vant";
-import {getUserInfo} from "../api/user"
+import {getUserInfo} from "@/api/user"
 const passwordVisible = ref(true);
 const username = ref("");
 const password = ref("");
 const userStore = useUserStore();
 const router = useRouter();
-
+const loading = ref(false);
 const validate = computed(() => {
   return username.value.length === 0 || password.value.length == 0;
 });
@@ -72,6 +72,7 @@ const handleSubmit = async () => {
     return;
   }
   try {
+    loading.value = true;
     const res = await login({
       username: username.value,
       password: password.value,
@@ -83,6 +84,8 @@ const handleSubmit = async () => {
     router.push("/");
   } catch (error) {
     console.log("🚀 ~ handleSubmit ~ error:", error);
+  } finally {
+    loading.value = false;
   }
 };
 </script>
