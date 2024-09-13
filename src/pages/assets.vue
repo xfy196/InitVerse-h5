@@ -1,55 +1,57 @@
 <template>
   <div class="container">
-    <div class="title">我的订单</div>
+    <div class="title">{{ $t("assets.title") }}</div>
     <div class="content">
       <div class="list">
         <div class="list-item">
           <div class="head">
-            <div class="title">算力订单</div>
+            <div class="title">{{ $t("assets.computingPowerOrder") }}</div>
             <img src="@/assets/images/icons/tab1-active.svg" alt="" />
           </div>
           <div class="cell-box">
             <div class="cell">
-              <div class="label">编号</div>
+              <div class="label">{{ $t("assets.orderNumber") }}</div>
               <div class="right">
                 <div class="value">1234567890</div>
               </div>
             </div>
             <div class="cell">
-              <div class="label">开始时间</div>
+              <div class="label">{{ $t("assets.startTime") }}</div>
               <div class="right">
                 <div class="value">2024/09/01 12:00:00</div>
               </div>
             </div>
             <div class="cell">
-              <div class="label">释放率</div>
+              <div class="label">{{ $t("assets.releaseRate") }}</div>
               <div class="right">
                 <div class="value">0.7%/D</div>
               </div>
             </div>
             <div class="cell">
-              <div class="label">算力总额</div>
+              <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
               <div class="right">
                 <div class="value">1 POR≈200 USDT</div>
                 <img src="@/assets/images/icons/power.svg" alt="" />
               </div>
             </div>
             <div class="cell">
-              <div class="label">未释放算力</div>
+              <div class="label">
+                {{ $t("assets.unreleasedComputingPower") }}
+              </div>
               <div class="right">
                 <div class="value">1 POR≈200 USDT</div>
                 <img src="@/assets/images/icons/power.svg" alt="" />
               </div>
             </div>
             <div class="cell">
-              <div class="label">状态</div>
+              <div class="label">{{ $t("assets.status") }}</div>
               <div class="right">
-                <div class="status">进行中</div>
+                <div class="status">{{ $t("assets.processing") }}</div>
               </div>
             </div>
           </div>
           <div @click.stop="handleToOrderList" class="show-all">
-            <div class="text">已隐藏已完成算力订单，展示全部</div>
+            <div class="text">{{ $t("assets.showAll") }}</div>
             <van-icon name="arrow-down" />
           </div>
         </div>
@@ -62,7 +64,9 @@
           :key="index"
         >
           <div class="assets-item-head">
-            <div class="assets-item-title">充值资产</div>
+            <div class="assets-item-title">
+              {{ $t("assets.rechargeAssets") }}
+            </div>
           </div>
           <div class="assets-item-body">
             <div class="assets-value cell-item">
@@ -78,11 +82,13 @@
             </div>
 
             <div class="btns cell-item">
-              <CButton>充值</CButton>
-              <CButton>提现</CButton>
+              <CButton>{{ $t("assets.recharge") }}</CButton>
+              <CButton>{{ $t("assets.withdrawal") }}</CButton>
             </div>
             <div class="tips cell-item">
-              <div class="tip">手续费：5%提现数量价值的INI</div>
+              <div class="tip">
+                {{ $t("assets.fee") }}: 5%{{ $t("assets.withdrawalCount") }} INI
+              </div>
             </div>
           </div>
         </div>
@@ -94,9 +100,9 @@
           >
             <div class="assets-item-head" v-if="index === 0">
               <div class="assets-item-title">
-                <div class="left">算力资产</div>
+                <div class="left">{{ $t("assets.computingPowerAssets") }}</div>
                 <div @click.stop="handleToAssetsDetail" class="right">
-                  资产明细
+                  {{ $t("assets.assetDetails") }}
                   <img src="@/assets/images/icons/record.svg" alt="" />
                 </div>
               </div>
@@ -112,11 +118,13 @@
                   <img v-else src="@/assets/images/icons/ini.svg" alt="" />
                   <div class="coin">
                     <span v-if="item.assetType == 2">
-                      {{ item.coinName.toUpperCase() }}静态</span
-                    >
+                      {{ item.coinName.toUpperCase() }}
+                      {{ $t("assets.static") }}
+                    </span>
                     <span v-else-if="item.assetType == 3">
-                      {{ item.coinName.toUpperCase() }}动态</span
-                    >
+                      {{ item.coinName.toUpperCase() }}
+                      {{ $t("assets.dynamic") }}
+                    </span>
                     <span v-else>{{ item.coinName.toUpperCase() }}</span>
                   </div>
                 </div>
@@ -143,8 +151,12 @@
                     src="@/assets/images/icons/lock.svg"
                     alt=""
                   />
-                  <div v-if="item.assetType == 4" class="text">未锁定</div>
-                  <div v-if="item.assetType == 5" class="text">锁定</div>
+                  <div v-if="item.assetType == 4" class="text">
+                    {{ $t("assets.unlock") }}
+                  </div>
+                  <div v-if="item.assetType == 5" class="text">
+                    {{ $t("assets.lock") }}
+                  </div>
                 </div>
                 <div class="right">
                   <div class="value">{{ item.balance }}</div>
@@ -156,8 +168,12 @@
                 v-if="item.lockAssetType == 1 && item.assetType == 5"
                 class="lock-box cell-item"
               >
-                <div class="left">当前释放率:150 INI/天</div>
-                <div class="right">锁定笔数：3</div>
+                <div class="left">
+                  {{ $t("assets.currentReleaseRate") }}: 150 INI/{{
+                    $t("assets.day")
+                  }}
+                </div>
+                <div class="right">{{ $t("assets.lockCount") }}:3</div>
               </div>
               <div
                 v-if="item.assetType != 5"
@@ -169,12 +185,22 @@
                 class="btns cell-item"
               >
                 <template v-if="[2, 3, 4].includes(item.assetType)">
-                  <CButton>转账</CButton>
-                  <CButton v-if="item.assetType == 4">闪兑</CButton>
+                  <CButton>{{
+                    [2, 3].includes(item.assetType)
+                      ? $t("assets.withdrawal")
+                      : $t("assets.transfer")
+                  }}</CButton>
+                  <CButton v-if="item.assetType == 4">
+                    {{ $t("assets.flashExchange") }}
+                  </CButton>
                 </template>
               </div>
               <div v-if="item.assetType != 4" class="tips cell-item">
-                <div class="tip">手续费：5%提现数量价值的INI</div>
+                <div class="tip">
+                  {{ $t("assets.fee") }}: 5%{{ $t("assets.withdrawalCount") }}
+                  {{ $t("assets.value") }}
+                  INI
+                </div>
               </div>
             </div>
           </div>
@@ -356,7 +382,7 @@ const handleToAssetsDetail = () => {
       }
       .assets-item {
         padding: 30px;
-        background: linear-gradient(223deg, #353342 0%, #383b52 100%);
+    
         border-radius: 20px 20px 20px 20px;
         .assets-item-head {
           display: flex;
@@ -478,6 +504,9 @@ const handleToAssetsDetail = () => {
               }
             }
           }
+        }
+        &:first-child {
+          background: linear-gradient(223deg, #353342 0%, #383b52 100%);
         }
       }
     }

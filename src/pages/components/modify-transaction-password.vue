@@ -53,6 +53,8 @@
 import { ref, watch } from "vue";
 import CInput from "@/components/c-input.vue";
 import { putUserTransactionPassword, sendEmailGetCode } from "@/api/user";
+import { useUserStore } from "@/stores/user";
+const userStore = useUserStore();
 const { password } = defineProps({
   password: {
     type: String,
@@ -89,6 +91,7 @@ const handleSubmit = async () => {
       safePassWord: newPassword.value,
       emailCode: code.value,
     });
+    await userStore.updateUserInfo()
     showSuccessToast(res.msg);
     show.value = false;
   } catch (error) {

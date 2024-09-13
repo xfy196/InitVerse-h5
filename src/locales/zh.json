@@ -8,6 +8,7 @@
   "back": {
     "title": "返回"
   },
+  "loadingText": "加载中...",
   "home": {
     "notice": "关于开启算力租赁活动的通知",
     "rentalTitle": "算力租赁",
@@ -28,7 +29,10 @@
     "placeholderUsername": "请输入用户名",
     "password": "密码",
     "placeholderPassword": "请输入密码",
-    "submit": "确认登录"
+    "submit": "确认登录",
+    "pleaseEnterUsername": "请输入用户名",
+    "pleaseEnterPassword": "请输入密码",
+    "loginSuccess": "登录成功"
   },
   "register": {
     "title": "注册",
@@ -46,7 +50,16 @@
     "placeholderCode": "请输入验证码",
     "submit": "确认注册",
     "getCode": "获取验证码",
-    "afterGetCode": "后可重新获取"
+    "afterGetCode": "后可重新获取",
+    "registerSuccess": "注册成功",
+    "pleaseEnterUsername": "请输入用户名",
+    "pleaseEnterPassword": "请输入密码",
+    "pleaseEnterConfirmPassword": "请输入确认密码",
+    "passwordNotMatch": "两次密码不一致",
+    "pleaseEnterInviteCode": "请输入邀请码",
+    "pleaseEnterEmail": "请输入邮箱",
+    "emailFormatError": "邮箱格式不正确",
+    "pleaseEnterCode": "请输入验证码"
   },
   "forget": {
     "title": "找回密码",
@@ -92,7 +105,9 @@
     "placeholderTransactionPassword": "请输入新的交易密码",
     "submit": "确认",
     "placeholderWithdrawalAddress": "请输入新的提现地址",
-    "code": "邮箱验证码"
+    "code": "邮箱验证码",
+    "modifyWithdrawalAddress": "修改提现地址",
+    "modifySafePassword": "修改交易密码"
   },
   "retanlRecords": {
     "title": "算力租赁记录",
@@ -118,7 +133,7 @@
     "placeholder": "请输入您要兑换的 INI 数量",
     "flashExchange": "闪兑",
     "flashExchangeRecord": "闪兑记录",
-    "exchangeRate": "汇率"
+    "exchangeRate": "今日汇率"
   },
   "exchangeRecords": {
     "title": "闪兑记录",
@@ -135,5 +150,57 @@
     "receiveAddress": "接收地址",
     "copy": "复制",
     "scan": "扫描"
+  },
+  "assets": {
+    "title": "我的订单",
+    "computingPowerOrder": "算力订单",
+    "orderNumber": "编号",
+    "startTime": "开始时间",
+    "releaseRate": "释放率",
+    "computingPowerTotal": "算力总额",
+    "computingPowerAssets": "算力资产",
+    "assetDetails": "资产明细",
+    "static": "静态",
+    "dynamic": "动态",
+    "currentReleaseRate": "当前释放率",
+    "unreleasedComputingPower": "未释放算力",
+    "status": "状态",
+    "showAll": "已隐藏已完成算力订单，展示全部",
+    "processing": "进行中",
+    "rechargeAssets": "充值资产",
+    "day": "天",
+    "lockCount": "锁定数量",
+    "transfer": "转账",
+    "flashExchange": "闪兑",
+    "fee": "手续费",
+    "withdrawal": "提现",
+    "withdrawalCount": "提现数量",
+    "computingPower": "算力",
+    "release": "释放",
+    "recharge": "充值",
+    "value": "价值",
+    "lock": "锁定",
+    "unlock": "解锁"
+  },
+  "assetsDetail": {
+    "title": "资产明细",
+    "usdtStatic": "USDT静态",
+    "usdtDynamic": "USDT动态",
+    "iniUnlock": "INI解锁",
+    "iniLock": "INI锁定"
+  },
+  "orderList": {
+    "usdtStatic": "USDT静态",
+    "usdtDynamic": "USDT动态",
+    "iniUnlock": "INI解锁",
+    "iniLock": "INI锁定",
+    "orderNumber": "编号",
+    "startTime": "开始时间",
+    "releaseRate": "释放率",
+    "computingPowerTotal": "算力总额",
+    "unreleasedComputingPower": "未释放算力",
+    "endTime": "结束时间",
+    "status": "状态",
+    "completed": "已完成"
   }
 }

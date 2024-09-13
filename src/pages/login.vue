@@ -50,11 +50,13 @@ import { login } from "@/api/user";
 import { useRouter } from "vue-router";
 import { showSuccessToast } from "vant";
 import {getUserInfo} from "@/api/user"
+import { useI18n } from "vue-i18n";
 const passwordVisible = ref(false);
 const username = ref("");
 const password = ref("");
 const userStore = useUserStore();
 const router = useRouter();
+const { t } = useI18n();
 const loading = ref(false);
 const validate = computed(() => {
   return username.value.length === 0 || password.value.length === 0;
@@ -64,11 +66,11 @@ const handleForgetPassword = () => {
 };
 const handleSubmit = async () => {
   if (username.value.length === 0) {
-    showToast("请输入用户名");
+    showToast(t("login.pleaseEnterUsername"));
     return;
   }
   if (password.value.length === 0) {
-    showToast("请输入密码");
+    showToast(t("login.pleaseEnterPassword"));
     return;
   }
   try {
@@ -80,7 +82,7 @@ const handleSubmit = async () => {
     userStore.setToken(res.token);
     const userData = await getUserInfo();
     userStore.setUserInfo(userData.userInfo);
-    showSuccessToast("登录成功");
+    showSuccessToast(t("login.loginSuccess"));
     router.push("/");
   } catch (error) {
     console.log("🚀 ~ handleSubmit ~ error:", error);

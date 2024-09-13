@@ -1,13 +1,19 @@
 import { defineStore } from "pinia";
-import router from "../router"
+import { getUserInfo } from "@/api/user";
+import router from "../router";
 export const useUserStore = defineStore("user", {
   state: () => ({
-    userInfo: {},
+    userInfo: {
+      uid: "",
+      shareCode: "",
+      withdrawalAddress: "",
+      safePassword: "",
+    },
     token: "",
   }),
   persist: {
     storage: localStorage,
-    pick: ["userInfo", 'token'],
+    pick: ["userInfo", "token"],
   },
   actions: {
     setToken(token) {
@@ -17,6 +23,14 @@ export const useUserStore = defineStore("user", {
       this.token = "";
       this.userInfo = {};
       router.push("/login");
+    },
+    async updateUserInfo() {
+      try {
+        const res = await getUserInfo();
+        this.setUserInfo(res.userInfo);
+      } catch (error) {
+        console.log("🚀 ~ updateUserInfo ~ error:", error);
+      }
     },
     setUserInfo(userInfo) {
       this.userInfo = userInfo;

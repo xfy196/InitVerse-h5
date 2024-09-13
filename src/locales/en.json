@@ -8,7 +8,7 @@
   "back": {
     "title": "Back"
   },
-
+  "loadingText": "Loading...",
   "home": {
     "notice": "Notice regarding the launch of the power rental activity",
     "rentalTitle": "Power Rental",
@@ -37,7 +37,16 @@
     "placeholderCode": "Please enter your code",
     "submit": "Confirm Register",
     "getCode": "Get Code",
-    "afterGetCode": "After Get Code"
+    "afterGetCode": "After Get Code",
+    "registerSuccess": "Register Success",
+    "pleaseEnterUsername": "Please enter your username",
+    "pleaseEnterPassword": "Please enter your password",
+    "pleaseEnterConfirmPassword": "Please enter your confirm password",
+    "passwordNotMatch": "Two passwords do not match",
+    "pleaseEnterInviteCode": "Please enter your invite code",
+    "pleaseEnterEmail": "Please enter your email",
+    "emailFormatError": "Email format error",
+    "pleaseEnterCode": "Please enter your code"
   },
   "login": {
     "welcome": "Welcome",
@@ -47,7 +56,10 @@
     "placeholderUsername": "Please enter your username",
     "password": "Password",
     "placeholderPassword": "Please enter your password",
-    "submit": "Confirm Login"
+    "submit": "Confirm Login",
+    "pleaseEnterUsername": "Please enter your username",
+    "pleaseEnterPassword": "Please enter your password",
+    "loginSuccess": "Login Success"
   },
   "forget": {
     "title": "Forget Password",
@@ -91,7 +103,9 @@
     "placeholderTransactionPassword": "Please enter your new transaction password",
     "submit": "Confirm",
     "placeholderWithdrawalAddress": "Please enter your new withdrawal address",
-    "code": "Email Verification Code"
+    "code": "Email Verification Code",
+    "modifyWithdrawalAddress": "Modify",
+    "modifySafePassword": "Modify"
   },
   "retanlRecords": {
     "title": "Rental Records",
@@ -126,11 +140,63 @@
     "placeholder": "Please enter the INI quantity you want to exchange",
     "flashExchange": "Exchange",
     "flashExchangeRecord": "Exchange Record",
-    "exchangeRate": "Exchange Rate"
+    "exchangeRate": "Today Exchange Rate"
   },
   "recharge": {
     "title": "Recharge",
     "tips": "Please scan or copy your USDT address to recharge",
     "receiveAddress": "Receive Address"
+  },
+  "assets": {
+    "title": "My Order",
+    "computingPowerOrder": "Computing Power Order",
+    "orderNumber": "Order Number",
+    "startTime": "Start Time",
+    "releaseRate": "Release Rate",
+    "computingPowerTotal": "Power Total",
+    "computingPowerAssets": "Power Assets",
+    "assetDetails": "Asset Details",
+    "static": "Static",
+    "dynamic": "Dynamic",
+    "currentReleaseRate": "Current Release Rate",
+    "unreleasedComputingPower": "Unreleased Power",
+    "status": "Status",
+    "showAll": "Hidden Completed Computing Power Orders, Show All",
+    "processing": "Processing",
+    "rechargeAssets": "Recharge Assets",
+    "day": "Day",
+    "lockCount": "Lock Count",
+    "transfer": "Transfer",
+    "flashExchange": "Exchange",
+    "fee": "Fee",
+    "withdrawal": "Withdrawal",
+    "withdrawalCount": "Withdrawal Count",
+    "computingPower": "Computing Power",
+    "release": "Release",
+    "recharge": "Recharge",
+    "value": "Value",
+    "lock": "Lock",
+    "unlock": "Unlock"
+  },
+  "assetsDetail": {
+    "title": "Asset Details",
+    "usdtStatic": "USDT Static",
+    "usdtDynamic": "USDT Dynamic",
+    "iniUnlock": "INI Unlock",
+    "iniLock": "INI Lock"
+  },
+  "orderList": {
+    "usdtStatic": "USDT Static",
+    "usdtDynamic": "USDT Dynamic",
+    "iniUnlock": "INI Unlock",
+    "iniLock": "INI Lock",
+    "orderNumber": "Order Number",
+    "startTime": "Start Time",
+    "releaseRate": "Release Rate",
+    "computingPowerTotal": "Computing Power Total",
+    "unreleasedComputingPower": "Unreleased Computing Power",
+    "endTime": "End Time",
+    "status": "Status",
+    "completed": "Completed"
   }
 }

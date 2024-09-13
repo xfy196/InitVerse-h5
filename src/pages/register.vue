@@ -129,35 +129,35 @@ const handleCountDownFinish = () => {
 };
 const handleSubmit = async () => {
   if (username.value.length === 0) {
-    showToast("请输入用户名");
+    showToast(t("register.pleaseEnterUsername"));
     return;
   }
   if (password.value.length === 0) {
-    showToast("请输入密码");
+    showToast(t("register.pleaseEnterPassword"));
     return;
   }
   if (confirmPassword.value.length === 0) {
-    showToast("请输入确认密码");
+    showToast(t("register.pleaseEnterConfirmPassword"));
     return;
   }
   if (password.value !== confirmPassword.value) {
-    showToast("两次密码不一致");
+    showToast(t("register.passwordNotMatch"));
     return;
   }
   if (shareCode.value.length === 0) {
-    showToast("请输入邀请码");
+    showToast(t("register.pleaseEnterInviteCode"));
     return;
   }
   if (email.value.length === 0) {
-    showToast("请输入邮箱");
+    showToast(t("register.pleaseEnterEmail"));
     return;
   }
   if (!isEmail(email.value)) {
-    showToast("邮箱格式不正确");
+    showToast(t("register.emailFormatError"));
     return;
   }
   if (emailCode.value.length === 0) {
-    showToast("请输入验证码");
+    showToast(t("register.pleaseEnterCode"));
     return;
   }
   loading.value = true;
@@ -170,7 +170,7 @@ const handleSubmit = async () => {
       email: email.value,
       emailCode: emailCode.value,
     });
-    showSuccessToast("注册成功");
+    showSuccessToast(t("register.registerSuccess"));
     router.push("/");
   } catch (error) {
     console.log("🚀 ~ handleSubmit ~ error:", error);

@@ -3,10 +3,10 @@
     <div class="profile">
       <div class="label">我的ID</div>
       <div class="profile-id">
-        {{ id }}
+        {{ userInfo.uid }}
         <img
           v-if="isSupported"
-          @click="copy(id)"
+          @click="handleCopy(userInfo.uid)"
           class="copy-icon"
           src="@/assets/images/icons/copy.svg"
           alt=""
@@ -35,7 +35,12 @@
         <div class="cell-item">
           <div class="label">{{ $t("my.withdrawalAddress") }}</div>
           <div class="right" @click="handleSetWithdrawalAddress">
-            <div class="status">{{ $t("my.notSet") }}</div>
+            <div v-if="!userInfo.withdrawalAddress" class="status">
+              {{ $t("my.notSet") }}
+            </div>
+            <div v-else class="status">
+              {{ $t("my.modifyWithdrawalAddress") }}
+            </div>
             <van-icon
               class="icon"
               color="#ffffff"
@@ -50,7 +55,10 @@
         <div class="cell-item">
           <div class="label">{{ $t("my.transactionPassword") }}</div>
           <div class="right" @click="handleSetTransactionPassword">
-            <div class="status">{{ $t("my.notSet") }}</div>
+            <div v-if="!userInfo.safePwd" class="status">
+              {{ $t("my.notSet") }}
+            </div>
+            <div v-else class="status">{{ $t("my.modifySafePassword") }}</div>
             <van-icon
               class="icon"
               color="#ffffff"
@@ -103,8 +111,13 @@
         <div class="cell-item">
           <div class="label">{{ $t("my.inviteCode") }}</div>
           <div class="right">
-            <div class="status">UDA76SS</div>
-            <img class="icon" src="@/assets/images/icons/copy.svg" alt="" />
+            <div class="status">{{ userInfo.shareCode }}</div>
+            <img
+              @click="handleCopy('UDA76SS')"
+              class="icon"
+              src="@/assets/images/icons/copy.svg"
+              alt=""
+            />
           </div>
         </div>
         <van-divider
@@ -114,7 +127,7 @@
           <div class="invite-link van-ellipsis">
             http://www.inichain.com/uetsce
           </div>
-          <div class="copy-link">
+          <div @click="handleCopy('12312323')" class="copy-link">
             {{ $t("my.copyLink") }}
             <img
               class="icon"
@@ -141,7 +154,7 @@
               <img
                 class="icon"
                 v-if="isSupported"
-                @click="copy(link.url)"
+                @click="handleCopy(link.url)"
                 src="@/assets/images/icons/copy.svg"
                 alt=""
               />
@@ -165,13 +178,14 @@ import x from "@/assets/images/icons/x.svg";
 import tg from "@/assets/images/icons/tg.svg";
 import discord from "@/assets/images/icons/discord.svg";
 import email from "@/assets/images/icons/email.svg";
-import { getUserOwnAssets } from "@/api/assets";
 import { onMounted, ref } from "vue";
 import ModifyTransactionPassword from "./components/modify-transaction-password.vue";
 import ModifyTransactionAddress from "./components/modify-transaction-address.vue";
 import { useUserStore } from "../stores/user";
-const id = ref("1234567890");
+import { storeToRefs } from "pinia";
+import { showToast } from "vant";
 const userStore = useUserStore();
+const { userInfo } = storeToRefs(userStore);
 const links = ref([
   {
     icon: x,
@@ -199,15 +213,21 @@ const handleSetWithdrawalAddress = () => {
 const handleSetTransactionPassword = () => {
   showModifyTransactionPassword.value = true;
 };
+const handleCopy = async (text) => {
+  try {
+    await copy(text);
+    showToast("复制成功");
+  } catch (error) {
+    console.log("🚀 ~ handleCopy ~ error:", error);
+  }
+};
 onMounted(async () => {
   try {
-    const res = await getUserOwnAssets(userStore.userInfo.userId)
-    console.log(res)
+    await userStore.updateUserInfo()
   } catch (error) {
-  console.log("🚀 ~ onMounted ~ error:", error)
-
+    console.log("🚀 ~ onMounted ~ error:", error);
   }
-})
+});
 </script>
 <style lang="scss" scoped>
 .container {

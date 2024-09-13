@@ -6,47 +6,47 @@
       <div class="list-item">
         <div class="cell-box">
           <div class="cell">
-            <div class="label">编号</div>
+            <div class="label">{{ $t("orderList.orderNumber") }}</div>
             <div class="right">
               <div class="value">1234567890</div>
             </div>
           </div>
           <div class="cell">
-            <div class="label">开始时间</div>
+            <div class="label">{{ $t("orderList.startTime") }}</div>
             <div class="right">
               <div class="value">2024/09/01 12:00:00</div>
             </div>
           </div>
           <div class="cell">
-            <div class="label">释放率</div>
+            <div class="label">{{ $t("orderList.releaseRate") }}</div>
             <div class="right">
               <div class="value">0.7%/D</div>
             </div>
           </div>
           <div class="cell">
-            <div class="label">算力总额</div>
+            <div class="label">{{ $t("orderList.computingPowerTotal") }}</div>
             <div class="right">
               <div class="value">1 POR≈200 USDT</div>
               <img src="@/assets/images/icons/power.svg" alt="" />
             </div>
           </div>
           <div class="cell">
-            <div class="label">未释放算力</div>
+            <div class="label">{{ $t("orderList.unreleasedComputingPower") }}</div>
             <div class="right">
               <div class="value">1 POR≈200 USDT</div>
               <img src="@/assets/images/icons/power.svg" alt="" />
             </div>
           </div>
           <div class="cell">
-            <div class="label">结束时间</div>
+            <div class="label">{{ $t("orderList.endTime") }}</div>
             <div class="right">
               <div class="value">2024/09/01 12:00:00</div>
             </div>
           </div>
           <div class="cell">
-            <div class="label">状态</div>
+            <div class="label">{{ $t("orderList.status") }}</div>
             <div class="right">
-              <div class="status">已完成</div>
+              <div class="status">{{ $t("orderList.completed") }}</div>
             </div>
           </div>
         </div>
@@ -58,7 +58,9 @@
 <script setup>
 import { ref } from "vue";
 import Back from "@/components/back.vue";
-const title = ref("INI订单");
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
+const title = ref(t("orderList.usdtStatic"));
 </script>
 <style lang="scss" scoped>
 .container {

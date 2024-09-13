@@ -1,11 +1,13 @@
 <template>
   <div class="container">
     <Back />
-    <div class="title">资产明细</div>
+    <div class="title">{{ $t("assetsDetail.title") }}</div>
     <div class="assets-detail-tabs">
       <van-tabs
+        scrollspy
         title-inactive-color="#AEAEC3"
         background="transparent"
+        swipe-threshold="2"
         v-model:active="active"
         @change="onChange"
       >
@@ -15,7 +17,10 @@
           :name="tab.name"
           :key="tab.name"
         >
-          <van-list
+        </van-tab>
+      </van-tabs>
+      <van-list
+            :loading-text="$t('loadingText')"
             :finished="finished"
             v-model:loading="loading"
           >
@@ -32,37 +37,39 @@
             :description="$t('retanlRecords.empty')"
           />
           </van-list>
-        </van-tab>
-      </van-tabs>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
+import { useI18n } from "vue-i18n";
 import Back from "../components/back.vue";
 import EmptyBg from "@/assets/images/empty.png";
 const finished = ref(true);
 const loading = ref(false);
+const { t } = useI18n();
 const list = ref([]);
-const tabs = ref([
-  {
-    title: "USDT静态",
-    name: "static-usdt",
-  },
-  {
-    title: "USDT 动态",
-    name: "dynamic-usdt",
-  },
-  {
-    title: "INI已解锁",
-    name: "ini-unlocked",
-  },
-  {
-    title: "INI锁定",
-    name: "ini-locked",
-  },
-]);
+const tabs = computed(() => {
+  return [
+    {
+      title: t("assetsDetail.usdtStatic"),
+      name: "static-usdt",
+    },
+    {
+      title: t("assetsDetail.usdtDynamic"),
+      name: "dynamic-usdt",
+    },
+    {
+      title: t("assetsDetail.iniUnlock"),
+      name: "ini-unlocked",
+    },
+    {
+      title: t("assetsDetail.iniLock"),
+      name: "ini-locked",
+    },
+  ];
+});
 const active = ref(0);
 onMounted(() => {
   loading.value = true;

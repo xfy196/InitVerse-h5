@@ -1,7 +1,12 @@
 <template>
   <van-nav-bar :border="false" class="nav-bar" left-arrow>
     <template #left>
-      <img class="logo" @click="goHome" src="@/assets/images/icons/logo.svg" alt="" />
+      <img
+        class="logo"
+        @click="goHome"
+        src="@/assets/images/icons/logo.svg"
+        alt=""
+      />
     </template>
     <template #right>
       <img
@@ -20,6 +25,7 @@
     </template>
   </van-nav-bar>
   <van-action-sheet
+    class="lang-box"
     v-model:show="showLangSelect"
     :actions="actions"
     @select="onSelectLang"
@@ -27,14 +33,14 @@
 </template>
 
 <script setup>
-import {computed, ref } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useStorage } from "@vueuse/core";
 import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../stores/user";
 const { locale } = useI18n();
-const userStore = useUserStore()
+const userStore = useUserStore();
 const route = useRoute();
 const router = useRouter();
 const showLangSelect = ref(false);
@@ -43,15 +49,16 @@ const actions = [
   { name: "English", value: "en" },
   { name: "简体中文", value: "zh" },
 ];
-const showLogout = computed(() => !['/login', '/register', '/forget'].includes(route.path));
+const showLogout = computed(
+  () => !["/login", "/register", "/forget"].includes(route.path)
+);
 const onSelectLang = (item) => {
   lang.value = item.value;
   locale.value = item.value;
   showLangSelect.value = false;
 };
 const logout = () => {
-  // TODO 退出登录
-  userStore.logout()
+  userStore.logout();
 };
 const changeLang = () => {
   showLangSelect.value = true;
@@ -63,7 +70,7 @@ const goHome = () => {
 <style lang="scss" scoped>
 .nav-bar {
   height: 108px;
-  background-color: rgba(255, 255, 255, 0);
+  background-color: transparent;
   .logo {
     width: 224px;
     height: 45px;
@@ -77,4 +84,5 @@ const goHome = () => {
     height: 100%;
   }
 }
+
 </style>

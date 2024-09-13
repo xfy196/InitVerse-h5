@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header">
       <div class="top">
-        <div class="left van-ellipsis">8888.8</div>
+        <div class="left van-ellipsis">{{ iniData.price }}</div>
         <div class="right">{{ $t('transaction.priceTrend') }}</div>
       </div>
       <div class="bottom">
@@ -12,7 +12,7 @@
             <span>/</span>
             <img src="@/assets/images/icons/power.svg" alt="" />
           </div>
-          <div class="proportion">8888&nbsp;(+1.2%)</div>
+          <div class="proportion">{{ iniData.price }}&nbsp;(+{{ iniData.chg }}%)</div>
         </div>
         <div class="right">{{ $t('transaction.onlyINI') }}</div>
       </div>
@@ -156,9 +156,14 @@ import CButton from "@/components/c-button.vue";
 import { useRouter } from "vue-router";
 import * as echarts from "echarts";
 import { getBalance } from "@/api/etc";
+import { getTradeCoinPrice } from "@/api/trade";
 const router = useRouter();
 const chartRef = useTemplateRef("chartRef");
 const iniNum = ref("");
+const iniData = ref({
+  price: 0,
+  chg: 0,
+})
 const currencyList = ref([
   {
     id: "1",
@@ -174,23 +179,24 @@ const currencyList = ref([
     price: 10000,
     chg: -1.11,
   },
-  {
-    id: "3",
-    type: "INI",
-    name: "INI",
-    price: 10000,
-    chg: 1.11,
-  },
 ]);
 
 let chart = null;
-
 onBeforeMount(async () => {
   // const res = await getBalance({ticker: 'BTC/USD', exchange_code: 'Binance'})
-  const res = await getBalance({
-    ticker: "BTC/USD",
-  });
-  console.log(res);
+  // const res = await getBalance({
+  //   ticker: "BTC/USD",
+  // });
+  // console.log(res);
+  const res = await getTradeCoinPrice();
+  currencyList.value.push({
+    id: res.data.coinId,
+    type: "INI",
+    price: res.data.price,
+    name: res.data.coin.toUpperCase(),
+  })
+  iniData.value.price = res.data.price
+  iniData.value.chg = res.data.chg
 });
 const toExchangeRecords = () => {
   router.push("/exchange-records");

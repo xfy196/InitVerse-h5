@@ -52,6 +52,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import { sendEmailGetCode } from "@/api/user";
+import { useUserStore } from "@/stores/user";
 import CInput from "@/components/c-input.vue";
 import { putUserWithdrawalAddress } from "@/api/user";
 import { showSuccessToast } from "vant";
@@ -64,6 +65,7 @@ const { address } = defineProps({
 
 const code = ref("");
 const newAddress = ref("");
+const userStore = useUserStore();
 const show = defineModel("show", { default: false });
 const countDownTime = ref(0);
 const loading = ref(false);
@@ -91,6 +93,7 @@ const handleSubmit = async () => {
       withdrawalAddress: newAddress.value,
       emailCode: code.value,
     });
+    await userStore.updateUserInfo()
     showSuccessToast(res.msg);
     show.value = false;
   } catch (error) {
