@@ -29,15 +29,15 @@
         <c-input
           :label="$t('register.confirmPassword')"
           clearable
-          :type="passwordVisible ? 'text' : 'password'"
+          :type="confirmPasswordVisible ? 'text' : 'password'"
           :border="false"
           :placeholder="$t('register.confirmPassword')"
           v-model:value.trim="confirmPassword"
         >
           <template #right-icon>
             <van-icon
-              :name="passwordVisible ? 'eye-o' : 'closed-eye'"
-              @click="passwordVisible = !passwordVisible"
+              :name="confirmPasswordVisible ? 'eye-o' : 'closed-eye'"
+              @click="confirmPasswordVisible = !confirmPasswordVisible"
             />
           </template>
         </c-input>
@@ -81,6 +81,7 @@
         </c-input>
 
         <div class="submit-btn-container">
+          {{ validate }}
           <!-- <van-button class="submit-btn" round type="primary"> 提交 </van-button> -->
           <CButton @click="handleSubmit" :disabled="validate">
             {{ $t("register.submit") }}
@@ -100,10 +101,11 @@ import { sendEmailGetCode, register } from "@/api/user";
 import { showSuccessToast } from "vant";
 import { useRouter } from "vue-router";
 const router = useRouter();
-const passwordVisible = ref(true);
+const passwordVisible = ref(false);
 const username = ref("");
 const password = ref("");
 const confirmPassword = ref("");
+const confirmPasswordVisible = ref(false);
 const shareCode = useStorage("inviteCode", '');
 const email = ref("");
 const emailCode = ref("");
@@ -111,6 +113,7 @@ const countDownTime = ref(0);
 const loading = ref(false);
 
 const validate = computed(() => {
+  console.log(password.value === confirmPassword.value);
   return (
     username.value.length === 0 ||
     password.value.length === 0 ||
@@ -118,7 +121,7 @@ const validate = computed(() => {
     shareCode.value.length === 0 ||
     email.value.length === 0 ||
     emailCode.value.length === 0 ||
-    password.value === confirmPassword.value
+    password.value !== confirmPassword.value || !isEmail(email.value)
   );
 });
 const handleSubmit = async () => {

@@ -57,7 +57,7 @@ const userStore = useUserStore();
 const router = useRouter();
 const loading = ref(false);
 const validate = computed(() => {
-  return username.value.length === 0 || password.value.length == 0;
+  return username.value.length === 0 || password.value.length === 0;
 });
 const handleForgetPassword = () => {
   router.push("/forget");

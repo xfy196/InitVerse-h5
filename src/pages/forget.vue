@@ -14,7 +14,6 @@
         <c-input
           :label="$t('forget.email')"
           clearable
-          type="email"
           :border="false"
           :placeholder="$t('forget.placeholderEmail')"
           v-model:value="email"
@@ -107,7 +106,8 @@ const validate = computed(() => {
     password.value.length === 0 ||
     confirmPassword.value.length === 0 ||
     email.value.length === 0 ||
-    emailCode.value.length === 0
+    emailCode.value.length === 0 ||
+    password.value !== confirmPassword.value || !isEmail(email.value)
   );
 });
 const sendEmail = async () => {

@@ -43,7 +43,7 @@ const actions = [
   { name: "English", value: "en" },
   { name: "简体中文", value: "zh" },
 ];
-const showLogout = computed(() => !['/login', '/register'].includes(route.path));
+const showLogout = computed(() => !['/login', '/register', '/forget'].includes(route.path));
 const onSelectLang = (item) => {
   lang.value = item.value;
   locale.value = item.value;
