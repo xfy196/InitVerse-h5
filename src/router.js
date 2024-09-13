@@ -88,6 +88,20 @@ const routes = [
       layout: BaseLayout,
     },
   },
+  {
+    path: "/assets-detail",
+    component: () => import("./pages/assets-detail.vue"),
+    meta: {
+      layout: BaseLayout,
+    },
+  },
+  {
+    path: "/order-list",
+    component: () => import("./pages/order-list.vue"),
+    meta: {
+      layout: BaseLayout,
+    },
+  },
 ];
 
 const router = createRouter({

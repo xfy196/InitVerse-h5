@@ -48,7 +48,7 @@
               </div>
             </div>
           </div>
-          <div class="show-all">
+          <div @click.stop="handleToOrderList" class="show-all">
             <div class="text">已隐藏已完成算力订单，展示全部</div>
             <van-icon name="arrow-down" />
           </div>
@@ -95,7 +95,7 @@
             <div class="assets-item-head" v-if="index === 0">
               <div class="assets-item-title">
                 <div class="left">算力资产</div>
-                <div class="right">
+                <div @click.stop="handleToAssetsDetail" class="right">
                   资产明细
                   <img src="@/assets/images/icons/record.svg" alt="" />
                 </div>
@@ -112,9 +112,11 @@
                   <img v-else src="@/assets/images/icons/ini.svg" alt="" />
                   <div class="coin">
                     <span v-if="item.assetType == 2">
-                    {{ item.coinName.toUpperCase() }}静态</span>
-                    <span v-if="item.assetType == 3">
-                    {{ item.coinName.toUpperCase() }}动态</span>
+                      {{ item.coinName.toUpperCase() }}静态</span
+                    >
+                    <span v-else-if="item.assetType == 3">
+                      {{ item.coinName.toUpperCase() }}动态</span
+                    >
                     <span v-else>{{ item.coinName.toUpperCase() }}</span>
                   </div>
                 </div>
@@ -185,8 +187,13 @@
 <script setup>
 import { getAssets } from "@/api/assets";
 import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
 const rechargeAssets = ref([]);
 const computingPowerAssets = ref([]);
+const handleToOrderList = () => {
+  router.push("/order-list");
+};
 onMounted(async () => {
   try {
     const res = await getAssets();
@@ -201,6 +208,9 @@ onMounted(async () => {
     console.log("🚀 ~ onMounted ~ error:", error);
   }
 });
+const handleToAssetsDetail = () => {
+  router.push("/assets-detail");
+};
 </script>
 <style lang="scss" scoped>
 .container {
@@ -231,8 +241,6 @@ onMounted(async () => {
             background: linear-gradient(90deg, #9160ff 0%, #5e75ff 100%);
             background-clip: text;
             color: transparent; /* 确保文本颜色为透明 */
-          }
-          img {
           }
         }
         .cell-box {

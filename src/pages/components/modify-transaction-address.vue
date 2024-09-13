@@ -1,6 +1,6 @@
 <template>
   <van-overlay v-model:show="show" @click.stop="handleClose">
-    <div class="wrapper" >
+    <div class="wrapper">
       <div class="form" @click.stop>
         <van-icon
           name="cross"
@@ -22,7 +22,11 @@
           :placeholder="$t('my.placeholderCode')"
         >
           <template #button>
-            <div v-if="!countDownTime" class="get-code-btn">
+            <div
+              @click="sendEmail"
+              v-if="!countDownTime"
+              class="get-code-btn"
+            >
               {{ $t("my.getCode") }}
             </div>
             <div v-else class="count-down-text">
@@ -33,9 +37,12 @@
           </template>
         </c-input>
         <div class="submit-btn-container">
-          <c-button @click.stop="handleSubmit" :disabled="!code || !newAddress">{{
-            $t("my.submit")
-          }}</c-button>
+          <c-button
+            :loading="loading"
+            @click.stop="handleSubmit"
+            :disabled="!code || !newAddress"
+            >{{ $t("my.submit") }}</c-button
+          >
         </div>
       </div>
     </div>
@@ -44,7 +51,10 @@
 
 <script setup>
 import { ref, watch } from "vue";
+import { sendEmailGetCode } from "@/api/user";
 import CInput from "@/components/c-input.vue";
+import { putUserWithdrawalAddress } from "@/api/user";
+import { showSuccessToast } from "vant";
 const { address } = defineProps({
   address: {
     type: String,
@@ -55,13 +65,35 @@ const { address } = defineProps({
 const code = ref("");
 const newAddress = ref("");
 const show = defineModel("show", { default: false });
-const countDownTime = ref(60 * 1000);
+const countDownTime = ref(0);
+const loading = ref(false);
 const handleClose = () => {
   show.value = false;
 };
-const handleSubmit = () => {
-  console.log("handleSubmit");
-  show.value = false;
+const sendEmail = async () => {
+  try {
+    await sendEmailGetCode({
+      type: "MODIFY_WITHDRAWAL_ADDRESS",
+    });
+    countDownTime.value = 3 * 60 * 1000;
+  } catch (error) {
+    console.log("🚀 ~ sendEmail ~ error:", error);
+  }
+};
+const handleSubmit = async () => {
+  try {
+    loading.value = true;
+    const res = await putUserWithdrawalAddress({
+      withdrawalAddress: newAddress.value,
+      emailCode: code.value,
+    });
+    showSuccessToast(res.msg);
+    show.value = false;
+  } catch (error) {
+    console.log("🚀 ~ handleSubmit ~ error:", error);
+  } finally {
+    loading.value = false;
+  }
 };
 watch(show, (val) => {
   if (val) {
@@ -108,6 +140,9 @@ watch(show, (val) => {
       background: linear-gradient(90deg, #9160ff 0%, #5e75ff 100%);
       border-radius: 20px 20px 20px 20px;
       padding: 8px 20px;
+      &.disabled {
+        opacity: 0.5;
+      }
     }
     .count-down-text {
       font-size: 26px;

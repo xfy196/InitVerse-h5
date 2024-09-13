@@ -25,10 +25,15 @@
           clearable
           :border="false"
           :placeholder="$t('forget.placeholderCode')"
-          v-model:value="code"
+          v-model:value="emailCode"
         >
           <template #button>
-            <div v-if="!countDownTime" class="get-code-btn">
+            <div
+              @click.stop="sendEmail"
+              v-if="!countDownTime"
+              :class="{ disabled: !isEmail(email) }"
+              class="get-code-btn"
+            >
               {{ $t("forget.getCode") }}
             </div>
             <div v-else class="count-down-text">
@@ -82,32 +87,56 @@
 
 <script setup>
 import Head from "@/layout/head.vue";
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { putUserPassword, sendEmailGetCode } from "@/api/user";
+import { showSuccessToast } from "vant";
+import { isEmail } from "@/utils/validate";
+import { useRouter } from "vue-router";
+const router = useRouter();
 const passwordVisible = ref(true);
 const confirmPasswordVisible = ref(true);
 const username = ref("");
 const password = ref("");
 const confirmPassword = ref("");
 const email = ref("");
-const code = ref("");
-const countDownTime = ref(60 * 1000);
+const emailCode = ref("");
+const countDownTime = ref(0);
 const validate = computed(() => {
   return (
     username.value.length === 0 ||
     password.value.length === 0 ||
     confirmPassword.value.length === 0 ||
     email.value.length === 0 ||
-    code.value.length === 0
+    emailCode.value.length === 0
   );
 });
-const handleSubmit = () => {
-  console.log(
-    username.value,
-    password.value,
-    confirmPassword.value,
-    email.value,
-    code.value
-  );
+const sendEmail = async () => {
+  try {
+    if (!isEmail(email.value)) return;
+    await sendEmailGetCode({
+      username: username.value,
+      email: email.value,
+      type: "FORGOT_PASSWORD"
+    });
+    countDownTime.value = 3 * 60 * 1000;
+  } catch (error) {
+    console.log("🚀 ~ sendEmail ~ error:", error);
+  }
+};
+const handleSubmit = async () => {
+  try {
+    const res = await putUserPassword({
+      userName: username.value,
+      passWord: password.value,
+      confirmPassword: confirmPassword.value,
+      email: email.value,
+      emailCode: emailCode.value,
+    });
+    showSuccessToast(res.msg);
+    router.push("/login");
+  } catch (error) {
+    console.log("🚀 ~ handleSubmit ~ error:", error);
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -162,6 +191,9 @@ const handleSubmit = () => {
       background: linear-gradient(90deg, #9160ff 0%, #5e75ff 100%);
       border-radius: 20px 20px 20px 20px;
       padding: 8px 20px;
+      &.disabled {
+        opacity: 0.5;
+      }
     }
     .count-down-text {
       font-size: 26px;

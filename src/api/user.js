@@ -34,12 +34,46 @@ export const getUserInfo = () => {
  * @param {string} type
  * @returns
  */
-export const sendEmailGetCode = ({ type, email }) => {
+export const sendEmailGetCode = ({ type, ...data }) => {
   return request({
     url: `/h5/email/${type}/send`,
     method: "POST",
-    data: {
-      email,
-    },
+    data,
+  });
+};
+/**
+ * 修改用户登录密码
+ * @param {*} data 
+ * @returns 
+ */
+export const putUserPassword = (data) => {
+  return request({
+    url: "/h5/user/password",
+    method: "PUT",
+    data,
+  });
+};
+/**
+ * 修改提现地址
+ * @param {*} data 
+ * @returns 
+ */
+export const putUserWithdrawalAddress = (data) => {
+  return request({
+    url: "/h5/user/withdrawalAddress",
+    method: "PUT",
+    data,
+  });
+};
+/**
+ * 修改交易密码
+ * @param {*} data 
+ * @returns 
+ */
+export const putUserTransactionPassword = (data) => {
+  return request({
+    url: "/h5/user/safePassword",
+    method: "PUT",
+    data,
   });
 };

@@ -165,10 +165,13 @@ import x from "@/assets/images/icons/x.svg";
 import tg from "@/assets/images/icons/tg.svg";
 import discord from "@/assets/images/icons/discord.svg";
 import email from "@/assets/images/icons/email.svg";
-import { ref } from "vue";
+import { getUserOwnAssets } from "@/api/assets";
+import { onMounted, ref } from "vue";
 import ModifyTransactionPassword from "./components/modify-transaction-password.vue";
 import ModifyTransactionAddress from "./components/modify-transaction-address.vue";
+import { useUserStore } from "../stores/user";
 const id = ref("1234567890");
+const userStore = useUserStore();
 const links = ref([
   {
     icon: x,
@@ -196,6 +199,15 @@ const handleSetWithdrawalAddress = () => {
 const handleSetTransactionPassword = () => {
   showModifyTransactionPassword.value = true;
 };
+onMounted(async () => {
+  try {
+    const res = await getUserOwnAssets(userStore.userInfo.userId)
+    console.log(res)
+  } catch (error) {
+  console.log("🚀 ~ onMounted ~ error:", error)
+
+  }
+})
 </script>
 <style lang="scss" scoped>
 .container {

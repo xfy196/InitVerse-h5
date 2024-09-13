@@ -16,7 +16,9 @@
           :placeholder="$t('my.placeholderCode')"
         >
           <template #button>
-            <div v-if="!countDownTime" class="get-code-btn">
+            <div 
+            @click.stop="sendEmail"
+            v-if="!countDownTime" class="get-code-btn">
               {{ $t("my.getCode") }}
             </div>
             <div v-else class="count-down-text">
@@ -39,6 +41,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import CInput from "@/components/c-input.vue";
+import { putUserTransactionPassword,sendEmailGetCode } from "@/api/user";
 const { password } = defineProps({
   password: {
     type: String,
@@ -49,13 +52,35 @@ const { password } = defineProps({
 const code = ref("");
 const newPassword = ref("");
 const show = defineModel("show", { default: false });
-const countDownTime = ref(60 * 1000);
+const countDownTime = ref(0);
+const loading = ref(false);
 const handleClose = () => {
   show.value = false;
 };
-const handleSubmit = () => {
-  console.log(code.value, newPassword.value);
-  show.value = false;
+const sendEmail = async () => {
+  try {
+    await sendEmailGetCode({
+      type: "CHANGE_PAYMENT_PASSWORD",
+    });
+    countDownTime.value = 3 * 60 * 1000;
+  } catch (error) {
+    console.log("🚀 ~ sendEmail ~ error:", error);
+  }
+};
+const handleSubmit = async () => {
+  try {
+    loading.value = true;
+    const res = await putUserTransactionPassword({
+      safePassWord: newPassword.value,
+      emailCode: code.value,
+    });
+    showSuccessToast(res.msg);
+    show.value = false;
+  } catch (error) {
+    console.log("🚀 ~ handleSubmit ~ error:", error);
+  }finally{
+    loading.value = false;
+  }
 };
 watch(show, (val) => {
   if (val) {
