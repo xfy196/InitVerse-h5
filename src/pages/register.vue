@@ -81,9 +81,8 @@
         </c-input>
 
         <div class="submit-btn-container">
-          {{ validate }}
           <!-- <van-button class="submit-btn" round type="primary"> 提交 </van-button> -->
-          <CButton @click="handleSubmit" :disabled="validate">
+          <CButton :loading="loading" @click="handleSubmit" :disabled="validate">
             {{ $t("register.submit") }}
           </CButton>
         </div>
