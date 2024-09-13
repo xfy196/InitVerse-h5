@@ -60,18 +60,10 @@ request.interceptors.response.use(
     }
   },
   (err) => {
-    if (err.response.status) {
-      switch (err.response.status) {
-        case 404:
-          showFailToast({
-            message: err.response.data.message,
-          });
-          break;
-        default:
-          break;
-      }
-    }
-    return Promise.reject(err.response);
+    showFailToast({
+      message: err.message,
+    });
+    return Promise.reject(err);
   }
 );
 export { request };
