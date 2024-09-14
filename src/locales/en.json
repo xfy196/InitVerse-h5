@@ -198,6 +198,7 @@
     "endTime": "End Time",
     "status": "Status",
     "completed": "Completed",
+    "processing": "Processing",
     "emptyNode": "You are not a node",
     "emptyPower": "You haven't rented any computing power yet,",
     "emptyPowerLink": "Rent Computing Power"

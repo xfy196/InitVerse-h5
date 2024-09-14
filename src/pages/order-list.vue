@@ -52,7 +52,12 @@
           <div class="cell">
             <div class="label">{{ $t("orderList.status") }}</div>
             <div class="right">
-              <div class="status">{{ $t("orderList.completed") }}</div>
+              <div class="status end" v-if="item.nodeStatus === '0'">
+                {{ $t("orderList.completed") }}
+              </div>
+              <div class="status processing" v-else-if="item.nodeStatus === '1'">
+                {{ $t("orderList.processing") }}
+              </div>
             </div>
           </div>
         </div>
@@ -68,9 +73,9 @@
         <div v-if="type === 'nodeOrder'">{{ $t("orderList.emptyNode") }}</div>
         <div v-else>
           {{ $t("orderList.emptyPower") }}
-          <router-link class="empty-link" to="/"
-            >{{ $t("orderList.emptyPowerLink") }}</router-link
-          >
+          <router-link class="empty-link" to="/">{{
+            $t("orderList.emptyPowerLink")
+          }}</router-link>
         </div>
       </template>
     </van-empty>
@@ -94,7 +99,7 @@ onBeforeMount(async () => {
     if (type.value == "nodeOrder") {
       title.value = t("orderList.nodeOrder");
       const res = await getAllNodeOrderList();
-      list.value = res.data.filter((item) => item.nodeStatus !== "1");
+      list.value = res.data;
     }
   } catch (error) {
     console.log("🚀 ~ onBeforeMount ~ error:", error);
@@ -138,13 +143,9 @@ onBeforeMount(async () => {
           align-items: center;
           border-bottom: 2px solid #27272b;
 
-          .label {
-          }
           .right {
             display: flex;
             align-items: center;
-            .value {
-            }
             img {
               margin-left: 8px;
               width: 40px;
@@ -152,9 +153,14 @@ onBeforeMount(async () => {
             }
             .status {
               padding: 4px 20px;
-              background: #626176;
               color: #ffffff;
               border-radius: 8px 8px 8px 8px;
+              &.end {
+                background: #626176;
+              }
+              &.processing {
+                background: #00c377;
+              }
             }
           }
         }
