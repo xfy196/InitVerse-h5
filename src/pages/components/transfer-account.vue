@@ -8,12 +8,12 @@
           class="close-icon"
           @click.stop="handleClose"
         />
-        <div class="title">INI转账</div>
+        <div class="title">{{ $t("transferAccount.title") }}</div>
         <div class="input-box">
           <CInput
-            label="交易密码:"
+            :label="$t('transferAccount.passwordLabel')"
             :type="passwordVisible ? 'text' : 'password'"
-            placeholder="请输入交易密码"
+            :placeholder="$t('transferAccount.passwordPlaceholder')"
             v-model:value="safePassword"
           >
             <template #right-icon>
@@ -27,14 +27,15 @@
         <div class="input-box">
           <CInput
             label="To:"
-            placeholder="请输入目标 ID"
+            :placeholder="$t('transferAccount.uidPlaceholder')"
             v-model:value="transferUid"
           >
           </CInput>
         </div>
         <div class="input-box">
           <CInput
-            label="转账数量"
+            :label="$t('transferAccount.numLabel')"
+            :placeholder="$t('transferAccount.numPlaceholder')"
             v-model:value="value"
             type="digit"
             :border="false"
@@ -49,12 +50,12 @@
           </CInput>
         </div>
         <div class="expected">
-          <div class="left">INI可用余额</div>
+          <div class="left">{{ $t("transferAccount.balanceLabel") }}</div>
           <div class="right van-ellipsis">200 INI</div>
         </div>
         <div class="withdrawal-btn">
           <CButton @click.stop="handleWithdrawal" :disabled="disabled"
-            >提现</CButton
+            >{{ $t("transferAccount.withdrawalBtn") }}</CButton
           >
         </div>
       </div>

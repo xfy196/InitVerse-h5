@@ -205,5 +205,15 @@
     "emptyNode": "You are not a node",
     "emptyPower": "You haven't rented any computing power yet,",
     "emptyPowerLink": "Rent Computing Power"
+  },
+  "transferAccount": {
+    "title": "INI Transfer",
+    "passwordLabel": "Transaction password:",
+    "passwordPlaceholder": "Please enter transaction password",
+    "uidPlaceholder": "Please enter target ID",
+    "numLabel": "Transfer amount:",
+    "numPlaceholder": "Please enter transfer amount",
+    "balanceLabel": "Available INI balance",
+    "withdrawalBtn": "Withdraw"
   }
 }
