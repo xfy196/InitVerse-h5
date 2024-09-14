@@ -160,14 +160,16 @@
 
 <script setup>
 import Hammer from "hammerjs";
-import { onBeforeMount, onMounted, useTemplateRef, ref } from "vue";
+import { onBeforeMount, onMounted, useTemplateRef, ref, onUnmounted } from "vue";
 import CButton from "@/components/c-button.vue";
 import { useRouter } from "vue-router";
 import * as echarts from "echarts";
 import { getBalance } from "@/api/etc";
+import { useI18n } from "vue-i18n";
 import { getTradeCoinPrice } from "@/api/trade";
-import { showLoadingToast } from "vant";
+import { closeToast, showLoadingToast } from "vant";
 const router = useRouter();
+const { t } = useI18n();
 const chartRef = useTemplateRef("chartRef");
 const iniNum = ref("");
 const iniData = ref({
@@ -199,7 +201,7 @@ onBeforeMount(async () => {
   // });
   // console.log(res);
   const loadingToast = showLoadingToast({
-    message: "加载中...",
+    message: t("loadingText"),
     duration: 0,
   });
   const res = await getTradeCoinPrice();
@@ -285,6 +287,9 @@ const onTouch = () => {
 const handleMaxNum = () => {
   iniNum.value = "8888.88";
 };
+onUnmounted(() => {
+  closeToast()
+})
 </script>
 <style lang="scss" scoped>
 .divider {

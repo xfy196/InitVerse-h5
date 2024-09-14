@@ -125,9 +125,9 @@
         ></van-divider>
         <div class="cell-item">
           <div class="invite-link van-ellipsis">
-            http://www.inichain.com/uetsce
+            {{ invideUrl }}
           </div>
-          <div @click="handleCopy('12312323')" class="copy-link">
+          <div @click="handleCopy(invideUrl)" class="copy-link">
             {{ $t("my.copyLink") }}
             <img
               class="icon"
@@ -178,7 +178,7 @@ import x from "@/assets/images/icons/x.svg";
 import tg from "@/assets/images/icons/tg.svg";
 import discord from "@/assets/images/icons/discord.svg";
 import email from "@/assets/images/icons/email.svg";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import ModifyTransactionPassword from "./components/modify-transaction-password.vue";
 import ModifyTransactionAddress from "./components/modify-transaction-address.vue";
 import { useUserStore } from "../stores/user";
@@ -186,6 +186,7 @@ import { storeToRefs } from "pinia";
 import { showToast } from "vant";
 const userStore = useUserStore();
 const { userInfo } = storeToRefs(userStore);
+const invideUrl = computed(() => `${import.meta.env.VITE_SITE_DOMAIN}/invite/${userInfo.value.shareCode}`)
 const links = ref([
   {
     icon: x,

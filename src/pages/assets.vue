@@ -267,12 +267,15 @@
                 class="btns cell-item"
               >
                 <template v-if="[2, 3, 4].includes(item.assetType)">
-                  <CButton>{{
+                  <CButton @click="handleShowWithdrawal(item.assetType)">{{
                     [2, 3].includes(item.assetType)
                       ? $t("assets.withdrawal")
                       : $t("assets.transfer")
                   }}</CButton>
-                  <CButton v-if="item.assetType == 4">
+                  <CButton
+                    @click="handleFlashExchange"
+                    v-if="item.assetType == 4"
+                  >
                     {{ $t("assets.flashExchange") }}
                   </CButton>
                 </template>
@@ -289,17 +292,25 @@
         </div>
       </div>
     </div>
-    <Withdrawal v-model:show="showWithdrawal" />
+    <Withdrawal
+    v-if="showWithdrawal"
+      :withdrawalType="withdrawalType"
+      v-model:show="showWithdrawal"
+    />
   </div>
 </template>
 
 <script setup>
 import { getAssets } from "@/api/assets";
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import Withdrawal from "./components/withdrawal.vue";
 import { getIneffectNodeOrderList } from "@/api/assets";
+import { useI18n } from "vue-i18n";
+import { closeToast } from "vant";
 const router = useRouter();
+const { t } = useI18n();
+const withdrawalType = ref("");
 const rechargeAssets = ref([]);
 const computingPowerAssets = ref([]);
 const powerAssets = ref([]);
@@ -315,10 +326,15 @@ const handleToOrderList = (type) => {
 };
 onMounted(async () => {
   try {
+    const loadingToast = showLoadingToast({
+      message: t("loadingText"),
+      duration: 0,
+    });
     const res = await getAssets();
     rechargeAssets.value = res.data.slice(0, 1);
     computingPowerAssets.value = res.data.slice(1, res.data.length);
     const nodeRes = await getIneffectNodeOrderList();
+    loadingToast.close();
     nodeAssets.value = nodeRes.data;
   } catch (error) {
     console.log("🚀 ~ onMounted ~ error:", error);
@@ -331,9 +347,24 @@ const handleToAssetsDetail = () => {
   router.push("/assets-detail");
 };
 const handleShowWithdrawal = (type) => {
-  console.log("🚀 ~ handleShowWithdrawal ~ type:", type);
-  showWithdrawal.value = true;
+  if (type === 2 || type === 3 || type === 1) {
+    if (type === 2) {
+      withdrawalType.value = "static";
+    } else if (type === 3) {
+      withdrawalType.value = "dynamic";
+    } else {
+      withdrawalType.value = "";
+    }
+    showWithdrawal.value = true;
+  }
 };
+const handleFlashExchange = () => {
+  // 闪兑
+  router.push("/transaction");
+};
+onUnmounted(() => {
+  closeToast();
+});
 </script>
 <style lang="scss" scoped>
 .container {

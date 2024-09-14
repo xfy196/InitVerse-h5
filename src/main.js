@@ -11,6 +11,7 @@ fastclick(document.body);
 setToastDefaultOptions({
     position: "top",
     wordBreak: "normal",
+    forbidClick: true,
   });
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);

@@ -201,6 +201,9 @@
     "unreleasedComputingPower": "未释放算力",
     "endTime": "结束时间",
     "status": "状态",
-    "completed": "已完成"
+    "completed": "已完成",
+    "emptyNode": "您还不是节点",
+    "emptyPower": "您还没租赁过算力，",
+    "emptyPowerLink": "去租赁算力"
   }
 }

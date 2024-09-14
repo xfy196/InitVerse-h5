@@ -33,7 +33,7 @@ const props = defineProps({
   },
   maxlength: {
     type: Number,
-    default: Infinity,
+    default: 10000000,
   },
   value: {
     type: String,
@@ -70,6 +70,7 @@ const handleBlur = (e) => {
 </script>
 <style lang="scss" scoped>
 .form-item {
+  width: 100%;
   .c-input {
     margin-top: 12px;
     margin-bottom: 20px;

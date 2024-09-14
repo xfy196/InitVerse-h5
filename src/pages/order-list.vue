@@ -26,7 +26,9 @@
           <div class="cell">
             <div class="label">{{ $t("orderList.computingPowerTotal") }}</div>
             <div class="right">
-              <div class="value">{{ item.total / 100 }} POR≈{{ item.total }} USDT</div>
+              <div class="value">
+                {{ item.total / 100 }} POR≈{{ item.total }} USDT
+              </div>
               <img src="@/assets/images/icons/power.svg" alt="" />
             </div>
           </div>
@@ -35,7 +37,9 @@
               {{ $t("orderList.unreleasedComputingPower") }}
             </div>
             <div class="right">
-              <div class="value">{{ item.notReleased / 100 }} POR≈{{ item.notReleased }} USDT</div>
+              <div class="value">
+                {{ item.notReleased / 100 }} POR≈{{ item.notReleased }} USDT
+              </div>
               <img src="@/assets/images/icons/power.svg" alt="" />
             </div>
           </div>
@@ -55,12 +59,21 @@
       </div>
     </div>
     <van-empty
-    v-else
+      v-else
       class="empty"
       :image="EmptyBg"
       :image-size="['6.32rem', '2.28rem']"
-      :description="$t('retanlRecords.empty')"
-    />
+    >
+      <template #description>
+        <div v-if="type === 'nodeOrder'">{{ $t("orderList.emptyNode") }}</div>
+        <div v-else>
+          {{ $t("orderList.emptyPower") }}
+          <router-link class="empty-link" to="/"
+            >{{ $t("orderList.emptyPowerLink") }}</router-link
+          >
+        </div>
+      </template>
+    </van-empty>
   </div>
 </template>
 
@@ -100,6 +113,11 @@ onBeforeMount(async () => {
   }
   .empty {
     margin-top: 120px;
+    .empty-link {
+      background: linear-gradient(90deg, #9160ff 0%, #5e75ff 100%);
+      background-clip: text;
+      color: transparent;
+    }
   }
   .list {
     padding: 0 30px;

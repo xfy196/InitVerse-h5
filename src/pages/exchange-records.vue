@@ -2,58 +2,69 @@
   <div class="container">
     <Back />
     <div class="title">{{ $t("exchangeRecords.title") }}</div>
-    <div class="lists" v-if="list.length > 0">
-      <template v-for="item in list" :key="item.id">
-        <div class="list-item">
-          <div class="cell">
-            <div class="cell-title">
-              {{ $t("exchangeRecords.exchangeTime") }}
+    <van-list v-model:loading="loading" :finished="finished" finished-text="">
+      <div class="lists" v-if="list.length > 0 && !loading">
+        <template v-for="(item, index) in list" :key="index">
+          <div class="list-item">
+            <div class="cell">
+              <div class="cell-title">
+                {{ $t("exchangeRecords.exchangeTime") }}
+              </div>
+              <div class="cell-right">
+                <div class="cell-right-text van-ellipsis">
+                  {{ item.createTime }}
+                </div>
+              </div>
             </div>
-            <div class="cell-right">
-              <div class="cell-right-text van-ellipsis">
-                {{ item.date }}
+            <div class="cell">
+              <div class="cell-title">
+                {{ $t("exchangeRecords.exchangeNumber") }}
+              </div>
+              <div class="cell-right">
+                <div class="cell-right-text van-ellipsis">
+                  {{ item.coinNum }} INI
+                </div>
+                <div class="cell-right-icon">
+                  <img
+                    class="icon"
+                    src="@/assets/images/icons/ini.svg"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="cell">
+              <div class="cell-title">
+                {{ $t("exchangeRecords.exchangeRate") }}
+              </div>
+              <div class="cell-right van-ellipsis">
+                <div class="por">1 INI = {{ item.price }} USDT</div>
+              </div>
+            </div>
+            <div class="cell">
+              <div class="cell-title">
+                {{ $t("exchangeRecords.exchangeINI") }}
+              </div>
+              <div class="cell-right">
+                <div class="ini-to-usdt van-ellipsis">
+                  {{ item.swapU }} USDT
+                </div>
+                <div class="ini-to-usdt-icon">
+                  <img
+                    class="icon"
+                    src="@/assets/images/icons/power.svg"
+                    alt=""
+                  />
+                </div>
               </div>
             </div>
           </div>
-          <div class="cell">
-            <div class="cell-title">
-              {{ $t("exchangeRecords.exchangeNumber") }}
-            </div>
-            <div class="cell-right">
-              <div class="cell-right-text van-ellipsis">{{ item.ini }} INI</div>
-              <div class="cell-right-icon">
-                <img class="icon" src="@/assets/images/icons/ini.svg" alt="" />
-              </div>
-            </div>
-          </div>
-          <div class="cell">
-            <div class="cell-title">
-              {{ $t("exchangeRecords.exchangeRate") }}
-            </div>
-            <div class="cell-right van-ellipsis">
-              <div class="por">1 INI = 2 USDT</div>
-            </div>
-          </div>
-          <div class="cell">
-            <div class="cell-title">
-              {{ $t("exchangeRecords.exchangeINI") }}
-            </div>
-            <div class="cell-right">
-              <div class="ini-to-usdt van-ellipsis">{{ item.usdt }} USDT</div>
-              <div class="ini-to-usdt-icon">
-                <img
-                  class="icon"
-                  src="@/assets/images/icons/power.svg"
-                  alt=""
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </template>
-    </div>
+        </template>
+      </div>
+    </van-list>
+
     <van-empty
-      v-else
+      v-if="!list.length && !loading"
       class="empty"
       :image="EmptyBg"
       :image-size="['6.32rem', '2.28rem']"
@@ -63,50 +74,26 @@
 </template>
 
 <script setup>
-import { onBeforeMount, onMounted, ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import EmptyBg from "@/assets/images/empty.png";
-import { useDateFormat } from "@vueuse/core";
 import { getExchangeRecords } from "@/api/trade";
 import Back from "../components/back.vue";
-const list = ref([
-  {
-    id: 1,
-    date: useDateFormat(new Date(), "YYYY-MM-DD HH:mm:ss").value,
-    por: 100,
-    usdt: 100,
-    ini: 200,
-  },
-  {
-    id: 2,
-    date: useDateFormat(new Date(), "YYYY-MM-DD HH:mm:ss").value,
-    por: 100,
-    usdt: 100,
-    ini: 200,
-  },
-  {
-    id: 3,
-    date: useDateFormat(new Date(), "YYYY-MM-DD HH:mm:ss").value,
-    por: 100,
-    usdt: 100,
-    ini: 200,
-  },
-  {
-    id: 4,
-    date: useDateFormat(new Date(), "YYYY-MM-DD HH:mm:ss").value,
-    por: 100,
-    usdt: 100,
-    ini: 200,
-  },
-]);
+const list = ref([]);
+const loading = ref(false);
+const finished = ref(true);
 onBeforeMount(async () => {
   try {
-    const res = await getExchangeRecords()
-    list.value = res.rows
+    loading.value = true;
+    finished.value = false;
+    const res = await getExchangeRecords();
+    list.value = res.rows;
   } catch (error) {
-    console.log("🚀 ~ onMounted ~ error:", error)
-    
+    console.log("🚀 ~ onMounted ~ error:", error);
+  } finally {
+    loading.value = false;
+    finished.value = true;
   }
-})
+});
 </script>
 <style lang="scss" scoped>
 .container {
