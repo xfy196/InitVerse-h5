@@ -149,9 +149,12 @@
           <div class="value">--&nbsp;USDT</div>
         </div>
         <div class="exchange-btn">
-          <CButton :disabled="!iniNum">{{
-            $t("transaction.exchange")
-          }}</CButton>
+          <CButton
+            :loading="loading"
+            @click="handleExchange"
+            :disabled="!iniNum"
+            >{{ $t("transaction.exchange") }}</CButton
+          >
         </div>
       </div>
     </div>
@@ -160,17 +163,24 @@
 
 <script setup>
 import Hammer from "hammerjs";
-import { onBeforeMount, onMounted, useTemplateRef, ref, onUnmounted } from "vue";
+import {
+  onBeforeMount,
+  onMounted,
+  useTemplateRef,
+  ref,
+  onUnmounted,
+} from "vue";
 import CButton from "@/components/c-button.vue";
 import { useRouter } from "vue-router";
 import * as echarts from "echarts";
 import { getBalance } from "@/api/etc";
 import { useI18n } from "vue-i18n";
-import { getTradeCoinPrice } from "@/api/trade";
+import { getTradeCoinPrice, exchangeCoin, getCoinTransList } from "@/api/trade";
 import { closeToast, showLoadingToast } from "vant";
 const router = useRouter();
 const { t } = useI18n();
 const chartRef = useTemplateRef("chartRef");
+const loading = ref(false);
 const iniNum = ref("");
 const iniData = ref({
   price: 0,
@@ -211,7 +221,7 @@ onBeforeMount(async () => {
     price: res.data.price,
     name: res.data.coin.toUpperCase(),
   });
-  loadingToast.close()
+  loadingToast.close();
   iniData.value.price = res.data.price;
   iniData.value.chg = res.data.chg;
 });
@@ -257,13 +267,18 @@ const initChart = () => {
   chart.setOption(option);
 };
 
-onMounted(() => {
-
-  initChart();
-  onTouch();
-  window.addEventListener("resize", () => {
-    chart && chart.resize();
-  });
+onMounted(async () => {
+  try {
+    const res = await getCoinTransList();
+    console.log("🚀 ~ onMounted ~ res:", res);
+    initChart();
+    onTouch();
+    window.addEventListener("resize", () => {
+      chart && chart.resize();
+    });
+  } catch (error) {
+    console.log("🚀 ~ onMounted ~ error:", error);
+  }
 });
 const onTouch = () => {
   const hammer = new Hammer(chartRef.value);
@@ -284,12 +299,25 @@ const onTouch = () => {
     });
   });
 };
+const handleExchange = async () => {
+  try {
+    loading.value = true;
+    await exchangeCoin({
+      price: iniData.value.price,
+      swapCoinCount: iniNum.value,
+    });
+  } catch (error) {
+    console.log("🚀 ~ handleExchange ~ error:", error);
+  } finally {
+    loading.value = false;
+  }
+};
 const handleMaxNum = () => {
   iniNum.value = "8888.88";
 };
 onUnmounted(() => {
-  closeToast()
-})
+  closeToast();
+});
 </script>
 <style lang="scss" scoped>
 .divider {

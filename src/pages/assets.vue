@@ -108,7 +108,7 @@
                 </div>
                 <div class="right">
                   <div class="value">
-                    {{ item.notReleased / 100 }} POR≈{{ item.notReleased }} }}
+                    {{ item.notReleased / 100 }} POR≈{{ item.notReleased }}
                     USDT
                   </div>
                   <img src="@/assets/images/icons/power.svg" alt="" />

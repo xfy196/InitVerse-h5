@@ -28,7 +28,7 @@
           <CInput
             label="To:"
             placeholder="请输入目标 ID"
-            v-model:value="safePassword"
+            v-model:value="transferUid"
           >
           </CInput>
         </div>
@@ -67,12 +67,13 @@
 import { computed, ref } from "vue";
 import CInput from "@/components/c-input.vue";
 import PasswordLock from "./password-lock.vue";
+import { transferAccount } from "@/api/assets";
 const show = defineModel("show", { default: false });
 const value = ref("");
 const safePassword = ref("");
 const passwordVisible = ref(false);
 const passwordLock = ref(false);
-
+const transferUid = ref("");
 const disabled = computed(() => {
   return !value.value || !safePassword.value;
 });
@@ -83,8 +84,17 @@ const handleClose = () => {
 const handleMaxNum = () => {
   value.value = 200;
 };
-const handleWithdrawal = () => {
-  console.log("handleWithdrawal", value.value);
+const handleWithdrawal = async () => {
+  try {
+    await transferAccount({
+      outNum: value.value,
+      transferUid: transferUid.value,
+      safePwd: safePassword.value,
+    });
+    show.value = false;
+  } catch (error) {
+    console.log("🚀 ~ handleWithdrawal ~ error:", error);
+  }
 };
 </script>
 <style lang="scss" scoped>

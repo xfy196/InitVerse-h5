@@ -21,3 +21,18 @@ export const getExchangeRecords = () => {
     method: "GET",
   });
 };
+
+export const getCoinTransList = () => {
+  return request({
+    url: "/h5/coin/trans/list",
+    method: "GET",
+  });
+};
+
+export const exchangeCoin = (data) => {
+  return request({
+    url: "/h5/coin/swap/",
+    method: "POST",
+    data,
+  });
+};
