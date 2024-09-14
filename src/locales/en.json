@@ -215,5 +215,20 @@
     "numPlaceholder": "Please enter transfer amount",
     "balanceLabel": "Available INI balance",
     "withdrawalBtn": "Withdraw"
+  },
+  "withdrawal": {
+    "title": "Withdrawal",
+    "static": "Static",
+    "dynamic": "Dynamic",
+    "staticTip": "Withdrawing static income will significantly affect the release rate of computing power, please be cautious",
+    "balanceLabel": "Available Balance",
+    "numLabel": "Withdrawal amount:",
+    "numPlaceholder": "Please enter withdrawal amount",
+    "passwordLabel": "Transaction password:",
+    "passwordPlaceholder": "Please enter transaction password",
+    "expectedLabel": "Expected to consume fee:",
+    "tip": "Withdrawal will arrive in 24 hours",
+    "notEnoughTip": "Withdrawal amount is insufficient, please recharge first",
+    "withdrawalBtn": "Withdraw"
   }
 }

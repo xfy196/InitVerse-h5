@@ -9,16 +9,16 @@
           @click.stop="handleClose"
         />
         <div class="title">
-          USDT<span v-if="withdrawalType === 'static'">静态</span
-          ><span v-if="withdrawalType === 'dynamic'">动态</span>提现
+          USDT<span v-if="withdrawalType === 'static'">{{ $t("withdrawal.static") }}</span
+          ><span v-if="withdrawalType === 'dynamic'">{{ $t("withdrawal.dynamic") }}</span>{{ $t("withdrawal.title") }}
         </div>
         <!-- 静态展示 toptip -->
         <div v-if="withdrawalType === 'static'" class="top-tip">
-          <div class="tip">提现静态收益会显著影响算力释放率，请谨慎提现</div>
+          <div class="tip">{{ $t("withdrawal.staticTip") }}</div>
         </div>
         <!-- 余额 -->
         <div class="balance">
-          <div class="label">可用余额</div>
+          <div class="label">{{ $t("withdrawal.balanceLabel") }}</div>
           <div class="value">
             200 USDT
             <img src="@/assets/images/icons/power.svg" alt="" />
@@ -27,9 +27,9 @@
         <van-divider class="divider" />
         <div class="input-box">
           <CInput
-            label="交易密码:"
+            :label="$t('withdrawal.passwordLabel')"
             :type="passwordVisible ? 'text' : 'password'"
-            placeholder="请输入交易密码"
+            :placeholder="$t('withdrawal.passwordPlaceholder')"
             v-model:value="safePassword"
           >
             <template #right-icon>
@@ -43,9 +43,10 @@
         <div class="input-box">
           <CInput
             @update:value="handleUpdateWithdrawalNum"
-            label="提现数量:"
+            :label="$t('withdrawal.numLabel')"
             v-model:value="value"
             type="digit"
+            :placeholder="$t('withdrawal.numPlaceholder')"
             :border="false"
             clearable
           >
@@ -58,23 +59,23 @@
           </CInput>
         </div>
         <div class="expected">
-          <div class="left">预计消耗手续费：</div>
+          <div class="left">{{ $t("withdrawal.expectedLabel") }}</div>
           <div class="right van-ellipsis">--INI</div>
         </div>
         <div class="expected">
-          <div class="left">INI可用余额</div>
+          <div class="left">{{ $t("withdrawal.balanceLabel") }}</div>
           <div class="right van-ellipsis">200 INI</div>
         </div>
         <div class="withdrawal-btn">
           <CButton @click.stop="handleWithdrawal" :disabled="disabled"
-            >提现</CButton
+            >{{ $t("withdrawal.withdrawalBtn") }}</CButton
           >
         </div>
         <div class="tips">
           <div v-if="value > balance" class="not-enough-tip">
-            提现金额不足，请先充值
+            {{ $t("withdrawal.notEnoughTip") }}
           </div>
-          <div v-else class="tip">提现将于24小时内到账</div>
+          <div v-else class="tip">{{ $t("withdrawal.tip") }}</div>
         </div>
       </div>
       <PasswordLock v-else @close="handleClose" />

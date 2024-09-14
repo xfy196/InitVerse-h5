@@ -217,5 +217,20 @@
     "numPlaceholder": "请输入转账数量",
     "balanceLabel": "INI可用余额",
     "withdrawalBtn": "提现"
+  },
+  "withdrawal": {
+    "title": "提现",
+    "static": "静态",
+    "dynamic": "动态",
+    "staticTip": "提现静态收益会显著影响算力释放率，请谨慎提现",
+    "balanceLabel": "可用余额",
+    "numLabel": "提现数量:",
+    "numPlaceholder": "请输入提现数量",
+    "passwordLabel": "交易密码:",
+    "passwordPlaceholder": "请输入交易密码",
+    "expectedLabel": "预计消耗手续费：",
+    "tip": "提现将于24小时内到账",
+    "notEnoughTip": "提现金额不足，请先充值",
+    "withdrawalBtn": "提现"
   }
 }
