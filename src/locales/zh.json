@@ -149,7 +149,8 @@
     "tips": "请扫描或复制您的USDT地址进行充值",
     "receiveAddress": "接收地址",
     "copy": "复制",
-    "scan": "扫描"
+    "scan": "扫描",
+    "copySuccess": "复制成功"
   },
   "assets": {
     "title": "我的订单",

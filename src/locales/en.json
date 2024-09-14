@@ -145,7 +145,10 @@
   "recharge": {
     "title": "Recharge",
     "tips": "Please scan or copy your USDT address to recharge",
-    "receiveAddress": "Receive Address"
+    "receiveAddress": "Receive Address",
+    "copy": "Copy",
+    "scan": "Scan",
+    "copySuccess": "Copy Success"
   },
   "assets": {
     "title": "My Order",

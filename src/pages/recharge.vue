@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <Back />
-    <div class="title">{{ $t('recharge.title') }}</div>
-    <div class="tips">{{ $t('recharge.tips') }}</div>
+    <div class="title">{{ $t("recharge.title") }}</div>
+    <div class="tips">{{ $t("recharge.tips") }}</div>
     <div class="address-container">
       <div class="tabs">
         <div class="tab-item" @click="changeTab('BSC')">
@@ -15,17 +15,19 @@
       <van-divider />
       <div class="address-content">
         <div class="address-title">
-          <div class="address-title-text">{{ $t('recharge.receiveAddress') }}</div>
+          <div class="address-title-text">
+            {{ $t("recharge.receiveAddress") }}
+          </div>
           <div class="address-title-copy">
             <img
               v-if="isSupported"
-              @click.stop="handleCopy"
+              @click.stop="handleCopy(address)"
               src="@/assets/images/icons/copy.svg"
               alt=""
             />
           </div>
         </div>
-        <div class="address">0xD8155eC59A04c34406946B527167ec17af0Ec5F9</div>
+        <div class="address">{{ address }}</div>
         <div class="qrcode">
           <img :src="imgUrl" alt="" />
         </div>
@@ -38,12 +40,19 @@
 import Back from "@/components/back.vue";
 import qrcode from "qrcode";
 import { onMounted, ref } from "vue";
+import { useUserStore } from "@/stores/user";
 import { useClipboard } from "@vueuse/core";
+import { storeToRefs } from "pinia";
+import { useI18n } from "vue-i18n";
 const { copy, isSupported } = useClipboard();
 const imgUrl = ref("");
 const tab = ref("BSC");
+const userStore = useUserStore();
+const { t } = useI18n();
+const address = ref("");
+const { bnbAddress, tronAddress } = storeToRefs(userStore);
 onMounted(async () => {
-  imgUrl.value = await generateQR("0xD8155eC59A04c34406946B527167ec17af0Ec5F9");
+  changeTab(tab.value);
 });
 const generateQR = async (text) => {
   try {
@@ -52,17 +61,21 @@ const generateQR = async (text) => {
     console.error(err);
   }
 };
-const changeTab = (value) => {
+const changeTab = async (value) => {
   tab.value = value;
+  if (tab.value === "BSC") {
+    address.value = bnbAddress;
+  } else {
+    address.value = tronAddress;
+  }
+  imgUrl.value = await generateQR(address);
 };
-const handleCopy = async () => {
-  await copy("0xD8155eC59A04c34406946B527167ec17af0Ec5F9");
+const handleCopy = async (value) => {
+  await copy(value);
   showToast({
-    position: "top",
-    message: "复制成功",
+    message: t("recharge.copySuccess"),
   });
 };
-
 </script>
 <style lang="scss" scoped>
 .container {

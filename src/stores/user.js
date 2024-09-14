@@ -8,6 +8,8 @@ export const useUserStore = defineStore("user", {
       shareCode: "",
       withdrawalAddress: "",
       safePassword: "",
+      tronAddress: '',
+      bnbAddress: ''
     },
     token: "",
   }),
