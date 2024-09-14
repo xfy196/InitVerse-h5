@@ -50,7 +50,7 @@ const tab = ref("BSC");
 const userStore = useUserStore();
 const { t } = useI18n();
 const address = ref("");
-const { bnbAddress, tronAddress } = storeToRefs(userStore);
+const { bnbAddress = "0xD8155eC59A04c34406946B527167ec17af0Ec5F9", tronAddress = "0xD8155eC59A04c34406946B527167ec17af0Ec5F9" } = storeToRefs(userStore);
 onMounted(async () => {
   changeTab(tab.value);
 });
@@ -68,7 +68,7 @@ const changeTab = async (value) => {
   } else {
     address.value = tronAddress;
   }
-  imgUrl.value = await generateQR(address);
+  imgUrl.value = await generateQR(address.value);
 };
 const handleCopy = async (value) => {
   await copy(value);
