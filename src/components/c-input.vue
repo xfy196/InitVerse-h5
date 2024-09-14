@@ -1,26 +1,30 @@
 <template>
   <div class="form-item">
     <label class="label">{{ label }}</label>
-    <van-field
-      :class="{ focus: isFocus }"
-      class="c-input"
-      v-model="value"
-      autocomplete="off"
-      :clearable="clearable"
-      :type="type"
-      :border="border"
-      @focus="handleFocus"
-      @blur="handleBlur"
-      :placeholder="placeholder"
-      :maxlength="maxlength"
-    >
-      <template #right-icon>
-        <slot name="right-icon"></slot>
-      </template>
-      <template #button>
-        <slot name="button"></slot>
-      </template>
-    </van-field>
+    <div class="form-item__content">
+      <van-field
+      @update:model-value="handleUpdateModelValue"
+        :class="{ focus: isFocus }"
+        class="c-input"
+        v-model="value"
+        autocomplete="off"
+        :clearable="clearable"
+        :type="type"
+        :border="border"
+        @focus="handleFocus"
+        @blur="handleBlur"
+        :placeholder="placeholder"
+        :maxlength="maxlength"
+      >
+        <template #right-icon>
+          <slot name="right-icon"></slot>
+        </template>
+        <template #button>
+          <slot name="button"></slot>
+        </template>
+      </van-field>
+      <slot name="unit"></slot>
+    </div>
   </div>
 </template>
 
@@ -57,7 +61,7 @@ const props = defineProps({
   },
 });
 const value = defineModel("value", { required: true });
-const emit = defineEmits(["focus", "blur"]);
+const emit = defineEmits(["focus", "blur", "update:value"]);
 const isFocus = ref(false);
 const handleFocus = (e) => {
   isFocus.value = true;
@@ -67,22 +71,31 @@ const handleBlur = (e) => {
   isFocus.value = false;
   emit("blur", e);
 };
+const handleUpdateModelValue = (value) => {
+  emit("update:value", value)
+}
 </script>
 <style lang="scss" scoped>
 .form-item {
   width: 100%;
-  .c-input {
-    margin-top: 12px;
-    margin-bottom: 20px;
-    border: 2px solid transparent;
-    &.focus {
-      border-color: #ffffff;
-    }
-  }
   .label {
     font-size: 30px;
     color: #ffffff;
     line-height: 35px;
   }
+  .form-item__content{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .c-input {
+      margin-top: 12px;
+      margin-bottom: 20px;
+      border: 2px solid transparent;
+      &.focus {
+        border-color: #ffffff;
+      }
+    }
+  }
+ 
 }
 </style>

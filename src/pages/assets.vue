@@ -293,9 +293,13 @@
       </div>
     </div>
     <Withdrawal
-    v-if="showWithdrawal"
+      v-if="showWithdrawal"
       :withdrawalType="withdrawalType"
       v-model:show="showWithdrawal"
+    />
+    <TransferAccount
+      v-if="showTransferAccount"
+      v-model:show="showTransferAccount"
     />
   </div>
 </template>
@@ -305,6 +309,7 @@ import { getAssets } from "@/api/assets";
 import { onMounted, onUnmounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import Withdrawal from "./components/withdrawal.vue";
+import TransferAccount from "./components/transfer-account.vue";
 import { getIneffectNodeOrderList } from "@/api/assets";
 import { useI18n } from "vue-i18n";
 import { closeToast } from "vant";
@@ -316,6 +321,7 @@ const computingPowerAssets = ref([]);
 const powerAssets = ref([]);
 const nodeAssets = ref([]);
 const showWithdrawal = ref(false);
+const showTransferAccount = ref(false);
 const handleToOrderList = (type) => {
   router.push({
     path: "/order-list",
@@ -347,6 +353,7 @@ const handleToAssetsDetail = () => {
   router.push("/assets-detail");
 };
 const handleShowWithdrawal = (type) => {
+  console.log("🚀 ~ handleShowWithdrawal ~ type:", type);
   if (type === 2 || type === 3 || type === 1) {
     if (type === 2) {
       withdrawalType.value = "static";
@@ -356,6 +363,8 @@ const handleShowWithdrawal = (type) => {
       withdrawalType.value = "";
     }
     showWithdrawal.value = true;
+  } else if (type === 4) {
+    showTransferAccount.value = true;
   }
 };
 const handleFlashExchange = () => {

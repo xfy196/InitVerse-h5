@@ -8,23 +8,7 @@
           class="close-icon"
           @click.stop="handleClose"
         />
-        <div class="title">
-          USDT<span v-if="withdrawalType === 'static'">静态</span
-          ><span v-if="withdrawalType === 'dynamic'">动态</span>提现
-        </div>
-        <!-- 静态展示 toptip -->
-        <div v-if="withdrawalType === 'static'" class="top-tip">
-          <div class="tip">提现静态收益会显著影响算力释放率，请谨慎提现</div>
-        </div>
-        <!-- 余额 -->
-        <div class="balance">
-          <div class="label">可用余额</div>
-          <div class="value">
-            200 USDT
-            <img src="@/assets/images/icons/power.svg" alt="" />
-          </div>
-        </div>
-        <van-divider class="divider" />
+        <div class="title">INI转账</div>
         <div class="input-box">
           <CInput
             label="交易密码:"
@@ -42,8 +26,15 @@
         </div>
         <div class="input-box">
           <CInput
-            @update:value="handleUpdateWithdrawalNum"
-            label="提现数量:"
+            label="To:"
+            placeholder="请输入目标 ID"
+            v-model:value="safePassword"
+          >
+          </CInput>
+        </div>
+        <div class="input-box">
+          <CInput
+            label="转账数量"
             v-model:value="value"
             type="digit"
             :border="false"
@@ -53,13 +44,9 @@
               <div @click.stop="handleMaxNum" class="max">Max</div>
             </template>
             <template #unit>
-              <div class="unit">USDT</div>
+              <div class="unit">INI</div>
             </template>
           </CInput>
-        </div>
-        <div class="expected">
-          <div class="left">预计消耗手续费：</div>
-          <div class="right van-ellipsis">--INI</div>
         </div>
         <div class="expected">
           <div class="left">INI可用余额</div>
@@ -70,12 +57,6 @@
             >提现</CButton
           >
         </div>
-        <div class="tips">
-          <div v-if="value > balance" class="not-enough-tip">
-            提现金额不足，请先充值
-          </div>
-          <div v-else class="tip">提现将于24小时内到账</div>
-        </div>
       </div>
       <PasswordLock v-else @close="handleClose" />
     </div>
@@ -83,22 +64,14 @@
 </template>
 
 <script setup>
-import { computed, nextTick, ref } from "vue";
+import { computed, ref } from "vue";
 import CInput from "@/components/c-input.vue";
 import PasswordLock from "./password-lock.vue";
-defineProps({
-  withdrawalType: {
-    type: String,
-    // 静态提现 动态提现 dynamic
-    default: "",
-  },
-});
 const show = defineModel("show", { default: false });
-const value = ref(200);
+const value = ref("");
 const safePassword = ref("");
 const passwordVisible = ref(false);
 const passwordLock = ref(false);
-const balance = ref(200);
 
 const disabled = computed(() => {
   return !value.value || !safePassword.value;
@@ -112,13 +85,6 @@ const handleMaxNum = () => {
 };
 const handleWithdrawal = () => {
   console.log("handleWithdrawal", value.value);
-};
-const handleUpdateWithdrawalNum = (val) => {
-  if (Number(val) > balance.value) {
-    nextTick(() => {
-      handleMaxNum();
-    });
-  }
 };
 </script>
 <style lang="scss" scoped>
