@@ -53,3 +53,38 @@ export const transferAccount = (data) => {
     data,
   });
 };
+/**
+ * 获取手续费
+ * @returns
+ */
+export const getCommission = () => {
+  return request({
+    url: "/h5/coin/price/getFee",
+    method: "GET",
+  });
+};
+/**
+ * 提现 USDT 所需要的 INI
+ * @param {*} data 
+ * @returns 
+ */
+export const getWithdrawalNeedINI = (data) => {
+  return request({
+    url: "/h5/coin/price/payout",
+    method: "POST",
+    data,
+  });
+};
+
+/**
+ * 获取资产记录
+ * @param {*} type 
+ * @returns 
+ */
+export const getAssetRecords = (type, params) => {
+  return request({
+    url: `/h5/user/assert/${type}/history`,
+    method: "GET",
+    params
+  });
+};

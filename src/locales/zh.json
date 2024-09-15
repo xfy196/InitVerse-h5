@@ -216,7 +216,7 @@
     "numLabel": "转账数量:",
     "numPlaceholder": "请输入转账数量",
     "balanceLabel": "INI可用余额",
-    "withdrawalBtn": "提现"
+    "transferBtn": "转账"
   },
   "withdrawal": {
     "title": "提现",

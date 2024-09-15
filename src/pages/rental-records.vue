@@ -1,23 +1,23 @@
 <template>
   <div class="container">
     <Back />
-    <div class="title">{{ $t('retanlRecords.title') }}</div>
+    <div class="title">{{ $t("retanlRecords.title") }}</div>
     <div class="lists" v-if="lists.length > 0">
-      <template v-for="item in lists" :key="item.id">
+      <template v-for="item in lists" :key="item.userPowerId">
         <div class="list-item">
           <div class="cell">
-            <div class="cell-title">{{ $t('retanlRecords.rentalTime') }}</div>
+            <div class="cell-title">{{ $t("retanlRecords.rentalTime") }}</div>
             <div class="cell-right">
               <div class="cell-right-text van-ellipsis">
-                {{ item.date }}
+                {{ item.createTime }}
               </div>
             </div>
           </div>
           <div class="cell">
-            <div class="cell-title">{{ $t('retanlRecords.rentalNumber') }}</div>
+            <div class="cell-title">{{ $t("retanlRecords.rentalNumber") }}</div>
             <div class="cell-right">
               <div class="cell-right-text van-ellipsis">
-                {{ item.USDT }}
+                {{ item.total }}
               </div>
               <div class="cell-right-icon">
                 <img
@@ -29,20 +29,28 @@
             </div>
           </div>
           <div class="cell">
-            <div class="cell-title">{{ $t('retanlRecords.getPower') }}</div>
+            <div class="cell-title">{{ $t("retanlRecords.getPower") }}</div>
             <div class="cell-right van-ellipsis">
               <div class="por">
-                <div class="por-to-usdt">({{ $t('retanlRecords.value') }}: {{ item.por }} USDT)</div>
-                <div class="">{{ item.por }} POR</div>
+                <div class="por-to-usdt">
+                  ({{ $t("retanlRecords.value") }}:
+                  {{
+                    BigNumber(item.total).multipliedBy(
+                      config.maximumReturnMultiplier
+                    )
+                  }}USDT)
+                </div>
+                <div class="">
+                   {{ BigNumber(item.total).div(100).toFixed(1) }}
+                  POR
+                </div>
               </div>
             </div>
           </div>
           <div class="cell">
-            <div class="cell-title">{{ $t('retanlRecords.getINI') }}</div>
+            <div class="cell-title">{{ $t("retanlRecords.getINI") }}</div>
             <div class="cell-right">
-              <div class="ini-to-usdt van-ellipsis">
-                {{ item.ini }} INI
-              </div>
+              <div class="ini-to-usdt van-ellipsis">{{ item.coinNum }} INI</div>
               <div class="ini-to-usdt-icon">
                 <img class="icon" src="@/assets/images/icons/ini.svg" alt="" />
               </div>
@@ -52,7 +60,7 @@
       </template>
     </div>
     <van-empty
-    v-else
+      v-else
       class="empty"
       :image="EmptyBg"
       :image-size="['6.32rem', '2.28rem']"
@@ -62,40 +70,28 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import EmptyBg from "@/assets/images/empty.png";
 import { useDateFormat } from "@vueuse/core";
 import Back from "../components/back.vue";
-const lists = ref([
-    {
-      id: 1,
-      date: useDateFormat(new Date(), "YYYY-MM-DD HH:mm:ss").value,
-      por: 100,
-      USDT: 100,
-      ini: 200,
-    },
-    {
-      id: 2,
-      date: useDateFormat(new Date(), "YYYY-MM-DD HH:mm:ss").value,
-      por: 100,
-      USDT: 100,
-      ini: 200,
-    },
-    {
-      id: 3,
-      date: useDateFormat(new Date(), "YYYY-MM-DD HH:mm:ss").value,
-      por: 100,
-      USDT: 100,
-      ini: 200,
-    },
-    {
-      id: 4,
-      date: useDateFormat(new Date(), "YYYY-MM-DD HH:mm:ss").value,
-      por: 100,
-      USDT: 100,
-      ini: 200,
-    },
-]);
+import { getPowerInEffect, getRentingPowerSetting } from "@/api/rental";
+
+import BigNumber from "bignumber.js";
+const lists = ref([]);
+const config = ref({
+  maximumReturnMultiplier: 2,
+});
+onBeforeMount(async () => {
+  try {
+    const res = await getPowerInEffect();
+    const settingRes = await getRentingPowerSetting();
+    config.value = settingRes.data;
+    console.log("🚀 ~ onBeforeMount ~ res:", res);
+    lists.value = res.data;
+  } catch (error) {
+    console.log("🚀 ~ onBeforeMount ~ error:", error);
+  }
+});
 </script>
 <style lang="scss" scoped>
 .container {

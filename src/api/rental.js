@@ -1,0 +1,45 @@
+import { request } from "@/utils/request";
+
+/**
+ * 购买算力
+ * @param {*} data
+ * @returns
+ */
+export const purchaseComputingPower = (data) => {
+  return request({
+    url: "/h5/power/pay",
+    method: "post",
+    data,
+  });
+};
+/**
+ * 获取有效算力订单
+ * @param {*} data
+ * @returns
+ */
+export const getPowerInEffect = () => {
+  return request({
+    url: "/h5/power/inEffect",
+    method: "get",
+  });
+};
+export const getPowerAllList = () => {
+  return request({
+    url: "h5/power/list",
+    method: "get",
+  });
+};
+export const getRentingPowerSetting = () => {
+  return request({
+    url: "/h5/power/setting",
+    method: "get",
+  });
+};
+
+export const getProjectedRevenue = (data) => {
+  return request({
+    url: "/h5/power/pre/pay",
+    method: "post",
+    data
+  });
+};

@@ -32,7 +32,10 @@
                 <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
                 <div class="right">
                   <div class="value">
-                    {{ new BigNumber(item.total).div(100) }} POR≈{{ item.total }} USDT
+                    {{ new BigNumber(item.total).div(100).toFixed(1) }} POR≈{{
+                      item.total
+                    }}
+                    USDT
                   </div>
                   <img src="@/assets/images/icons/power.svg" alt="" />
                 </div>
@@ -43,7 +46,10 @@
                 </div>
                 <div class="right">
                   <div class="value">
-                    {{ new BigNumber(item.notReleased).div(100) }} POR≈{{ item.notReleased }} USDT
+                    {{ new BigNumber(item.notReleased).div(100) }} POR≈{{
+                      item.notReleased
+                    }}
+                    USDT
                   </div>
                   <img src="@/assets/images/icons/power.svg" alt="" />
                 </div>
@@ -97,7 +103,10 @@
                 <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
                 <div class="right">
                   <div class="value">
-                    {{ new BigNumber(item.total).div(100) }} POR≈{{ item.total }} USDT
+                    {{ new BigNumber(item.total).div(100).toFixed(1) }} POR≈{{
+                      item.total
+                    }}
+                    USDT
                   </div>
                   <img src="@/assets/images/icons/power.svg" alt="" />
                 </div>
@@ -108,7 +117,9 @@
                 </div>
                 <div class="right">
                   <div class="value">
-                    {{ new BigNumber(item.notReleased).div(100) }} POR≈{{ item.notReleased }}
+                    {{ new BigNumber(item.notReleased).div(100).toFixed(1) }} POR≈{{
+                      item.notReleased
+                    }}
                     USDT
                   </div>
                   <img src="@/assets/images/icons/power.svg" alt="" />
@@ -169,7 +180,9 @@
             </div>
             <div class="tips cell-item">
               <div class="tip">
-                {{ $t("assets.fee") }}: 5%{{ $t("assets.withdrawalCount") }} INI
+                {{ $t("assets.fee") }}: {{ commission }}%{{
+                  $t("assets.withdrawalCount")
+                }} INI
               </div>
             </div>
           </div>
@@ -251,11 +264,11 @@
                 class="lock-box cell-item"
               >
                 <div class="left">
-                  {{ $t("assets.currentReleaseRate") }}: 150 INI/{{
+                  {{ $t("assets.currentReleaseRate") }}: {{ item.dayReleaseNum }} INI/{{
                     $t("assets.day")
                   }}
                 </div>
-                <div class="right">{{ $t("assets.lockCount") }}:3</div>
+                <div class="right">{{ $t("assets.lockCount") }}:{{ item.lockOrderNum }}</div>
               </div>
               <div
                 v-if="item.assetType != 5"
@@ -282,9 +295,7 @@
               </div>
               <div v-if="item.assetType != 4" class="tips cell-item">
                 <div class="tip">
-                  {{ $t("assets.fee") }}: 5%{{ $t("assets.withdrawalCount") }}
-                  {{ $t("assets.value") }}
-                  INI
+                  {{ $t("assets.fee") }}: {{commission}}%{{ $t("assets.withdrawalCount") }}{{ $t("assets.value") }}INI
                 </div>
               </div>
             </div>
@@ -295,6 +306,7 @@
     <Withdrawal
       v-if="showWithdrawal"
       :withdrawalType="withdrawalType"
+      :assetType="assetType"
       v-model:show="showWithdrawal"
     />
     <TransferAccount
@@ -311,18 +323,21 @@ import { onMounted, onUnmounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import Withdrawal from "./components/withdrawal.vue";
 import TransferAccount from "./components/transfer-account.vue";
-import { getIneffectNodeOrderList } from "@/api/assets";
+import { getIneffectNodeOrderList, getCommission } from "@/api/assets";
+import { getPowerAllList } from "@/api/rental";
 import { useI18n } from "vue-i18n";
 import { closeToast } from "vant";
 const router = useRouter();
 const { t } = useI18n();
 const withdrawalType = ref("");
+const assetType = ref(1);
 const rechargeAssets = ref([]);
 const computingPowerAssets = ref([]);
 const powerAssets = ref([]);
 const nodeAssets = ref([]);
 const showWithdrawal = ref(false);
 const showTransferAccount = ref(false);
+const commission = ref();
 const handleToOrderList = (type) => {
   router.push({
     path: "/order-list",
@@ -340,9 +355,13 @@ onMounted(async () => {
     const res = await getAssets();
     rechargeAssets.value = res.data.slice(0, 1);
     computingPowerAssets.value = res.data.slice(1, res.data.length);
+    const commissionRes = await getCommission();
+    commission.value = new BigNumber(commissionRes.data).multipliedBy(100);
+    const powerRes = await getPowerAllList();
+    powerAssets.value = powerRes.data;
     const nodeRes = await getIneffectNodeOrderList();
-    loadingToast.close();
     nodeAssets.value = nodeRes.data;
+    loadingToast.close();
   } catch (error) {
     console.log("🚀 ~ onMounted ~ error:", error);
   }
@@ -354,7 +373,7 @@ const handleToAssetsDetail = () => {
   router.push("/assets-detail");
 };
 const handleShowWithdrawal = (type) => {
-  console.log("🚀 ~ handleShowWithdrawal ~ type:", type);
+  assetType.value = type;
   if (type === 2 || type === 3 || type === 1) {
     if (type === 2) {
       withdrawalType.value = "static";

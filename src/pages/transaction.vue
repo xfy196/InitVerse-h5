@@ -112,14 +112,14 @@
               <div>Receive</div>
             </div>
             <div class="bottom">
-              <div>&nbsp;INI</div>
-              <div>&nbsp;USDT</div>
+              <div>1&nbsp;INI</div>
+              <div>{{iniData.price}}&nbsp;USDT</div>
             </div>
           </div>
           <!-- 可用余额 -->
           <div class="balance">
             <div>{{ $t("transaction.availableBalance") }}</div>
-            <div class="value">8888.88 INI</div>
+            <div class="value">{{ iniData.abBalance }} INI</div>
           </div>
         </div>
         <van-divider class="divider" />
@@ -175,17 +175,20 @@ import { useRouter } from "vue-router";
 import * as echarts from "echarts";
 import { getBalance } from "@/api/etc";
 import { useI18n } from "vue-i18n";
-import { getTradeCoinPrice, exchangeCoin, getCoinTransList } from "@/api/trade";
+import { getTradeCoinPrice, exchangeCoin, getCoinHistoryPrice, getAssetDetail } from "@/api/trade";
 import { closeToast, showLoadingToast } from "vant";
+import { useDateFormat } from "@vueuse/core";
 const router = useRouter();
 const { t } = useI18n();
 const chartRef = useTemplateRef("chartRef");
 const loading = ref(false);
-const iniNum = ref("");
+const iniNum = ref('');
 const iniData = ref({
   price: 0,
-  chg: 0,
+  abBalance: 0
 });
+const xData = ref([]);
+const yData = ref([]);
 const currencyList = ref([
   {
     id: "1",
@@ -214,6 +217,7 @@ onBeforeMount(async () => {
     message: t("loadingText"),
     duration: 0,
   });
+
   const res = await getTradeCoinPrice();
   currencyList.value.push({
     id: res.data.coinId,
@@ -221,9 +225,12 @@ onBeforeMount(async () => {
     price: res.data.price,
     name: res.data.coin.toUpperCase(),
   });
-  loadingToast.close();
   iniData.value.price = res.data.price;
   iniData.value.chg = res.data.chg;
+  const assetRes = await getAssetDetail(4)
+  iniData.value.abBalance = assetRes.data.balance
+  console.log("🚀 ~ onBeforeMount ~ assetRes:", assetRes)
+  loadingToast.close();
 });
 const toExchangeRecords = () => {
   router.push("/exchange-records");
@@ -235,7 +242,12 @@ const initChart = () => {
   const option = {
     xAxis: {
       type: "category",
-      data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      data: xData.value,
+      axisLabel: {
+        formatter: (value) => {
+          return useDateFormat(value, "MM-DD").value;
+        },
+      }
     },
     tooltip: {
       show: true,
@@ -248,7 +260,7 @@ const initChart = () => {
     grid: {
       containLabel: true,
       left: 0,
-      right: 0,
+      right: 10,
       top: 10,
       bottom: 0,
     },
@@ -258,7 +270,7 @@ const initChart = () => {
     },
     series: [
       {
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
+        data: yData.value,
         type: "line",
         smooth: true,
       },
@@ -269,8 +281,11 @@ const initChart = () => {
 
 onMounted(async () => {
   try {
-    const res = await getCoinTransList();
-    console.log("🚀 ~ onMounted ~ res:", res);
+    const historyRes = await getCoinHistoryPrice(30);
+    historyRes.data.forEach((item) => {
+      xData.value.push(item.dayDate);
+      yData.value.push(item.price);
+    });
     initChart();
     onTouch();
     window.addEventListener("resize", () => {
@@ -313,7 +328,7 @@ const handleExchange = async () => {
   }
 };
 const handleMaxNum = () => {
-  iniNum.value = "8888.88";
+  iniNum.value = iniData.value.abBalance;
 };
 onUnmounted(() => {
   closeToast();

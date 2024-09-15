@@ -36,3 +36,16 @@ export const exchangeCoin = (data) => {
     data,
   });
 };
+export const getAssetDetail = (type) => {
+  return request({
+    url: `/h5/user/assert/${type}`,
+    method: "GET",
+  });
+};
+
+export const  getCoinHistoryPrice = (day) => {
+  return request({
+    url: `/h5/coin/price/history/${day}`,
+    method: "GET",
+  })
+}

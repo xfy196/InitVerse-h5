@@ -9,8 +9,13 @@
           @click.stop="handleClose"
         />
         <div class="title">
-          USDT<span v-if="withdrawalType === 'static'">{{ $t("withdrawal.static") }}</span
-          ><span v-if="withdrawalType === 'dynamic'">{{ $t("withdrawal.dynamic") }}</span>{{ $t("withdrawal.title") }}
+          USDT<span v-if="withdrawalType === 'static'">{{
+            $t("withdrawal.static")
+          }}</span
+          ><span v-if="withdrawalType === 'dynamic'">{{
+            $t("withdrawal.dynamic")
+          }}</span
+          >{{ $t("withdrawal.title") }}
         </div>
         <!-- 静态展示 toptip -->
         <div v-if="withdrawalType === 'static'" class="top-tip">
@@ -20,7 +25,7 @@
         <div class="balance">
           <div class="label">{{ $t("withdrawal.balanceLabel") }}</div>
           <div class="value">
-            200 USDT
+            {{ balance }} USDT
             <img src="@/assets/images/icons/power.svg" alt="" />
           </div>
         </div>
@@ -60,16 +65,16 @@
         </div>
         <div class="expected">
           <div class="left">{{ $t("withdrawal.expectedLabel") }}</div>
-          <div class="right van-ellipsis">--INI</div>
+          <div class="right van-ellipsis">{{ expectedIni }} INI</div>
         </div>
         <div class="expected">
           <div class="left">{{ $t("withdrawal.balanceLabel") }}</div>
-          <div class="right van-ellipsis">200 INI</div>
+          <div class="right van-ellipsis">{{ expectedIni }} INI</div>
         </div>
         <div class="withdrawal-btn">
-          <CButton @click.stop="handleWithdrawal" :disabled="disabled"
-            >{{ $t("withdrawal.withdrawalBtn") }}</CButton
-          >
+          <CButton @click.stop="handleWithdrawal" :disabled="disabled">{{
+            $t("withdrawal.withdrawalBtn")
+          }}</CButton>
         </div>
         <div class="tips">
           <div v-if="value > balance" class="not-enough-tip">
@@ -84,43 +89,83 @@
 </template>
 
 <script setup>
-import { computed, nextTick, ref } from "vue";
+import { computed, nextTick, ref, watch } from "vue";
 import CInput from "@/components/c-input.vue";
 import PasswordLock from "./password-lock.vue";
-defineProps({
+import { getWithdrawalNeedINI } from "@/api/assets";
+import { useDebounceFn } from "@vueuse/core";
+import BigNumber from "bignumber.js";
+import { getAssetDetail } from "@/api/trade";
+import { useI18n } from "vue-i18n"
+const { t } = useI18n()
+const { withdrawalType, assetType } = defineProps({
   withdrawalType: {
     type: String,
     // 静态提现 动态提现 dynamic
     default: "",
   },
+  assetType: {
+    default: 1,
+    type: Number,
+  },
 });
 const show = defineModel("show", { default: false });
-const value = ref(200);
+const value = ref();
 const safePassword = ref("");
 const passwordVisible = ref(false);
 const passwordLock = ref(false);
-const balance = ref();
-
+const balance = ref(0);
+const expectedIni = ref(0);
 const disabled = computed(() => {
-  return !value.value || !safePassword.value;
+  return !value.value || !safePassword.value || !expectedIni.value;
 });
+
+watch(
+  show,
+  async (newVal) => {
+    if (newVal) {
+      const loadinbgToast = showLoadingToast(t("loadingText"))
+      const res = await getAssetDetail(assetType);
+      balance.value = res.data.balance
+      const iniRes = await getAssetDetail(4)
+      expectedIni.value = iniRes.data.balance
+      loadinbgToast.close()
+    } else {
+      balance.value = 0;
+    }
+  },
+  {
+    immediate: true,
+  }
+);
 
 const handleClose = () => {
   show.value = false;
 };
 const handleMaxNum = () => {
-  value.value = 200;
+  value.value = balance.value;
 };
 const handleWithdrawal = () => {
   console.log("handleWithdrawal", value.value);
 };
-const handleUpdateWithdrawalNum = (val) => {
-  if (Number(val) > balance.value) {
+const handleUpdateWithdrawalNum = useDebounceFn(async (val) => {
+  console.log("🚀 ~ handleUpdateWithdrawalNum ~ val:", val)
+  if (new BigNumber(val).gt(new BigNumber(balance.value))) {
     nextTick(() => {
       handleMaxNum();
     });
+  } else if (new BigNumber(val).isZero() || val === '') {
+    nextTick(() => {
+      value.value = '';
+      expectedIni.value = 0;
+    });
+  } else {
+    const res = await getWithdrawalNeedINI({
+      num: value.value,
+    });
+    expectedIni.value = res.data.num;
   }
-};
+}, 100);
 </script>
 <style lang="scss" scoped>
 .wrapper {

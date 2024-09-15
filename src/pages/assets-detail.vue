@@ -46,8 +46,11 @@ import { ref, onMounted, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import Back from "../components/back.vue";
 import EmptyBg from "@/assets/images/empty.png";
+import { getAssetRecords } from "@/api/assets";
 const finished = ref(true);
 const loading = ref(false);
+const pageNo = ref(1)
+const pageSize = ref(10)
 const { t } = useI18n();
 const list = ref([]);
 const tabs = computed(() => {
@@ -70,20 +73,46 @@ const tabs = computed(() => {
     },
   ];
 });
-const active = ref(0);
+const active = ref("static-usdt");
 onMounted(() => {
-  loading.value = true;
-  finished.value = false;
-  new Promise((resolve) => {
-    setTimeout(() => {
-      loading.value = false;
-      finished.value = true;
-      resolve();
-    }, 2000);
-  });
+  
+  onChange(active.value)
 });
-const onChange = (index) => {
-  active.value = index;
+const onChange = async (val) => {
+  active.value = val;
+  try {
+    loading.value = true;
+  finished.value = false;
+    let res = null;
+    if(val === "static-usdt") {
+      res = await getAssetRecords(2, {
+        pageNo: pageNo.value,
+        pageSize: pageSize.value
+      });
+    }else if(val === "dynamic-usdt") {
+      res = await getAssetRecords(3, {
+        pageNo: pageNo.value,
+        pageSize: pageSize.value
+      });
+    }else if(val === "ini-unlocked") {
+      res = await getAssetRecords(4, {
+        pageNo: pageNo.value,
+        pageSize: pageSize.value
+      });
+    }else if(val === "ini-locked") {
+      res = await getAssetRecords(5, {
+        pageNo: pageNo.value,
+        pageSize: pageSize.value
+      });
+    }
+    list.value = res.data;
+    
+  } catch (error) {
+    console.log("🚀 ~ onChange ~ error:", error)
+  }finally {
+    loading.value = false;
+    finished.value = true;
+  }
 };
 </script>
 <style lang="scss" scoped>

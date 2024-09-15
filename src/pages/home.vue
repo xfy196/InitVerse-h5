@@ -36,7 +36,7 @@
         <div class="balance-box">
           <div class="left">{{ $t("home.balanceKey") }}</div>
           <div class="right">
-            <div class="balance van-ellipsis">111111&nbsp;USDT</div>
+            <div class="balance van-ellipsis">{{balance}}&nbsp;USDT</div>
             <div @click="toRecharge" class="button borderColorActive">
               {{ $t("home.balanceBtn") }}
             </div>
@@ -64,7 +64,7 @@
               {{ expectPrice }} {{ $t("home.expectValue") }}
             </div>
           </div>
-          <div class="ini">--INI</div>
+          <div class="ini">{{ expectIni }}INI</div>
         </div>
         <div class="rental-power-btn">
           <CButton :disabled="disabledFee" @click="rentalPower">{{
@@ -85,43 +85,74 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, watch } from "vue";
+import { onBeforeMount, ref, computed, watch } from "vue";
 import { useDebounceFn } from "@vueuse/core";
-import { getTradeCoinPrice } from "@/api/trade";
 import { links } from "@/config";
 import BigNumber from "bignumber.js";
 import { useRouter } from "vue-router";
-
+import {
+  purchaseComputingPower,
+  getRentingPowerSetting,
+  getProjectedRevenue,
+} from "@/api/rental";
+import {getAssetDetail} from "@/api/trade"
+const balance = ref(0)
 const fee = ref();
-const expectPrice = ref("");
+const expectPrice = ref(0);
+const expectIni = ref(0);
 const router = useRouter();
 const disabledFee = computed(() => {
   return (
     new BigNumber(fee.value).lt(100) ||
-    !new BigNumber(fee.value).modulo(10).isZero()
+    !new BigNumber(fee.value).modulo(10).isZero() || BigNumber(fee.value).gt(10000)
   );
 });
-watch(fee, useDebounceFn(async (newVal) => {
+onBeforeMount(async () => {
   try {
-    if (newVal) {
-      const res = await getTradeCoinPrice();
-      expectPrice.value = new BigNumber(res.data.price).plus(
-        new BigNumber(newVal)
-      );
-    }else {
-      expectPrice.value = "";
-    }
+    const assetRes = await getAssetDetail(1)
+    balance.value = assetRes.data.balance
+    const res = await getRentingPowerSetting();
+    console.log("🚀 ~ onBeforeMount ~ res:", res);
   } catch (error) {
-    console.log("🚀 ~ watch ~ error:", error);
+    console.log("🚀 ~ onBeforeMount ~ error:", error);
   }
-}, 100));
+});
+watch(
+  fee,
+  useDebounceFn(async (newVal) => {
+    try {
+      if (newVal) {
+        const res = await getProjectedRevenue({
+          powerUSDT: newVal,
+        });
+        expectPrice.value = res.data.usdt;
+        expectIni.value = res.data.iniNums;
+      } else {
+        expectPrice.value = 0;
+        expectIni.value = 0;
+      }
+    } catch (error) {
+      console.log("🚀 ~ watch ~ error:", error);
+    }
+  }, 200)
+);
+
+const rentalPower = async () => {
+  try {
+    const res = await purchaseComputingPower({
+      powerUSDT: fee.value,
+    });
+    console.log("🚀 ~ rentalPower ~ res:", res);
+  } catch (error) {
+    console.log("🚀 ~ rentalPower ~ error:", error);
+  }
+};
 const toRentalRecords = () => {
   router.push("/rental-records");
 };
 const toRecharge = () => {
   router.push("/recharge");
 };
-onMounted(async () => {});
 </script>
 <style lang="scss" scoped>
 .home-container {

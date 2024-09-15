@@ -214,7 +214,7 @@
     "numLabel": "Transfer amount:",
     "numPlaceholder": "Please enter transfer amount",
     "balanceLabel": "Available INI balance",
-    "withdrawalBtn": "Withdraw"
+    "transferBtn": "Transfer"
   },
   "withdrawal": {
     "title": "Withdrawal",

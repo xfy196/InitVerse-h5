@@ -87,6 +87,7 @@ import { onBeforeMount, ref } from "vue";
 import BigNumber from "bignumber.js";
 import Back from "@/components/back.vue";
 import EmptyBg from "@/assets/images/empty.png";
+import { getPowerAllList } from "@/api/rental";
 import { useI18n } from "vue-i18n";
 import { getAllNodeOrderList } from "@/api/assets";
 import { useRoute } from "vue-router";
@@ -100,6 +101,10 @@ onBeforeMount(async () => {
     if (type.value == "nodeOrder") {
       title.value = t("orderList.nodeOrder");
       const res = await getAllNodeOrderList();
+      list.value = res.data;
+    } else if (type.value === "computingPowerOrder") {
+      title.value = t("orderList.computingPowerOrder");
+      const res = await getPowerAllList();
       list.value = res.data;
     }
   } catch (error) {

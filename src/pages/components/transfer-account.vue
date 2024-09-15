@@ -34,6 +34,7 @@
         </div>
         <div class="input-box">
           <CInput
+            @update:value="handleUpdateValue"
             :label="$t('transferAccount.numLabel')"
             :placeholder="$t('transferAccount.numPlaceholder')"
             v-model:value="value"
@@ -51,11 +52,14 @@
         </div>
         <div class="expected">
           <div class="left">{{ $t("transferAccount.balanceLabel") }}</div>
-          <div class="right van-ellipsis">200 INI</div>
+          <div class="right van-ellipsis">{{ expectedIni }} INI</div>
         </div>
         <div class="withdrawal-btn">
-          <CButton @click.stop="handleWithdrawal" :disabled="disabled"
-            >{{ $t("transferAccount.withdrawalBtn") }}</CButton
+          <CButton
+            :loading="loading"
+            @click.stop="handleWithdrawal"
+            :disabled="disabled"
+            >{{ $t("transferAccount.transferBtn") }}</CButton
           >
         </div>
       </div>
@@ -65,28 +69,49 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watch, nextTick } from "vue";
 import CInput from "@/components/c-input.vue";
 import PasswordLock from "./password-lock.vue";
 import { transferAccount } from "@/api/assets";
+import { getAssetDetail } from "@/api/trade";
+import { useI18n } from "vue-i18n";
+import BigNumber from "bignumber.js";
+const { t } = useI18n();
 const show = defineModel("show", { default: false });
 const value = ref("");
 const safePassword = ref("");
 const passwordVisible = ref(false);
 const passwordLock = ref(false);
+const loading = ref(false);
+const expectedIni = ref(0);
 const transferUid = ref("");
 const disabled = computed(() => {
-  return !value.value || !safePassword.value;
+  return !value.value || !safePassword.value || !expectedIni.value;
 });
 
 const handleClose = () => {
   show.value = false;
 };
 const handleMaxNum = () => {
-  value.value = 200;
+  value.value = expectedIni.value;
 };
+watch(
+  show,
+  async (newVal) => {
+    if (newVal) {
+      const loadinbgToast = showLoadingToast(t("loadingText"));
+      const iniRes = await getAssetDetail(4);
+      expectedIni.value = iniRes.data.balance;
+      loadinbgToast.close();
+    }
+  },
+  {
+    immediate: true,
+  }
+);
 const handleWithdrawal = async () => {
   try {
+    loading.value = true;
     await transferAccount({
       outNum: value.value,
       transferUid: transferUid.value,
@@ -95,6 +120,16 @@ const handleWithdrawal = async () => {
     show.value = false;
   } catch (error) {
     console.log("🚀 ~ handleWithdrawal ~ error:", error);
+  } finally {
+    loading.value = false;
+  }
+};
+const handleUpdateValue = (val) => {
+  console.log("🚀 ~ handleUpdateValue ~ val:", val)
+  if (BigNumber(val).gt(expectedIni.value)) {
+    nextTick(() => {
+      handleMaxNum()
+    });
   }
 };
 </script>
