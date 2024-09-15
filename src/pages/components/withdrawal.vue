@@ -99,7 +99,7 @@ const value = ref(200);
 const safePassword = ref("");
 const passwordVisible = ref(false);
 const passwordLock = ref(false);
-const balance = ref(200);
+const balance = ref();
 
 const disabled = computed(() => {
   return !value.value || !safePassword.value;

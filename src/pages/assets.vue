@@ -32,7 +32,7 @@
                 <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
                 <div class="right">
                   <div class="value">
-                    {{ item.total / 100 }} POR≈{{ item.total }} USDT
+                    {{ new BigNumber(item.total).div(100) }} POR≈{{ item.total }} USDT
                   </div>
                   <img src="@/assets/images/icons/power.svg" alt="" />
                 </div>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="right">
                   <div class="value">
-                    {{ item.notReleased / 100 }} POR≈{{ item.notReleased }} USDT
+                    {{ new BigNumber(item.notReleased).div(100) }} POR≈{{ item.notReleased }} USDT
                   </div>
                   <img src="@/assets/images/icons/power.svg" alt="" />
                 </div>
@@ -97,7 +97,7 @@
                 <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
                 <div class="right">
                   <div class="value">
-                    {{ item.total / 100 }} POR≈{{ item.total }} USDT
+                    {{ new BigNumber(item.total).div(100) }} POR≈{{ item.total }} USDT
                   </div>
                   <img src="@/assets/images/icons/power.svg" alt="" />
                 </div>
@@ -108,7 +108,7 @@
                 </div>
                 <div class="right">
                   <div class="value">
-                    {{ item.notReleased / 100 }} POR≈{{ item.notReleased }}
+                    {{ new BigNumber(item.notReleased).div(100) }} POR≈{{ item.notReleased }}
                     USDT
                   </div>
                   <img src="@/assets/images/icons/power.svg" alt="" />
@@ -306,6 +306,7 @@
 
 <script setup>
 import { getAssets } from "@/api/assets";
+import BigNumber from "bignumber.js";
 import { onMounted, onUnmounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import Withdrawal from "./components/withdrawal.vue";

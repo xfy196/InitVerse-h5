@@ -60,9 +60,11 @@ request.interceptors.response.use(
     }
   },
   (err) => {
-    showFailToast({
-      message: err.message,
-    });
+    if(err.code !== "ERR_CANCELED"){
+      showFailToast({
+        message: err.message,
+      });
+    }
     return Promise.reject(err);
   }
 );

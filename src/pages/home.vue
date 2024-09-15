@@ -60,12 +60,14 @@
         <div class="expect-box">
           <div class="top">
             <div class="left">{{ $t("home.expectTitle") }}</div>
-            <div class="right">{{ $t("home.expectValue") }}</div>
+            <div class="right">
+              {{ expectPrice }} {{ $t("home.expectValue") }}
+            </div>
           </div>
           <div class="ini">--INI</div>
         </div>
         <div class="rental-power-btn">
-          <CButton :disabled="!fee" @click="rentalPower">{{
+          <CButton :disabled="disabledFee" @click="rentalPower">{{
             $t("home.expectBtn")
           }}</CButton>
         </div>
@@ -83,33 +85,36 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import x from "@/assets/images/icons/x.svg";
-import tg from "@/assets/images/icons/tg.svg";
-import discord from "@/assets/images/icons/discord.svg";
-import email from "@/assets/images/icons/email.svg";
+import { onMounted, ref, computed, watch } from "vue";
+import { useDebounceFn } from "@vueuse/core";
+import { getTradeCoinPrice } from "@/api/trade";
+import { links } from "@/config";
+import BigNumber from "bignumber.js";
 import { useRouter } from "vue-router";
-import { useClipboard } from "@vueuse/core";
+
 const fee = ref();
+const expectPrice = ref("");
 const router = useRouter();
-const links = ref([
-  {
-    icon: x,
-    url: "https://x.com/zj_nft_game",
-  },
-  {
-    icon: tg,
-    url: "https://x.com/zj_nft_game",
-  },
-  {
-    icon: discord,
-    url: "https://x.com/zj_nft_game",
-  },
-  {
-    icon: email,
-    url: "https://x.com/zj_nft_game",
-  },
-]);
+const disabledFee = computed(() => {
+  return (
+    new BigNumber(fee.value).lt(100) ||
+    !new BigNumber(fee.value).modulo(10).isZero()
+  );
+});
+watch(fee, useDebounceFn(async (newVal) => {
+  try {
+    if (newVal) {
+      const res = await getTradeCoinPrice();
+      expectPrice.value = new BigNumber(res.data.price).plus(
+        new BigNumber(newVal)
+      );
+    }else {
+      expectPrice.value = "";
+    }
+  } catch (error) {
+    console.log("🚀 ~ watch ~ error:", error);
+  }
+}, 100));
 const toRentalRecords = () => {
   router.push("/rental-records");
 };

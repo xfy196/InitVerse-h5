@@ -174,10 +174,7 @@
 
 <script setup>
 import { useClipboard } from "@vueuse/core";
-import x from "@/assets/images/icons/x.svg";
-import tg from "@/assets/images/icons/tg.svg";
-import discord from "@/assets/images/icons/discord.svg";
-import email from "@/assets/images/icons/email.svg";
+import { links } from "@/config";
 import { computed, onMounted, ref } from "vue";
 import ModifyTransactionPassword from "./components/modify-transaction-password.vue";
 import ModifyTransactionAddress from "./components/modify-transaction-address.vue";
@@ -187,24 +184,7 @@ import { showToast } from "vant";
 const userStore = useUserStore();
 const { userInfo } = storeToRefs(userStore);
 const invideUrl = computed(() => `${import.meta.env.VITE_SITE_DOMAIN}/invite/${userInfo.value.shareCode}`)
-const links = ref([
-  {
-    icon: x,
-    url: "https://x.com/InitVerse",
-  },
-  {
-    icon: tg,
-    url: "https://t.me/InitVerseWeb3",
-  },
-  {
-    icon: discord,
-    url: "https://discord.com/invite/InitVerse",
-  },
-  {
-    icon: email,
-    url: "abc@xxxx.com",
-  },
-]);
+
 const { copy, isSupported } = useClipboard();
 const showModifyTransactionPassword = ref(false);
 const showModifyTransactionAddress = ref(false);
