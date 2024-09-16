@@ -9,6 +9,7 @@
     "title": "Back"
   },
   "loadingText": "Loading...",
+  "finishedText": "No more data",
   "home": {
     "notice": "Notice regarding the launch of the power rental activity",
     "rentalTitle": "Power Rental",

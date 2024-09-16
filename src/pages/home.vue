@@ -36,7 +36,7 @@
         <div class="balance-box">
           <div class="left">{{ $t("home.balanceKey") }}</div>
           <div class="right">
-            <div class="balance van-ellipsis">{{balance}}&nbsp;USDT</div>
+            <div class="balance van-ellipsis">{{ balance }}&nbsp;USDT</div>
             <div @click="toRecharge" class="button borderColorActive">
               {{ $t("home.balanceBtn") }}
             </div>
@@ -90,28 +90,35 @@ import { useDebounceFn } from "@vueuse/core";
 import { links } from "@/config";
 import BigNumber from "bignumber.js";
 import { useRouter } from "vue-router";
-import {
-  purchaseComputingPower,
-  getProjectedRevenue,
-} from "@/api/rental";
-import {getAssetDetail} from "@/api/trade"
-const balance = ref(0)
+import { useI18n } from "vue-i18n";
+import { purchaseComputingPower, getProjectedRevenue } from "@/api/rental";
+import { getAssetDetail } from "@/api/trade";
+import { showLoadingToast } from "vant";
+const balance = ref(0);
 const fee = ref();
 const expectPrice = ref(0);
 const expectIni = ref(0);
 const router = useRouter();
+const { t } = useI18n();
 const disabledFee = computed(() => {
   return (
     new BigNumber(fee.value).lt(100) ||
-    !new BigNumber(fee.value).modulo(10).isZero() || BigNumber(fee.value).gt(10000)
+    !new BigNumber(fee.value).modulo(10).isZero() ||
+    BigNumber(fee.value).gt(10000)
   );
 });
 onBeforeMount(async () => {
+  const loadinbgToast = showLoadingToast({
+    message: t("loadingText"),
+    duration: 0,
+  });
   try {
-    const assetRes = await getAssetDetail(1)
-    balance.value = assetRes.data.balance
+    const assetRes = await getAssetDetail(1);
+    balance.value = assetRes.data.balance;
   } catch (error) {
     console.log("🚀 ~ onBeforeMount ~ error:", error);
+  } finally {
+    loadinbgToast.close();
   }
 });
 watch(

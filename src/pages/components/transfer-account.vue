@@ -99,7 +99,10 @@ watch(
   show,
   async (newVal) => {
     if (newVal) {
-      const loadinbgToast = showLoadingToast(t("loadingText"));
+      const loadinbgToast = showLoadingToast({
+        message: t("loadingText"),
+        duration: 0,
+      });
       const iniRes = await getAssetDetail(4);
       expectedIni.value = iniRes.data.balance;
       loadinbgToast.close();
@@ -119,15 +122,14 @@ const handleWithdrawal = async () => {
     });
     show.value = false;
   } catch (error) {
-    console.log("🚀 ~ handleWithdrawal ~ error:", error);
   } finally {
     loading.value = false;
   }
 };
 const handleUpdateValue = (val) => {
-  if (BigNumber(val).gt(expectedIni.value)) {
-    nextTick(() => {
-      handleMaxNum()
+  if (BigNumber(val).gt(BigNumber(expectedIni.value))) {
+    setTimeout(() => {
+      handleMaxNum();
     });
   }
 };

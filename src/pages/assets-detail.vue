@@ -20,37 +20,55 @@
         </van-tab>
       </van-tabs>
       <van-list
-            :loading-text="$t('loadingText')"
-            :finished="finished"
-            v-model:loading="loading"
-          >
-          <template
-          v-if"list.length > 0"
-          
-          >
-          </template>
-          <van-empty
-            v-if="!list.length && !loading"
-            class="empty"
-            :image="EmptyBg"
-            :image-size="['6.32rem', '2.28rem']"
-            :description="$t('retanlRecords.empty')"
-          />
-          </van-list>
+        :offset="100"
+        :loading-text="$t('loadingText')"
+        :finished="finished"
+        :finished-text="$t('finishedText')"
+        @load="onLoad"
+        v-model:loading="loading"
+      >
+        <div class="list-content" v-if="list.length > 0">
+          <div class="item" v-for="(item, index) in list" :key="index">
+            <div class="top">
+              <div
+                :class="{
+                  red: item.changeAmount >= 0,
+                  green: item.changeAmount < 0,
+                }"
+                class="value"
+              >
+                {{ item.changeAmount }}
+              </div>
+              <div class="time">{{ item.createTime }}</div>
+            </div>
+            <div class="bottom">
+              <div class="form">{{ item.sourceTag }}</div>
+              <div class="detail">{{ item.changeSource }}</div>
+            </div>
+          </div>
+        </div>
+        <van-empty
+          v-if="!list.length && !loading"
+          class="empty"
+          :image="EmptyBg"
+          :image-size="['6.32rem', '2.28rem']"
+          :description="$t('retanlRecords.empty')"
+        />
+      </van-list>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import Back from "../components/back.vue";
 import EmptyBg from "@/assets/images/empty.png";
 import { getAssetRecords } from "@/api/assets";
-const finished = ref(true);
+const finished = ref(false);
 const loading = ref(false);
-const pageNo = ref(1)
-const pageSize = ref(10)
+const pageNo = ref(1);
+const pageSize = ref(10);
 const { t } = useI18n();
 const list = ref([]);
 const tabs = computed(() => {
@@ -74,49 +92,59 @@ const tabs = computed(() => {
   ];
 });
 const active = ref("static-usdt");
-onMounted(() => {
-  
-  onChange(active.value)
+watch(active, (val, oldVal) => {
+  if (val !== oldVal) {
+    list.value = [];
+  }
 });
 const onChange = async (val) => {
   active.value = val;
   try {
-    loading.value = true;
-  finished.value = false;
     let res = null;
-    if(val === "static-usdt") {
+    loading.value = true;
+    finished.value = false;
+    if (val === "static-usdt") {
       res = await getAssetRecords(2, {
         pageNo: pageNo.value,
-        pageSize: pageSize.value
+        pageSize: pageSize.value,
       });
-    }else if(val === "dynamic-usdt") {
+    } else if (val === "dynamic-usdt") {
       res = await getAssetRecords(3, {
         pageNo: pageNo.value,
-        pageSize: pageSize.value
+        pageSize: pageSize.value,
       });
-    }else if(val === "ini-unlocked") {
+    } else if (val === "ini-unlocked") {
       res = await getAssetRecords(4, {
         pageNo: pageNo.value,
-        pageSize: pageSize.value
+        pageSize: pageSize.value,
       });
-    }else if(val === "ini-locked") {
+    } else if (val === "ini-locked") {
       res = await getAssetRecords(5, {
         pageNo: pageNo.value,
-        pageSize: pageSize.value
+        pageSize: pageSize.value,
       });
     }
-    list.value = res.data;
-    
-  } catch (error) {
-    console.log("🚀 ~ onChange ~ error:", error)
-  }finally {
+
+    list.value.push(
+      ...res.rows
+    );
     loading.value = false;
-    finished.value = true;
+    if (list.value.length >= res.total) {
+      finished.value = true;
+    }
+  } catch (error) {
+    console.log("🚀 ~ onChange ~ error:", error);
   }
+};
+const onLoad = async () => {
+  onChange(active.value);
 };
 </script>
 <style lang="scss" scoped>
 .container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   .empty {
     margin-top: 120px;
   }
@@ -129,6 +157,72 @@ const onChange = async (val) => {
     text-align: center;
   }
   .assets-detail-tabs {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    flex: 1;
+    .van-list {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+    }
+    .list-content {
+      padding: 0 30px;
+      .item {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: linear-gradient(223deg, #353342 0%, #383b52 100%);
+        border-radius: 20px 20px 20px 20px;
+        margin-top: 20px;
+        padding: 0 30px;
+        .top {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 64px;
+          .value {
+            font-weight: 400;
+            font-size: 30px;
+            line-height: 35px;
+            &.red {
+              color: #ed5c42;
+            }
+            &.green {
+              color: #2abb93;
+            }
+          }
+          .time {
+            font-weight: 400;
+            font-size: 24px;
+            color: #aeaec3;
+            line-height: 28px;
+          }
+        }
+        .bottom {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 64px;
+
+          .form {
+            font-weight: 400;
+            font-size: 24px;
+            color: #ffffff;
+            line-height: 28px;
+          }
+          .detail {
+            font-weight: 400;
+            font-size: 24px;
+            color: #ffffff;
+            line-height: 28px;
+          }
+        }
+      }
+    }
+    .empty {
+    }
     margin-top: 30px;
     :deep(.van-tabs) {
       .van-tabs__wrap {

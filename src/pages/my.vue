@@ -20,7 +20,9 @@
           <img v-for="i in userInfo.groupLevel" :key="i" src="@/assets/images/icons/star.svg" alt="" />
         </div>
         <div class="level-icon">
-          <img v-for="i in userInfo.nodeLevel" :key="i" src="@/assets/images/icons/level2.svg" alt="" />
+          <img v-if="userInfo.nodeLevel === 1" src="@/assets/images/icons/level1.svg" alt="" />
+          <img v-else-if="userInfo.nodeLevel === 2" src="@/assets/images/icons/level2.svg" alt="" />
+          <img v-else-if="userInfo.nodeLevel === 3" src="@/assets/images/icons/level3.svg" alt="" />
         </div>
       </div>
       <div class="bottom">
@@ -83,10 +85,10 @@
         <van-divider
           style="margin: 0; border-color: rgba(39, 39, 43, 1)"
         ></van-divider>
-        <div class="cell-item">
-          <div class="label van-ellipsis">U2432534534</div>
+        <div class="cell-item" v-for="item in groupList" :key="item.userId">
+          <div class="label van-ellipsis">{{ item.userId }}</div>
           <div class="right">
-            <div class="status">200 USDT</div>
+            <div class="status">{{ item.selfPower }} USDT</div>
             <img class="icon" src="@/assets/images/icons/power.svg" alt="" />
           </div>
         </div>
@@ -95,7 +97,7 @@
         ></van-divider>
         <div class="cell-item">
           <div class="label van-ellipsis">
-            {{ $t("my.myCommunity") }}：7000 USDT（{{ $t("my.totalPower") }}-{{
+            {{ $t("my.myCommunity") }}：{{ groupTotalPower }} USDT（{{ $t("my.totalPower") }}-{{
               $t("my.regionPower")
             }}）
           </div>
@@ -176,13 +178,17 @@ import { links } from "@/config";
 import { computed, onMounted, ref } from "vue";
 import ModifyTransactionPassword from "./components/modify-transaction-password.vue";
 import ModifyTransactionAddress from "./components/modify-transaction-address.vue";
+import { useI18n } from "vue-i18n";
 import { useUserStore } from "../stores/user";
 import { storeToRefs } from "pinia";
 import { showToast } from "vant";
+import {getGroupList} from "@/api/user"
 const userStore = useUserStore();
 const { userInfo } = storeToRefs(userStore);
+const { t } = useI18n();
 const invideUrl = computed(() => `${import.meta.env.VITE_SITE_DOMAIN}/invite/${userInfo.value.shareCode}`)
-
+const groupList = ref([])
+const groupTotalPower = ref(0)
 const { copy, isSupported } = useClipboard();
 const showModifyTransactionPassword = ref(false);
 const showModifyTransactionAddress = ref(false);
@@ -201,10 +207,19 @@ const handleCopy = async (text) => {
   }
 };
 onMounted(async () => {
+  const loadingToast = showLoadingToast({
+    message: t("loadingText"),
+    duration: 0,
+  });
   try {
     await userStore.updateUserInfo()
+    const res = await getGroupList()
+    groupTotalPower.value = res.data.groupRelationList.reduce((prev, cur) => prev + cur.selfPower, 0)
+    groupList.value = res.data.groupRelationList
   } catch (error) {
     console.log("🚀 ~ onMounted ~ error:", error);
+  } finally {
+    loadingToast.close()
   }
 });
 </script>

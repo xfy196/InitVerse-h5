@@ -89,7 +89,7 @@ import Back from "@/components/back.vue";
 import EmptyBg from "@/assets/images/empty.png";
 import { getPowerAllList } from "@/api/rental";
 import { useI18n } from "vue-i18n";
-import { getAllNodeOrderList } from "@/api/assets";
+import { getAllNodeOrderList, getIniOrderList } from "@/api/assets";
 import { useRoute } from "vue-router";
 const route = useRoute();
 const type = ref(route.query.type ?? "computingPowerOrder");
@@ -105,6 +105,10 @@ onBeforeMount(async () => {
     } else if (type.value === "computingPowerOrder") {
       title.value = t("orderList.computingPowerOrder");
       const res = await getPowerAllList();
+      list.value = res.data;
+    } else if (type.value === "iniOrder") {
+      title.value = t("orderList.iniOrder");
+      const res = await getIniOrderList();
       list.value = res.data;
     }
   } catch (error) {

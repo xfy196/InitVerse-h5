@@ -6,9 +6,13 @@
         <div class="list-item">
           <div class="head">
             <div class="title">{{ $t("assets.computingPowerOrder") }}</div>
-            <img src="@/assets/images/icons/tab1-active.svg" alt="" />
+            <img src="@/assets/images/icons/power-order.svg" alt="" />
           </div>
-          <template v-for="(item, index) in powerAssets" :key="index">
+          <template
+            v-if="powerAssets.length > 0"
+            v-for="(item, index) in powerAssets"
+            :key="index"
+          >
             <div class="cell-box">
               <div class="cell">
                 <div class="label">{{ $t("assets.orderNumber") }}</div>
@@ -69,6 +73,11 @@
               <van-icon name="arrow-down" />
             </div>
           </template>
+          <template v-else>
+            <div class="empty">
+              您还没租赁过算力，去<router-link to="/">租赁算力</router-link>吧
+            </div>
+          </template>
         </div>
       </div>
 
@@ -77,9 +86,13 @@
         <div class="list-item">
           <div class="head">
             <div class="title">{{ $t("assets.nodeOrder") }}</div>
-            <img src="@/assets/images/icons/tab2-active.svg" alt="" />
+            <img src="@/assets/images/icons/node-order.svg" alt="" />
           </div>
-          <template v-for="(item, index) in nodeAssets" :key="index">
+          <template
+            v-if="nodeAssets.length > 0"
+            v-for="(item, index) in nodeAssets"
+            :key="index"
+          >
             <div class="cell-box">
               <div class="cell">
                 <div class="label">{{ $t("assets.orderNumber") }}</div>
@@ -117,9 +130,8 @@
                 </div>
                 <div class="right">
                   <div class="value">
-                    {{ new BigNumber(item.notReleased).div(100).toFixed(1) }} POR≈{{
-                      item.notReleased
-                    }}
+                    {{ new BigNumber(item.notReleased).div(100).toFixed(1) }}
+                    POR≈{{ item.notReleased }}
                     USDT
                   </div>
                   <img src="@/assets/images/icons/power.svg" alt="" />
@@ -135,6 +147,85 @@
             <div @click.stop="handleToOrderList('nodeOrder')" class="show-all">
               <div class="text">{{ $t("assets.showAll") }}</div>
               <van-icon name="arrow-down" />
+            </div>
+          </template>
+          <template v-else>
+            <div class="empty">您还不是节点</div>
+          </template>
+        </div>
+      </div>
+
+      <!-- INI订单 -->
+      <div class="list">
+        <div class="list-item">
+          <div class="head">
+            <div class="title">INI订单</div>
+            <img src="@/assets/images/icons/ini-order.svg" alt="" />
+          </div>
+          <template
+            v-if="nodeAssets.length > 0"
+            v-for="(item, index) in nodeAssets"
+            :key="index"
+          >
+            <div class="cell-box">
+              <div class="cell">
+                <div class="label">{{ $t("assets.orderNumber") }}</div>
+                <div class="right">
+                  <div class="value">{{ item.nodeOrderNo }}</div>
+                </div>
+              </div>
+              <div class="cell">
+                <div class="label">{{ $t("assets.startTime") }}</div>
+                <div class="right">
+                  <div class="value">{{ item.startTime }}</div>
+                </div>
+              </div>
+              <div class="cell">
+                <div class="label">{{ $t("assets.releaseRate") }}</div>
+                <div class="right">
+                  <div class="value">{{ item.releaseRate }}%/D</div>
+                </div>
+              </div>
+              <div class="cell">
+                <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
+                <div class="right">
+                  <div class="value">
+                    {{ new BigNumber(item.total).div(100).toFixed(1) }} POR≈{{
+                      item.total
+                    }}
+                    USDT
+                  </div>
+                  <img src="@/assets/images/icons/power.svg" alt="" />
+                </div>
+              </div>
+              <div class="cell">
+                <div class="label">
+                  {{ $t("assets.unreleasedComputingPower") }}
+                </div>
+                <div class="right">
+                  <div class="value">
+                    {{ new BigNumber(item.notReleased).div(100).toFixed(1) }}
+                    POR≈{{ item.notReleased }}
+                    USDT
+                  </div>
+                  <img src="@/assets/images/icons/power.svg" alt="" />
+                </div>
+              </div>
+              <div class="cell">
+                <div class="label">{{ $t("assets.status") }}</div>
+                <div class="right">
+                  <div class="status">{{ $t("assets.processing") }}</div>
+                </div>
+              </div>
+            </div>
+            <div @click.stop="handleToOrderList('iniOrder')" class="show-all">
+              <div class="text">{{ $t("assets.showAll") }}</div>
+              <van-icon name="arrow-down" />
+            </div>
+          </template>
+          <template v-else>
+            <div class="empty">
+              您还没租赁过算力，去<router-link to="/">租赁算力</router-link>吧
             </div>
           </template>
         </div>
@@ -182,7 +273,8 @@
               <div class="tip">
                 {{ $t("assets.fee") }}: {{ commission }}%{{
                   $t("assets.withdrawalCount")
-                }} INI
+                }}
+                INI
               </div>
             </div>
           </div>
@@ -264,11 +356,12 @@
                 class="lock-box cell-item"
               >
                 <div class="left">
-                  {{ $t("assets.currentReleaseRate") }}: {{ item.dayReleaseNum }} INI/{{
-                    $t("assets.day")
-                  }}
+                  {{ $t("assets.currentReleaseRate") }}:
+                  {{ item.dayReleaseNum }} INI/{{ $t("assets.day") }}
                 </div>
-                <div class="right">{{ $t("assets.lockCount") }}:{{ item.lockOrderNum }}</div>
+                <div class="right">
+                  {{ $t("assets.lockCount") }}:{{ item.lockOrderNum }}
+                </div>
               </div>
               <div
                 v-if="item.assetType != 5"
@@ -295,7 +388,9 @@
               </div>
               <div v-if="item.assetType != 4" class="tips cell-item">
                 <div class="tip">
-                  {{ $t("assets.fee") }}: {{commission}}%{{ $t("assets.withdrawalCount") }}{{ $t("assets.value") }}INI
+                  {{ $t("assets.fee") }}: {{ commission }}%{{
+                    $t("assets.withdrawalCount")
+                  }}{{ $t("assets.value") }}INI
                 </div>
               </div>
             </div>
@@ -323,7 +418,11 @@ import { onMounted, onUnmounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import Withdrawal from "./components/withdrawal.vue";
 import TransferAccount from "./components/transfer-account.vue";
-import { getIneffectNodeOrderList, getCommission } from "@/api/assets";
+import {
+  getIneffectNodeOrderList,
+  getCommission,
+  getInEffectIniOrderList,
+} from "@/api/assets";
 import { getPowerAllList } from "@/api/rental";
 import { useI18n } from "vue-i18n";
 import { closeToast } from "vant";
@@ -335,6 +434,7 @@ const rechargeAssets = ref([]);
 const computingPowerAssets = ref([]);
 const powerAssets = ref([]);
 const nodeAssets = ref([]);
+const iniAssets = ref([]);
 const showWithdrawal = ref(false);
 const showTransferAccount = ref(false);
 const commission = ref();
@@ -361,10 +461,10 @@ onMounted(async () => {
     powerAssets.value = powerRes.data;
     const nodeRes = await getIneffectNodeOrderList();
     nodeAssets.value = nodeRes.data;
+    const iniRes = await getInEffectIniOrderList();
+    iniAssets.value = iniRes.data;
     loadingToast.close();
-  } catch (error) {
-    console.log("🚀 ~ onMounted ~ error:", error);
-  }
+  } catch (error) {}
 });
 const handleToRecharge = () => {
   router.push("/recharge");
@@ -485,6 +585,21 @@ onUnmounted(() => {
             margin-right: 10px;
           }
         }
+      }
+    }
+    .empty {
+      height: 92px;
+      background: linear-gradient(223deg, #353342 0%, #383b52 100%);
+      border-radius: 20px 20px 20px 20px;
+      text-align: center;
+      font-weight: 400;
+      font-size: 24px;
+      color: #aeaec3;
+      line-height: 92px;
+      a {
+        background: linear-gradient(90deg, #9160ff 0%, #5e75ff 100%);
+        background-clip: text;
+        color: transparent; /* 确保文本颜色为透明 */
       }
     }
     .assets-list {

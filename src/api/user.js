@@ -77,3 +77,10 @@ export const putUserTransactionPassword = (data) => {
     data,
   });
 };
+
+export const getGroupList = () => {
+  return request({
+    url: "/h5/group/list",
+    method: "GET",
+  });
+};

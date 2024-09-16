@@ -78,7 +78,7 @@
             <van-col span="8">
               <div
                 :style="{
-                  color: item.chg > 0 ? '#ED5C42' : '#00C377',
+                  color: item.chg >= 0 ? '#ED5C42' : '#00C377',
                   'justify-content': 'flex-end',
                 }"
                 class="value van-ellipsis"
@@ -113,7 +113,7 @@
             </div>
             <div class="bottom">
               <div>1&nbsp;INI</div>
-              <div>{{iniData.price}}&nbsp;USDT</div>
+              <div>{{ iniData.price }}&nbsp;USDT</div>
             </div>
           </div>
           <!-- 可用余额 -->
@@ -173,65 +173,83 @@ import {
 import CButton from "@/components/c-button.vue";
 import { useRouter } from "vue-router";
 import * as echarts from "echarts";
-import { getBalance } from "@/api/etc";
+import { getRealTimeBalance } from "@/api/etc";
 import { useI18n } from "vue-i18n";
-import { getTradeCoinPrice, exchangeCoin, getCoinHistoryPrice, getAssetDetail } from "@/api/trade";
+import BigNumber from "bignumber.js";
+import {
+  getTradeCoinPrice,
+  exchangeCoin,
+  getCoinHistoryPrice,
+  getAssetDetail,
+} from "@/api/trade";
 import { closeToast, showLoadingToast } from "vant";
-import { useDateFormat } from "@vueuse/core";
+import { useDateFormat, useIntervalFn } from "@vueuse/core";
 const router = useRouter();
 const { t } = useI18n();
 const chartRef = useTemplateRef("chartRef");
 const loading = ref(false);
-const iniNum = ref('');
+const iniNum = ref("");
 const iniData = ref({
   price: 0,
-  abBalance: 0
+  abBalance: 0,
 });
 const xData = ref([]);
 const yData = ref([]);
-const currencyList = ref([
-  {
-    id: "1",
-    type: "BTC",
-    name: "BTC",
-    price: 10000,
-    chg: 1.11,
-  },
-  {
-    id: "2",
-    type: "ETH",
-    name: "ETH",
-    price: 10000,
-    chg: -1.11,
-  },
-]);
-
+const currencyList = ref([]);
 let chart = null;
 onBeforeMount(async () => {
-  // const res = await getBalance({ticker: 'BTC/USD', exchange_code: 'Binance'})
-  // const res = await getBalance({
-  //   ticker: "BTC/USD",
-  // });
-  // console.log(res);
-  const loadingToast = showLoadingToast({
-    message: t("loadingText"),
-    duration: 0,
-  });
-
-  const res = await getTradeCoinPrice();
-  currencyList.value.push({
-    id: res.data.coinId,
-    type: "INI",
-    price: res.data.price,
-    name: res.data.coin.toUpperCase(),
-  });
-  iniData.value.price = res.data.price;
-  iniData.value.chg = res.data.chg;
-  const assetRes = await getAssetDetail(4)
-  iniData.value.abBalance = assetRes.data.balance
-  console.log("🚀 ~ onBeforeMount ~ assetRes:", assetRes)
-  loadingToast.close();
+  try {
+    const loadingToast = showLoadingToast({
+      message: t("loadingText"),
+      duration: 0,
+    });
+    await requestBtcAndEth();
+    const res = await getTradeCoinPrice();
+    const chg = BigNumber(res.data.price)
+      .minus(res.data.yesterdayPrice)
+      .div(res.data.price)
+      .multipliedBy(100)
+      .toFixed(2);
+    currencyList.value.push({
+      id: res.data.coinId,
+      type: "INI",
+      price: res.data.price,
+      chg: chg,
+      name: res.data.coin.toUpperCase(),
+    });
+    iniData.value.price = res.data.price;
+    iniData.value.chg = chg;
+    const assetRes = await getAssetDetail(4);
+    iniData.value.abBalance = assetRes.data.balance;
+    useIntervalFn(() => {
+      requestBtcAndEth();
+    }, 5000);
+    loadingToast.close();
+  } catch (error) {
+    console.log("🚀 ~ onBeforeMount ~ error:", error);
+  }
 });
+const requestBtcAndEth = async () => {
+  try {
+    const btcAndEth = await getRealTimeBalance();
+    btcAndEth.data = btcAndEth.data.map((item, index) => {
+      return {
+        id: index,
+        type: item.ticker.split("/")[0],
+        price: item.close,
+        name: item.ticker.split("/")[0].toUpperCase(),
+        chg: BigNumber(item.close)
+          .minus(item.pre_close)
+          .div(item.close)
+          .multipliedBy(100)
+          .toFixed(2),
+      };
+    });
+    currencyList.value.splice(0, 2, ...btcAndEth.data);
+  } catch (error) {
+    console.log("🚀 ~ requestBtcAndEth ~ error:", error);
+  }
+};
 const toExchangeRecords = () => {
   router.push("/exchange-records");
 };
@@ -247,7 +265,7 @@ const initChart = () => {
         formatter: (value) => {
           return useDateFormat(value, "MM-DD").value;
         },
-      }
+      },
     },
     tooltip: {
       show: true,

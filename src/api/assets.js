@@ -88,3 +88,15 @@ export const getAssetRecords = (type, params) => {
     params
   });
 };
+export const getInEffectIniOrderList = () => {
+  return request({
+    url: "/h5/coin/order/inEffect",
+    method: "GET",
+  });
+};
+export const getIniOrderList = () => {
+  return request({
+    url: "/h5/coin/order/list",
+    method: "GET",
+  });
+};

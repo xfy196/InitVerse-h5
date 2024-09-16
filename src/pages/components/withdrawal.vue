@@ -96,8 +96,8 @@ import { getWithdrawalNeedINI } from "@/api/assets";
 import { useDebounceFn } from "@vueuse/core";
 import BigNumber from "bignumber.js";
 import { getAssetDetail } from "@/api/trade";
-import { useI18n } from "vue-i18n"
-const { t } = useI18n()
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 const { withdrawalType, assetType } = defineProps({
   withdrawalType: {
     type: String,
@@ -124,12 +124,15 @@ watch(
   show,
   async (newVal) => {
     if (newVal) {
-      const loadinbgToast = showLoadingToast(t("loadingText"))
+      const loadinbgToast = showLoadingToast({
+        message: t("loadingText"),
+        duration: 0,
+      });
       const res = await getAssetDetail(assetType);
-      balance.value = res.data.balance
-      const iniRes = await getAssetDetail(4)
-      expectedIni.value = iniRes.data.balance
-      loadinbgToast.close()
+      balance.value = res.data.balance;
+      const iniRes = await getAssetDetail(4);
+      expectedIni.value = iniRes.data.balance;
+      loadinbgToast.close();
     } else {
       balance.value = 0;
     }
@@ -149,14 +152,14 @@ const handleWithdrawal = () => {
   console.log("handleWithdrawal", value.value);
 };
 const handleUpdateWithdrawalNum = useDebounceFn(async (val) => {
-  console.log("🚀 ~ handleUpdateWithdrawalNum ~ val:", val)
+  console.log("🚀 ~ handleUpdateWithdrawalNum ~ val:", val);
   if (new BigNumber(val).gt(new BigNumber(balance.value))) {
     nextTick(() => {
       handleMaxNum();
     });
-  } else if (new BigNumber(val).isZero() || val === '') {
+  } else if (new BigNumber(val).isZero() || val === "") {
     nextTick(() => {
-      value.value = '';
+      value.value = "";
       expectedIni.value = 0;
     });
   } else {

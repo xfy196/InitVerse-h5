@@ -9,6 +9,7 @@
     "title": "返回"
   },
   "loadingText": "加载中...",
+  "finishedText": "没有更多数据了",
   "home": {
     "notice": "关于开启算力租赁活动的通知",
     "rentalTitle": "算力租赁",
