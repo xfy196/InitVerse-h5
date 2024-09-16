@@ -17,17 +17,38 @@
     <div class="level-box">
       <div class="top" v-if="userInfo.groupLevel > 0 || userInfo.nodeLevel > 0">
         <div class="stars">
-          <img v-for="i in userInfo.groupLevel" :key="i" src="@/assets/images/icons/star.svg" alt="" />
+          <img
+            v-for="i in userInfo.groupLevel"
+            :key="i"
+            src="@/assets/images/icons/star.svg"
+            alt=""
+          />
         </div>
         <div class="level-icon">
-          <img v-if="userInfo.nodeLevel === 1" src="@/assets/images/icons/level1.svg" alt="" />
-          <img v-else-if="userInfo.nodeLevel === 2" src="@/assets/images/icons/level2.svg" alt="" />
-          <img v-else-if="userInfo.nodeLevel === 3" src="@/assets/images/icons/level3.svg" alt="" />
+          <img
+            v-if="userInfo.nodeLevel === 1"
+            src="@/assets/images/icons/level1.svg"
+            alt=""
+          />
+          <img
+            v-else-if="userInfo.nodeLevel === 2"
+            src="@/assets/images/icons/level2.svg"
+            alt=""
+          />
+          <img
+            v-else-if="userInfo.nodeLevel === 3"
+            src="@/assets/images/icons/level3.svg"
+            alt=""
+          />
         </div>
       </div>
       <div class="bottom">
-        <div class="vip-level">{{ $t("my.vipLevel") }}：V{{ userInfo.groupLevel }}</div>
-        <div class="node-level">{{ $t("my.nodeLevel") }}：V{{ userInfo.nodeLevel }}</div>
+        <div class="vip-level">
+          {{ $t("my.vipLevel") }}：V{{ userInfo.groupLevel }}
+        </div>
+        <div class="node-level">
+          {{ $t("my.nodeLevel") }}：V{{ userInfo.nodeLevel }}
+        </div>
       </div>
     </div>
     <div class="setting-box">
@@ -85,10 +106,17 @@
         <van-divider
           style="margin: 0; border-color: rgba(39, 39, 43, 1)"
         ></van-divider>
-        <div class="cell-item" v-for="item in groupList" :key="item.userId">
-          <div class="label van-ellipsis">{{ item.userId }}</div>
+        <div
+          class="cell-item"
+          v-for="(item, index) in groupList"
+          :key="item.userId"
+        >
+          <div class="label van-ellipsis">
+            U{{ item.userId }}
+            <div v-if="index === 0" class="region">大区</div>
+          </div>
           <div class="right">
-            <div class="status">{{ item.selfPower }} USDT</div>
+            <div class="status">{{ item.groupPower }} USDT</div>
             <img class="icon" src="@/assets/images/icons/power.svg" alt="" />
           </div>
         </div>
@@ -97,9 +125,9 @@
         ></van-divider>
         <div class="cell-item">
           <div class="label van-ellipsis">
-            {{ $t("my.myCommunity") }}：{{ groupTotalPower }} USDT（{{ $t("my.totalPower") }}-{{
-              $t("my.regionPower")
-            }}）
+            {{ $t("my.myCommunity") }}：{{ groupTotalPower }} USDT（{{
+              $t("my.totalPower")
+            }}-{{ $t("my.regionPower") }}）
           </div>
         </div>
       </div>
@@ -182,13 +210,15 @@ import { useI18n } from "vue-i18n";
 import { useUserStore } from "../stores/user";
 import { storeToRefs } from "pinia";
 import { showToast } from "vant";
-import {getGroupList} from "@/api/user"
+import { getGroupList } from "@/api/user";
 const userStore = useUserStore();
 const { userInfo } = storeToRefs(userStore);
 const { t } = useI18n();
-const invideUrl = computed(() => `${import.meta.env.VITE_SITE_DOMAIN}/invite/${userInfo.value.shareCode}`)
-const groupList = ref([])
-const groupTotalPower = ref(0)
+const invideUrl = computed(
+  () => `${import.meta.env.VITE_SITE_DOMAIN}/invite/${userInfo.value.shareCode}`
+);
+const groupList = ref([]);
+const groupTotalPower = ref(0);
 const { copy, isSupported } = useClipboard();
 const showModifyTransactionPassword = ref(false);
 const showModifyTransactionAddress = ref(false);
@@ -212,14 +242,14 @@ onMounted(async () => {
     duration: 0,
   });
   try {
-    await userStore.updateUserInfo()
-    const res = await getGroupList()
-    groupTotalPower.value = res.data.groupRelationList.reduce((prev, cur) => prev + cur.selfPower, 0)
-    groupList.value = res.data.groupRelationList
+    await userStore.updateUserInfo();
+    const res = await getGroupList();
+    groupTotalPower.value = res.data.minRegionComputingPower;
+    groupList.value = res.data.groupRelationList;
   } catch (error) {
     console.log("🚀 ~ onMounted ~ error:", error);
   } finally {
-    loadingToast.close()
+    loadingToast.close();
   }
 });
 </script>
@@ -306,6 +336,22 @@ onMounted(async () => {
     margin-top: 38px;
     .cell-item {
       &:not(:first-child) {
+        .label {
+        display: flex;
+        align-items: center;
+        .region {
+          width: 64px;
+          height: 34px;
+          background: #00c377;
+          border-radius: 0px 0px 0px 0px;
+          font-weight: 400;
+          font-size: 20px;
+          color: #ffffff;
+          line-height: 34px;
+          text-align: center;
+          margin-left: 8px;
+        }
+      }
         .right {
           .status {
             font-weight: 400;
