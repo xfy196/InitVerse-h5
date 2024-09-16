@@ -9,7 +9,9 @@ export const useUserStore = defineStore("user", {
       withdrawalAddress: "",
       safePassword: "",
       tronAddress: '',
-      bnbAddress: ''
+      bnbAddress: '',
+      groupLevel: 0,
+      nodeLevel: 0
     },
     token: "",
   }),

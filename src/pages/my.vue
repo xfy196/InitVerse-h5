@@ -15,19 +15,17 @@
     </div>
     <van-divider class="divider"></van-divider>
     <div class="level-box">
-      <div class="top">
+      <div class="top" v-if="userInfo.groupLevel > 0 || userInfo.nodeLevel > 0">
         <div class="stars">
-          <img src="@/assets/images/icons/star.svg" alt="" />
-          <img src="@/assets/images/icons/star.svg" alt="" />
-          <img src="@/assets/images/icons/star.svg" alt="" />
+          <img v-for="i in userInfo.groupLevel" :key="i" src="@/assets/images/icons/star.svg" alt="" />
         </div>
         <div class="level-icon">
-          <img src="@/assets/images/icons/level2.svg" alt="" />
+          <img v-for="i in userInfo.nodeLevel" :key="i" src="@/assets/images/icons/level2.svg" alt="" />
         </div>
       </div>
       <div class="bottom">
-        <div class="vip-level">{{ $t("my.vipLevel") }}：V5</div>
-        <div class="node-level">{{ $t("my.nodeLevel") }}：V5</div>
+        <div class="vip-level">{{ $t("my.vipLevel") }}：V{{ userInfo.groupLevel }}</div>
+        <div class="node-level">{{ $t("my.nodeLevel") }}：V{{ userInfo.nodeLevel }}</div>
       </div>
     </div>
     <div class="setting-box">
