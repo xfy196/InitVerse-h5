@@ -35,13 +35,11 @@
                 <div class="por-to-usdt">
                   ({{ $t("retanlRecords.value") }}:
                   {{
-                    BigNumber(item.total).multipliedBy(
-                      config.maximumReturnMultiplier
-                    )
+                    BigNumber(item.total).multipliedBy(maximumReturnMultiplier)
                   }}USDT)
                 </div>
                 <div class="">
-                   {{ BigNumber(item.total).div(100).toFixed(1) }}
+                  {{ BigNumber(item.total).div(100).toFixed(1) }}
                   POR
                 </div>
               </div>
@@ -74,18 +72,16 @@ import { onBeforeMount, ref } from "vue";
 import EmptyBg from "@/assets/images/empty.png";
 import { useDateFormat } from "@vueuse/core";
 import Back from "../components/back.vue";
-import { getPowerInEffect, getRentingPowerSetting } from "@/api/rental";
-
+import { getPowerInEffect } from "@/api/rental";
+import { useSettingStore } from "@/stores/setting";
 import BigNumber from "bignumber.js";
+import {storeToRefs} from "pinia"
 const lists = ref([]);
-const config = ref({
-  maximumReturnMultiplier: 2,
-});
+const settingStore = useSettingStore();
+const { maximumReturnMultiplier } = storeToRefs(settingStore);
 onBeforeMount(async () => {
   try {
     const res = await getPowerInEffect();
-    const settingRes = await getRentingPowerSetting();
-    config.value = settingRes.data;
     console.log("🚀 ~ onBeforeMount ~ res:", res);
     lists.value = res.data;
   } catch (error) {

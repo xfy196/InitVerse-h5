@@ -92,7 +92,6 @@ import BigNumber from "bignumber.js";
 import { useRouter } from "vue-router";
 import {
   purchaseComputingPower,
-  getRentingPowerSetting,
   getProjectedRevenue,
 } from "@/api/rental";
 import {getAssetDetail} from "@/api/trade"
@@ -111,8 +110,6 @@ onBeforeMount(async () => {
   try {
     const assetRes = await getAssetDetail(1)
     balance.value = assetRes.data.balance
-    const res = await getRentingPowerSetting();
-    console.log("🚀 ~ onBeforeMount ~ res:", res);
   } catch (error) {
     console.log("🚀 ~ onBeforeMount ~ error:", error);
   }

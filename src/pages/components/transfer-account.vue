@@ -125,7 +125,6 @@ const handleWithdrawal = async () => {
   }
 };
 const handleUpdateValue = (val) => {
-  console.log("🚀 ~ handleUpdateValue ~ val:", val)
   if (BigNumber(val).gt(expectedIni.value)) {
     nextTick(() => {
       handleMaxNum()
