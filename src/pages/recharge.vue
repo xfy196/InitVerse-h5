@@ -29,7 +29,7 @@
         </div>
         <div class="address">{{ address }}</div>
         <div class="qrcode">
-          <img :src="imgUrl" alt="" />
+          <img v-if="imgUrl" :src="imgUrl" alt="" />
         </div>
       </div>
     </div>
