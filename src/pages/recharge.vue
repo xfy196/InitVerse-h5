@@ -50,7 +50,7 @@ const tab = ref("BSC");
 const userStore = useUserStore();
 const { t } = useI18n();
 const address = ref("");
-const { bnbAddress = "0xD8155eC59A04c34406946B527167ec17af0Ec5F9", tronAddress = "0xD8155eC59A04c34406946B527167ec17af0Ec5F9" } = storeToRefs(userStore);
+const { bnbAddress = "", tronAddress = "" } = storeToRefs(userStore);
 onMounted(async () => {
   changeTab(tab.value);
 });

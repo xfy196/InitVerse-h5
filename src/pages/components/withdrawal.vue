@@ -69,7 +69,7 @@
         </div>
         <div class="expected">
           <div class="left">{{ $t("withdrawal.balanceLabel") }}</div>
-          <div class="right van-ellipsis">{{ expectedIni }} INI</div>
+          <div class="right van-ellipsis">{{ balanceIni }} INI</div>
         </div>
         <div class="withdrawal-btn">
           <CButton @click.stop="handleWithdrawal" :disabled="disabled">{{
@@ -119,6 +119,7 @@ const safePassword = ref("");
 const passwordVisible = ref(false);
 const passwordLock = ref(false);
 const balance = ref(0);
+const balanceIni = ref(0);
 const expectedIni = ref(0);
 const disabled = computed(() => {
   return !value.value || !safePassword.value || !expectedIni.value;
@@ -135,7 +136,7 @@ watch(
       const res = await getAssetDetail(assetType);
       balance.value = res.data.balance;
       const iniRes = await getAssetDetail(4);
-      expectedIni.value = iniRes.data.balance;
+      balanceIni.value = iniRes.data.balance;
       loadinbgToast.close();
     } else {
       balance.value = 0;
@@ -162,6 +163,9 @@ const handleWithdrawal = async () => {
     console.log("🚀 ~ handleWithdrawal ~ res:", res);
   } catch (error) {
     console.log("🚀 ~ handleWithdrawal ~ error:", error);
+    if(error.code === '550' ){
+      passwordLock.value = true;
+    }
   }
 };
 const handleUpdateWithdrawalNum = useDebounceFn(async (val) => {
