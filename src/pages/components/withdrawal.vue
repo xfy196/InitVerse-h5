@@ -92,13 +92,13 @@
 import { computed, nextTick, ref, watch } from "vue";
 import CInput from "@/components/c-input.vue";
 import PasswordLock from "./password-lock.vue";
-import { getWithdrawalNeedINI } from "@/api/assets";
+import { getWithdrawalNeedINI, postWithdrawal } from "@/api/assets";
 import { useDebounceFn } from "@vueuse/core";
 import BigNumber from "bignumber.js";
 import { getAssetDetail } from "@/api/trade";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
-const { withdrawalType, assetType } = defineProps({
+const { withdrawalType, assetType, userAssetId } = defineProps({
   withdrawalType: {
     type: String,
     // 静态提现 动态提现 dynamic
@@ -106,6 +106,10 @@ const { withdrawalType, assetType } = defineProps({
   },
   assetType: {
     default: 1,
+    type: Number,
+  },
+  userAssetId: {
+    default: 0,
     type: Number,
   },
 });
@@ -148,11 +152,19 @@ const handleClose = () => {
 const handleMaxNum = () => {
   value.value = balance.value;
 };
-const handleWithdrawal = () => {
-  console.log("handleWithdrawal", value.value);
+const handleWithdrawal = async () => {
+  try {
+    const res = await postWithdrawal({
+      userAssetId,
+      outNum: value.value,
+      safePassWord: safePassword.value,
+    });
+    console.log("🚀 ~ handleWithdrawal ~ res:", res);
+  } catch (error) {
+    console.log("🚀 ~ handleWithdrawal ~ error:", error);
+  }
 };
 const handleUpdateWithdrawalNum = useDebounceFn(async (val) => {
-  console.log("🚀 ~ handleUpdateWithdrawalNum ~ val:", val);
   if (new BigNumber(val).gt(new BigNumber(balance.value))) {
     nextTick(() => {
       handleMaxNum();

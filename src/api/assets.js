@@ -100,3 +100,10 @@ export const getIniOrderList = () => {
     method: "GET",
   });
 };
+export const postWithdrawal = (data) => {
+  return request({
+    url: "/h5/assert/payout/",
+    method: "POST",
+    data,
+  });
+};

@@ -37,7 +37,7 @@
                 }"
                 class="value"
               >
-                {{ item.changeAmount }}
+                {{ item.changeAmount > 0 ? "+" : "-" }}{{ item.changeAmount }}
               </div>
               <div class="time">{{ item.createTime }}</div>
             </div>
@@ -145,6 +145,7 @@ const onLoad = async () => {
   display: flex;
   flex-direction: column;
   height: 100%;
+  margin-top: 30px;
   .empty {
     margin-top: 120px;
   }
@@ -181,7 +182,7 @@ const onLoad = async () => {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          height: 64px;
+          height: 56px;
           .value {
             font-weight: 400;
             font-size: 30px;
@@ -204,7 +205,7 @@ const onLoad = async () => {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          height: 64px;
+          height: 56px;
 
           .form {
             font-weight: 400;
@@ -221,9 +222,6 @@ const onLoad = async () => {
         }
       }
     }
-    .empty {
-    }
-    margin-top: 30px;
     :deep(.van-tabs) {
       .van-tabs__wrap {
         .van-tabs__nav {

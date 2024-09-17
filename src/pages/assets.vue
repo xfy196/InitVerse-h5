@@ -265,7 +265,7 @@
               <CButton @click="handleToRecharge">{{
                 $t("assets.recharge")
               }}</CButton>
-              <CButton @click="handleShowWithdrawal(item.assetType)">{{
+              <CButton @click="handleShowWithdrawal(item.assetType, item.userAssetId)">{{
                 $t("assets.withdrawal")
               }}</CButton>
             </div>
@@ -373,7 +373,7 @@
                 class="btns cell-item"
               >
                 <template v-if="[2, 3, 4].includes(item.assetType)">
-                  <CButton @click="handleShowWithdrawal(item.assetType)">{{
+                  <CButton @click="handleShowWithdrawal(item.assetType, item.userAssetId)">{{
                     [2, 3].includes(item.assetType)
                       ? $t("assets.withdrawal")
                       : $t("assets.transfer")
@@ -399,6 +399,7 @@
       </div>
     </div>
     <Withdrawal
+      :userAssetId="userAssetId"
       v-if="showWithdrawal"
       :withdrawalType="withdrawalType"
       :assetType="assetType"
@@ -430,6 +431,7 @@ const router = useRouter();
 const { t } = useI18n();
 const withdrawalType = ref("");
 const assetType = ref(1);
+const userAssetId = ref(0);
 const rechargeAssets = ref([]);
 const computingPowerAssets = ref([]);
 const powerAssets = ref([]);
@@ -472,8 +474,9 @@ const handleToRecharge = () => {
 const handleToAssetsDetail = () => {
   router.push("/assets-detail");
 };
-const handleShowWithdrawal = (type) => {
+const handleShowWithdrawal = (type, usId) => {
   assetType.value = type;
+  userAssetId.value = usId;
   if (type === 2 || type === 3 || type === 1) {
     if (type === 2) {
       withdrawalType.value = "static";
