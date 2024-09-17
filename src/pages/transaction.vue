@@ -126,6 +126,7 @@
         <!-- 兑换的 INI 数量 -->
         <div class="ini-input">
           <van-field
+          @update:model-value="handleUpdateIniNum"
             class="c-input"
             v-model="iniNum"
             type="digit"
@@ -146,7 +147,7 @@
         <!-- 预计获得 -->
         <div class="expected">
           <div class="title">{{ $t("transaction.expected") }}</div>
-          <div class="value">--&nbsp;USDT</div>
+          <div class="value">{{expectedIni}}&nbsp;USDT</div>
         </div>
         <div class="exchange-btn">
           <CButton
@@ -196,6 +197,7 @@ const iniData = ref({
 const xData = ref([]);
 const yData = ref([]);
 const currencyList = ref([]);
+const expectedIni = ref(0);
 let chart = null;
 onBeforeMount(async () => {
   try {
@@ -351,6 +353,9 @@ const handleMaxNum = () => {
 onUnmounted(() => {
   closeToast();
 });
+const handleUpdateIniNum = (value) => {
+  expectedIni.value = BigNumber(value).multipliedBy(iniData.value.price).toString();
+};
 </script>
 <style lang="scss" scoped>
 .divider {

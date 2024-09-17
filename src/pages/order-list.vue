@@ -2,69 +2,81 @@
   <div class="container">
     <Back />
     <div class="title">{{ title }}</div>
-    <div class="list" v-if="list.length > 0">
-      <div class="list-item" v-for="(item, index) in list" :key="index">
-        <div class="cell-box">
-          <div class="cell">
-            <div class="label">{{ $t("orderList.orderNumber") }}</div>
-            <div class="right">
-              <div class="value">{{ item.nodeOrderNo }}</div>
-            </div>
-          </div>
-          <div class="cell">
-            <div class="label">{{ $t("orderList.startTime") }}</div>
-            <div class="right">
-              <div class="value">{{ item.startTime }}</div>
-            </div>
-          </div>
-          <div class="cell">
-            <div class="label">{{ $t("orderList.releaseRate") }}</div>
-            <div class="right">
-              <div class="value">{{ item.releaseRate }}%/D</div>
-            </div>
-          </div>
-          <div class="cell">
-            <div class="label">{{ $t("orderList.computingPowerTotal") }}</div>
-            <div class="right">
-              <div class="value">
-                {{ new BigNumber(item.total).div(100) }} POR≈{{ item.total }} USDT
+    <van-list v-model:loading="loading" :finished="finished" finished-text="">
+      <div class="list" v-if="list.length > 0 && !loading">
+        <div class="list-item" v-for="(item, index) in list" :key="index">
+          <div class="cell-box">
+            <div class="cell">
+              <div class="label">{{ $t("orderList.orderNumber") }}</div>
+              <div class="right">
+                <div class="value">{{ item.nodeOrderNo }}</div>
               </div>
-              <img src="@/assets/images/icons/power.svg" alt="" />
             </div>
-          </div>
-          <div class="cell">
-            <div class="label">
-              {{ $t("orderList.unreleasedComputingPower") }}
-            </div>
-            <div class="right">
-              <div class="value">
-                {{ new BigNumber(item.notReleased).div(100) }} POR≈{{ item.notReleased }} USDT
+            <div class="cell">
+              <div class="label">{{ $t("orderList.startTime") }}</div>
+              <div class="right">
+                <div class="value">{{ item.startTime }}</div>
               </div>
-              <img src="@/assets/images/icons/power.svg" alt="" />
             </div>
-          </div>
-          <div class="cell">
-            <div class="label">{{ $t("orderList.endTime") }}</div>
-            <div class="right">
-              <div class="value">{{ item.endTime }}</div>
-            </div>
-          </div>
-          <div class="cell">
-            <div class="label">{{ $t("orderList.status") }}</div>
-            <div class="right">
-              <div class="status end" v-if="item.nodeStatus === '0'">
-                {{ $t("orderList.completed") }}
+            <div class="cell">
+              <div class="label">{{ $t("orderList.releaseRate") }}</div>
+              <div class="right">
+                <div class="value">{{ item.releaseRate }}%/D</div>
               </div>
-              <div class="status processing" v-else-if="item.nodeStatus === '1'">
-                {{ $t("orderList.processing") }}
+            </div>
+            <div class="cell">
+              <div class="label">{{ $t("orderList.computingPowerTotal") }}</div>
+              <div class="right">
+                <div class="value">
+                  {{ new BigNumber(item.total).div(100) }} POR≈{{
+                    item.total
+                  }}
+                  USDT
+                </div>
+                <img src="@/assets/images/icons/power.svg" alt="" />
+              </div>
+            </div>
+            <div class="cell">
+              <div class="label">
+                {{ $t("orderList.unreleasedComputingPower") }}
+              </div>
+              <div class="right">
+                <div class="value">
+                  {{ new BigNumber(item.notReleased).div(100) }} POR≈{{
+                    item.notReleased
+                  }}
+                  USDT
+                </div>
+                <img src="@/assets/images/icons/power.svg" alt="" />
+              </div>
+            </div>
+            <div class="cell">
+              <div class="label">{{ $t("orderList.endTime") }}</div>
+              <div class="right">
+                <div class="value">{{ item.endTime }}</div>
+              </div>
+            </div>
+            <div class="cell">
+              <div class="label">{{ $t("orderList.status") }}</div>
+              <div class="right">
+                <div class="status end" v-if="item.nodeStatus === '0'">
+                  {{ $t("orderList.completed") }}
+                </div>
+                <div
+                  class="status processing"
+                  v-else-if="item.nodeStatus === '1'"
+                >
+                  {{ $t("orderList.processing") }}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </van-list>
+
     <van-empty
-      v-else
+      v-if="!list.length && !loading"
       class="empty"
       :image="EmptyBg"
       :image-size="['6.32rem', '2.28rem']"
@@ -96,7 +108,11 @@ const type = ref(route.query.type ?? "computingPowerOrder");
 const { t } = useI18n();
 const title = ref(t("orderList.computingPowerOrder"));
 const list = ref([]);
+const loading = ref(false);
+const finished = ref(true);
 onBeforeMount(async () => {
+  loading.value = true;
+  finished.value = false;
   try {
     if (type.value == "nodeOrder") {
       title.value = t("orderList.nodeOrder");
@@ -113,6 +129,9 @@ onBeforeMount(async () => {
     }
   } catch (error) {
     console.log("🚀 ~ onBeforeMount ~ error:", error);
+  } finally {
+    loading.value = false;
+    finished.value = true;
   }
 });
 </script>
