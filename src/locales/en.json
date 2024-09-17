@@ -10,6 +10,11 @@
   },
   "loadingText": "Loading...",
   "finishedText": "No more data",
+  "passwordLock": {
+    "title": "Transaction Password Locked",
+    "tips": "Due to your incorrect input of the transaction password 3 times in 1 hour, your account has been locked. Please go to the personal center to modify the transaction password and try again.",
+    "button": "Go"
+  },
   "home": {
     "notice": "Notice regarding the launch of the power rental activity",
     "rentalTitle": "Power Rental",

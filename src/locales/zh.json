@@ -10,6 +10,11 @@
   },
   "loadingText": "加载中...",
   "finishedText": "没有更多数据了",
+  "passwordLock": {
+    "title": "交易密码已锁定",
+    "tips": "由于您在1小时内连续输入错误3次交易密码，您的账户已被锁定，请前往个人中心修改交易密码后重试",
+    "button": "前往"
+  },
   "home": {
     "notice": "关于开启算力租赁活动的通知",
     "rentalTitle": "算力租赁",

@@ -6,12 +6,12 @@
         color="#ffffff"
         class="close-icon"
       />
-      <div class="title">交易密码已锁定</div>
+      <div class="title">{{ $t("passwordLock.title") }}</div>
       <img class="icon" src="@/assets/images/icons/password-lock.svg" alt="" />
       <div class="tips">
-        由于您在1小时内连续输入错误3次交易密码，您的账户已被锁定，请前往个人中心修改交易密码后重试
+        {{ $t("passwordLock.tips") }}
       </div>
-      <CButton @click.stop="handleToMy" class="button">前往</CButton>
+      <CButton @click.stop="handleToMy" class="button">{{ $t("passwordLock.button") }}</CButton>
     </div>
 </template>
 
