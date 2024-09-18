@@ -12,9 +12,16 @@
         <c-input
           v-model:value="newPassword"
           :label="$t('my.transactionPassword')"
-          type="password"
+          :type="passwordVisible ? 'text' : 'password'"
           :placeholder="$t('my.placeholderTransactionPassword')"
-        />
+        >
+          <template #right-icon>
+            <van-icon
+              @click="passwordVisible = !passwordVisible"
+              :name="passwordVisible ? 'eye-o' : 'eye'"
+            />
+          </template>
+        </c-input>
         <c-input
           v-model:value="code"
           :label="$t('my.code')"
@@ -61,7 +68,7 @@ const { password } = defineProps({
     default: "",
   },
 });
-
+const passwordVisible = ref(false);
 const code = ref("");
 const newPassword = ref("");
 const show = defineModel("show", { default: false });
