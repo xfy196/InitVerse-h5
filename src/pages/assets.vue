@@ -265,9 +265,10 @@
               <CButton @click="handleToRecharge">{{
                 $t("assets.recharge")
               }}</CButton>
-              <CButton @click="handleShowWithdrawal(item.assetType, item.userAssetId)">{{
-                $t("assets.withdrawal")
-              }}</CButton>
+              <CButton
+                @click="handleShowWithdrawal(item.assetType, item.userAssetId)"
+                >{{ $t("assets.withdrawal") }}</CButton
+              >
             </div>
             <div class="tips cell-item">
               <div class="tip">
@@ -373,11 +374,16 @@
                 class="btns cell-item"
               >
                 <template v-if="[2, 3, 4].includes(item.assetType)">
-                  <CButton @click="handleShowWithdrawal(item.assetType, item.userAssetId)">{{
-                    [2, 3].includes(item.assetType)
-                      ? $t("assets.withdrawal")
-                      : $t("assets.transfer")
-                  }}</CButton>
+                  <CButton
+                    @click="
+                      handleShowWithdrawal(item.assetType, item.userAssetId)
+                    "
+                    >{{
+                      [2, 3].includes(item.assetType)
+                        ? $t("assets.withdrawal")
+                        : $t("assets.transfer")
+                    }}</CButton
+                  >
                   <CButton
                     @click="handleFlashExchange"
                     v-if="item.assetType == 4"
@@ -399,6 +405,7 @@
       </div>
     </div>
     <Withdrawal
+    @refresh="initData"
       :userAssetId="userAssetId"
       v-if="showWithdrawal"
       :withdrawalType="withdrawalType"
@@ -406,6 +413,7 @@
       v-model:show="showWithdrawal"
     />
     <TransferAccount
+    @refresh="initData"
       v-if="showTransferAccount"
       v-model:show="showTransferAccount"
     />
@@ -448,7 +456,7 @@ const handleToOrderList = (type) => {
     },
   });
 };
-onMounted(async () => {
+const initData = async () => {
   try {
     const loadingToast = showLoadingToast({
       message: t("loadingText"),
@@ -467,6 +475,9 @@ onMounted(async () => {
     iniAssets.value = iniRes.data;
     loadingToast.close();
   } catch (error) {}
+};
+onMounted(async () => {
+  initData();
 });
 const handleToRecharge = () => {
   router.push("/recharge");

@@ -78,6 +78,7 @@ import { useI18n } from "vue-i18n";
 import BigNumber from "bignumber.js";
 const { t } = useI18n();
 const show = defineModel("show", { default: false });
+const emit = defineEmits(["refresh"]);
 const value = ref("");
 const safePassword = ref("");
 const passwordVisible = ref(false);
@@ -115,12 +116,14 @@ watch(
 const handleWithdrawal = async () => {
   try {
     loading.value = true;
-    await transferAccount({
+    const res = await transferAccount({
       outNum: value.value,
       transferUid: transferUid.value,
       safePwd: safePassword.value,
     });
+    showToast(res.msg)
     show.value = false;
+    emit("refresh");
   } catch (error) {
   } finally {
     loading.value = false;

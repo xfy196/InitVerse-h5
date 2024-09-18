@@ -97,6 +97,7 @@ import { useDebounceFn } from "@vueuse/core";
 import BigNumber from "bignumber.js";
 import { getAssetDetail } from "@/api/trade";
 import { useI18n } from "vue-i18n";
+import { showToast } from "vant";
 const { t } = useI18n();
 const { withdrawalType, assetType, userAssetId } = defineProps({
   withdrawalType: {
@@ -114,6 +115,7 @@ const { withdrawalType, assetType, userAssetId } = defineProps({
   },
 });
 const show = defineModel("show", { default: false });
+const emit = defineEmits(["refresh"]);
 const value = ref();
 const safePassword = ref("");
 const passwordVisible = ref(false);
@@ -160,7 +162,9 @@ const handleWithdrawal = async () => {
       outNum: value.value,
       safePassWord: safePassword.value,
     });
-    console.log("🚀 ~ handleWithdrawal ~ res:", res);
+    showToast(res.msg)
+    show.value = false;
+    emit("refresh");
   } catch (error) {
     console.log("🚀 ~ handleWithdrawal ~ error:", error);
     if(error.code === '550' ){
