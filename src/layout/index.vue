@@ -9,9 +9,14 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onBeforeMount } from "vue";
+import { useUserStore } from "@/stores/user";
 import Head from "./head.vue";
 import TabBar from "./tab-bar.vue";
+const userStore = useUserStore();
+onBeforeMount(async () => {
+  await userStore.updateUserInfo();
+});
 </script>
 <style lang="scss" scoped>
 .layout-container {
