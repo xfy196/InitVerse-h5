@@ -37,7 +37,7 @@
                 }"
                 class="value"
               >
-                {{ item.changeAmount > 0 ? "+" : "-" }}{{ item.changeAmount }}
+                {{ item.changeAmount > 0 ? "+" : "" }}{{ item.changeAmount }}
               </div>
               <div class="time">{{ item.createTime }}</div>
             </div>

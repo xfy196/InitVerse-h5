@@ -83,7 +83,7 @@
                 }"
                 class="value van-ellipsis"
               >
-                {{ item.chg >= 0 ? "+" : "-" }}{{ item.chg }}%
+                {{ item.chg >= 0 ? "+" : "" }}{{ item.chg }}%
               </div>
             </van-col>
           </van-row>
