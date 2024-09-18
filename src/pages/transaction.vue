@@ -164,13 +164,7 @@
 
 <script setup>
 import Hammer from "hammerjs";
-import {
-  onBeforeMount,
-  onMounted,
-  useTemplateRef,
-  ref,
-  onUnmounted,
-} from "vue";
+import { onMounted, useTemplateRef, ref, onUnmounted } from "vue";
 import CButton from "@/components/c-button.vue";
 import { useRouter } from "vue-router";
 import * as echarts from "echarts";
@@ -200,38 +194,6 @@ const currencyList = ref([]);
 const expectedIni = ref(0);
 let chart = null;
 let interval = null;
-onBeforeMount(async () => {
-  try {
-    const loadingToast = showLoadingToast({
-      message: t("loadingText"),
-      duration: 0,
-    });
-    await requestBtcAndEth();
-    const res = await getTradeCoinPrice();
-    const chg = BigNumber(res.data.price)
-      .minus(res.data.yesterdayPrice)
-      .div(res.data.price)
-      .multipliedBy(100)
-      .toFixed(2);
-    currencyList.value.push({
-      id: res.data.coinId,
-      type: "INI",
-      price: res.data.price,
-      chg: chg,
-      name: res.data.coin.toUpperCase(),
-    });
-    iniData.value.price = res.data.price;
-    iniData.value.chg = chg;
-    const assetRes = await getAssetDetail(4);
-    iniData.value.abBalance = assetRes.data.balance;
-    interval = useIntervalFn(() => {
-      requestBtcAndEth();
-    }, 5000);
-    loadingToast.close();
-  } catch (error) {
-    console.log("🚀 ~ onBeforeMount ~ error:", error);
-  }
-});
 const requestBtcAndEth = async () => {
   try {
     const btcAndEth = await getRealTimeBalance();
@@ -304,7 +266,32 @@ const initChart = () => {
 };
 
 onMounted(async () => {
+  const loadingToast = showLoadingToast({
+    message: t("loadingText"),
+    duration: 0,
+  });
   try {
+    await requestBtcAndEth();
+    const res = await getTradeCoinPrice();
+    const chg = BigNumber(res.data.price)
+      .minus(res.data.yesterdayPrice)
+      .div(res.data.price)
+      .multipliedBy(100)
+      .toFixed(2);
+    currencyList.value.push({
+      id: res.data.coinId,
+      type: "INI",
+      price: res.data.price,
+      chg: chg,
+      name: res.data.coin.toUpperCase(),
+    });
+    iniData.value.price = res.data.price;
+    iniData.value.chg = chg;
+    const assetRes = await getAssetDetail(4);
+    iniData.value.abBalance = assetRes.data.balance;
+    interval = useIntervalFn(() => {
+      requestBtcAndEth();
+    }, 5000);
     const historyRes = await getCoinHistoryPrice(30);
     historyRes.data.forEach((item) => {
       xData.value.push(item.dayDate);
@@ -317,6 +304,8 @@ onMounted(async () => {
     });
   } catch (error) {
     console.log("🚀 ~ onMounted ~ error:", error);
+  } finally {
+    loadingToast.close();
   }
 });
 const onTouch = () => {
