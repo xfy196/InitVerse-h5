@@ -3,7 +3,7 @@ import { useUserStore } from "../stores/user";
 import router from "../router"
 import { showToast } from "vant";
 const CancelToken = axios.CancelToken;
-const baseURL = import.meta.env.VITE_BASE_URL;
+const baseURL = import.meta.env.VITE_BASE_PREFIX;
 const request = axios.create({
   baseURL,
   headers: {

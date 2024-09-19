@@ -36,20 +36,13 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       proxy: {
-        "/tsanghiApi": {
-          target: env.VITE_TS_API,
+        "/api": {
+          target: env.VITE_BASE_URL,
           changeOrigin: true,
           rewrite: (path) => {
-            return path.replace(/\/tsanghiApi/, "");
+            return path.replace(/\/api/, "");
           },
         },
-        // "/api": {
-        //   target: env.VITE_BASE_URL,
-        //   changeOrigin: true,
-        //   rewrite: (path) => {
-        //     return path.replace(/\/api/, "");
-        //   },
-        // },
       },
     },
   };
