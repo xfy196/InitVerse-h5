@@ -73,9 +73,8 @@
 <script setup>
 import { onBeforeMount, ref } from "vue";
 import EmptyBg from "@/assets/images/empty.png";
-import { useDateFormat } from "@vueuse/core";
 import Back from "../components/back.vue";
-import { getPowerInEffect } from "@/api/rental";
+import { getPowerAllList } from "@/api/rental";
 import { useSettingStore } from "@/stores/setting";
 import BigNumber from "bignumber.js";
 import {storeToRefs} from "pinia"
@@ -88,7 +87,7 @@ onBeforeMount(async () => {
   try {
     loading.value = true;
     finished.value = false;
-    const res = await getPowerInEffect();
+    const res = await getPowerAllList();
     console.log("🚀 ~ onBeforeMount ~ res:", res);
     lists.value = res.data;
   } catch (error) {
