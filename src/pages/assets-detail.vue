@@ -32,8 +32,8 @@
             <div class="top">
               <div
                 :class="{
-                  red: item.changeAmount >= 0,
-                  green: item.changeAmount < 0,
+                  red: item.changeType == 1,
+                  green: item.changeType == 2,
                 }"
                 class="value"
               >

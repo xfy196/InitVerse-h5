@@ -29,14 +29,14 @@
               <div class="cell">
                 <div class="label">{{ $t("assets.releaseRate") }}</div>
                 <div class="right">
-                  <div class="value">{{ item.releaseRate }}%/D</div>
+                  <div class="value">{{ BigNumber(item.releaseRate).multipliedBy(100) }}%/D</div>
                 </div>
               </div>
               <div class="cell">
                 <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
                 <div class="right">
                   <div class="value">
-                    {{ new BigNumber(item.total).div(100).toFixed(1) }} POR≈{{
+                    {{ BigNumber(item.total).div(100).toFixed(1) }} POR≈{{
                       item.total
                     }}
                     USDT
@@ -50,7 +50,7 @@
                 </div>
                 <div class="right">
                   <div class="value">
-                    {{ new BigNumber(item.notReleased).div(100) }} POR≈{{
+                    {{ BigNumber(item.notReleased).div(100) }} POR≈{{
                       item.notReleased
                     }}
                     USDT
