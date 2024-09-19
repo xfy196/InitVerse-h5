@@ -107,7 +107,7 @@ const disabledFee = computed(() => {
     BigNumber(fee.value).gt(10000)
   );
 });
-onBeforeMount(async () => {
+const initData = async () => {
   const loadinbgToast = showLoadingToast({
     message: t("loadingText"),
     duration: 0,
@@ -120,6 +120,9 @@ onBeforeMount(async () => {
   } finally {
     loadinbgToast.close();
   }
+};
+onBeforeMount(async () => {
+  initData();
 });
 watch(
   fee,
@@ -146,7 +149,8 @@ const rentalPower = async () => {
     const res = await purchaseComputingPower({
       powerUSDT: fee.value,
     });
-    console.log("🚀 ~ rentalPower ~ res:", res);
+    showSuccessToast(res.msg);
+    initData();
   } catch (error) {
     console.log("🚀 ~ rentalPower ~ error:", error);
   }
