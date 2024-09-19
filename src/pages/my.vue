@@ -141,7 +141,7 @@
           <div class="right">
             <div class="status">{{ userInfo.shareCode }}</div>
             <img
-              @click="handleCopy('UDA76SS')"
+              @click="handleCopy(userInfo.shareCode)"
               class="icon"
               src="@/assets/images/icons/copy.svg"
               alt=""
