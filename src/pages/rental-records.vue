@@ -2,7 +2,8 @@
   <div class="container">
     <Back />
     <div class="title">{{ $t("retanlRecords.title") }}</div>
-    <div class="lists" v-if="lists.length > 0">
+    <van-list v-model:loading="loading" :finished="finished" finished-text="">
+      <div class="lists" v-if="lists.length > 0">
       <template v-for="item in lists" :key="item.userPowerId">
         <div class="list-item">
           <div class="cell">
@@ -57,8 +58,10 @@
         </div>
       </template>
     </div>
+    </van-list>
+    
     <van-empty
-      v-else
+      v-if="!lists.length && !loading"
       class="empty"
       :image="EmptyBg"
       :image-size="['6.32rem', '2.28rem']"
@@ -77,15 +80,22 @@ import { useSettingStore } from "@/stores/setting";
 import BigNumber from "bignumber.js";
 import {storeToRefs} from "pinia"
 const lists = ref([]);
+const loading = ref(false);
+const finished = ref(true);
 const settingStore = useSettingStore();
 const { maximumReturnMultiplier } = storeToRefs(settingStore);
 onBeforeMount(async () => {
   try {
+    loading.value = true;
+    finished.value = false;
     const res = await getPowerInEffect();
     console.log("🚀 ~ onBeforeMount ~ res:", res);
     lists.value = res.data;
   } catch (error) {
     console.log("🚀 ~ onBeforeMount ~ error:", error);
+  }finally{
+    loading.value = false;
+    finished.value = true;
   }
 });
 </script>
