@@ -80,7 +80,6 @@
           <div v-if="value > balance" class="not-enough-tip">
             {{ $t("withdrawal.notEnoughTip") }}
           </div>
-          <div v-else class="tip">{{ $t("withdrawal.tip") }}</div>
         </div>
       </div>
       <PasswordLock v-else @close="handleClose" />

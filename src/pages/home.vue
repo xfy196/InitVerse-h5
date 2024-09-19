@@ -64,7 +64,7 @@
               {{ expectPrice }} {{ $t("home.expectValue") }}
             </div>
           </div>
-          <div class="ini">{{ expectIni }}INI</div>
+          <div class="ini">{{ expectIni }} INI</div>
         </div>
         <div class="rental-power-btn">
           <CButton :disabled="disabledFee" @click="rentalPower">{{
