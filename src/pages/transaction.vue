@@ -265,7 +265,8 @@ const initChart = () => {
   chart.setOption(option);
 };
 
-onMounted(async () => {
+const initData = async () => {
+  iniNum.value = "";
   const loadingToast = showLoadingToast({
     message: t("loadingText"),
     duration: 0,
@@ -278,7 +279,7 @@ onMounted(async () => {
       .div(res.data.price)
       .multipliedBy(100)
       .toFixed(2);
-    currencyList.value.push({
+    currencyList.value.splice(2, 1, {
       id: res.data.coinId,
       type: "INI",
       price: res.data.price,
@@ -307,6 +308,10 @@ onMounted(async () => {
   } finally {
     loadingToast.close();
   }
+};
+
+onMounted(async () => {
+  initData();
 });
 const onTouch = () => {
   const hammer = new Hammer(chartRef.value);
@@ -330,10 +335,12 @@ const onTouch = () => {
 const handleExchange = async () => {
   try {
     loading.value = true;
-    await exchangeCoin({
+    const res = await exchangeCoin({
       price: iniData.value.price,
       swapCoinCount: iniNum.value,
     });
+    showSuccessToast(res.msg);
+    initData();
   } catch (error) {
     console.log("🚀 ~ handleExchange ~ error:", error);
   } finally {
@@ -347,9 +354,9 @@ onUnmounted(() => {
   closeToast();
 });
 const handleUpdateIniNum = (value) => {
-  expectedIni.value = BigNumber(value)
+  expectedIni.value = value ? BigNumber(value)
     .multipliedBy(iniData.value.price)
-    .toString();
+    .toString() : 0;
 };
 </script>
 <style lang="scss" scoped>
