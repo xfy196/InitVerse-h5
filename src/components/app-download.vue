@@ -3,13 +3,16 @@
     <div class="app-download-content">
       <div class="app-download-text">{{ $t("download.title") }}</div>
       <div class="app-download-btn">
-        <router-link to="/">{{ $t("download.btn") }}</router-link>
+        <a target="_blank" :href="appDownloadUrl">{{ $t("download.btn") }}</a>
       </div>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+const appDownloadUrl = ref(import.meta.env.VITE_APP_DOWNLOAD_URL);
+</script>
 <style lang="scss" scoped>
 .app-download-container {
   padding: 0 30px;
