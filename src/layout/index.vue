@@ -1,5 +1,6 @@
 <template>
   <div class="layout-container">
+    <AppDownload v-if="route.path === '/' || route.path === '/rental-power'" />
     <Head />
     <div class="main">
       <RouterView />
@@ -13,6 +14,8 @@ import { onBeforeMount } from "vue";
 import { useUserStore } from "@/stores/user";
 import Head from "./head.vue";
 import TabBar from "./tab-bar.vue";
+import { useRoute } from "vue-router";
+const route = useRoute();
 const userStore = useUserStore();
 onBeforeMount(async () => {
   await userStore.updateUserInfo();

@@ -8,6 +8,10 @@
   "back": {
     "title": "Back"
   },
+  "download": {
+    "title": "Download App to Phone",
+    "btn": "Download APP"
+  },
   "loadingText": "Loading...",
   "finishedText": "No more data",
   "passwordLock": {

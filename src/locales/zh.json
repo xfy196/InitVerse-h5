@@ -8,6 +8,10 @@
   "back": {
     "title": "返回"
   },
+  "download": {
+    "title": "下载应用到手机",
+    "btn": "下载APP"
+  },
   "loadingText": "加载中...",
   "finishedText": "没有更多数据了",
   "passwordLock": {
