@@ -405,7 +405,7 @@
       </div>
     </div>
     <Withdrawal
-    @refresh="initData"
+      @refresh="initData"
       :userAssetId="userAssetId"
       v-if="showWithdrawal"
       :withdrawalType="withdrawalType"
@@ -413,7 +413,7 @@
       v-model:show="showWithdrawal"
     />
     <TransferAccount
-    @refresh="initData"
+      @refresh="initData"
       v-if="showTransferAccount"
       v-model:show="showTransferAccount"
     />
@@ -527,7 +527,6 @@ onUnmounted(() => {
         margin-top: 0;
       }
       .list-item {
-        margin: top 30px;
         .head {
           display: flex;
           justify-content: space-between;
@@ -610,6 +609,7 @@ onUnmounted(() => {
       font-size: 24px;
       color: #aeaec3;
       line-height: 92px;
+      margin-top: 20px;
       a {
         background: linear-gradient(90deg, #9160ff 0%, #5e75ff 100%);
         background-clip: text;
