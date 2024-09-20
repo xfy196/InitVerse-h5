@@ -75,7 +75,9 @@
           </template>
           <template v-else>
             <div class="empty">
-              您还没租赁过算力，去<router-link to="/">租赁算力</router-link>吧
+              {{ $t("assets.powerEmpty") }}<router-link to="/">{{
+                $t("assets.rentalPower")
+              }}</router-link>
             </div>
           </template>
         </div>
@@ -150,7 +152,7 @@
             </div>
           </template>
           <template v-else>
-            <div class="empty">您还不是节点</div>
+            <div class="empty">{{ $t("assets.nodeEmpty") }}</div>
           </template>
         </div>
       </div>
@@ -159,7 +161,7 @@
       <div class="list">
         <div class="list-item">
           <div class="head">
-            <div class="title">INI订单</div>
+            <div class="title">{{ $t("assets.iniOrder") }}</div>
             <img src="@/assets/images/icons/ini-order.svg" alt="" />
           </div>
           <template
@@ -225,7 +227,9 @@
           </template>
           <template v-else>
             <div class="empty">
-              您还没租赁过算力，去<router-link to="/">租赁算力</router-link>吧
+              {{ $t("assets.powerEmpty") }}<router-link to="/">{{
+                $t("assets.rentalPower")
+              }}</router-link>
             </div>
           </template>
         </div>
@@ -610,6 +614,7 @@ onUnmounted(() => {
       color: #aeaec3;
       line-height: 92px;
       margin-top: 20px;
+      padding: 0 30px;
       a {
         background: linear-gradient(90deg, #9160ff 0%, #5e75ff 100%);
         background-clip: text;

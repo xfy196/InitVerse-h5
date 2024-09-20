@@ -192,7 +192,11 @@
     "recharge": "充值",
     "value": "价值",
     "lock": "锁定",
-    "unlock": "未锁定"
+    "unlock": "未锁定",
+    "powerEmpty": "您还没租赁过算力，去",
+    "rentalPower": "租赁算力",
+    "nodeEmpty": "您还不是节点",
+    "iniOrder": "INI订单"
   },
   "assetsDetail": {
     "title": "资产明细",

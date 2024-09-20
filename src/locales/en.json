@@ -190,7 +190,11 @@
     "recharge": "Recharge",
     "value": "Value",
     "lock": "Lock",
-    "unlock": "Unlock"
+    "unlock": "Unlock",
+    "powerEmpty": "You haven't rented any computing power yet,",
+    "rentalPower": "Rent Computing Power",
+    "nodeEmpty": "You are not a node",
+    "iniOrder": "INI Order"
   },
   "assetsDetail": {
     "title": "Asset Details",
