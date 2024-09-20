@@ -68,7 +68,7 @@ const changeTab = async (value) => {
   } else {
     address.value = tronAddress;
   }
-  imgUrl.value = await generateQR(address.value);
+  imgUrl.value = address.value ? await generateQR(address.value) : "";
 };
 const handleCopy = async (value) => {
   await copy(value);
