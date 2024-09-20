@@ -37,7 +37,7 @@
             </div>
             <div v-else class="count-down-text">
               <van-count-down
-                @onFinish="handleCountDownFinish"
+                @finish="handleCountDownFinish"
                 format="sss"
                 :time="countDownTime"
               />{{ $t("my.afterGetCode") }}

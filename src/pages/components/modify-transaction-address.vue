@@ -30,7 +30,7 @@
               {{ $t("my.getCode") }}
             </div>
             <div v-else class="count-down-text">
-              <van-count-down @onFinish="handleCountDownFinish" format="sss" :time="countDownTime" />{{
+              <van-count-down @finish="handleCountDownFinish" format="sss" :time="countDownTime" />{{
                 $t("register.afterGetCode")
               }}
             </div>
