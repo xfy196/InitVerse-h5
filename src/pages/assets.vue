@@ -605,7 +605,7 @@ onUnmounted(() => {
       }
     }
     .empty {
-      height: 92px;
+      min-height: 92px;
       background: linear-gradient(223deg, #353342 0%, #383b52 100%);
       border-radius: 20px 20px 20px 20px;
       text-align: center;
