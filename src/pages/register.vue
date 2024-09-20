@@ -99,6 +99,7 @@ import { useStorage } from "@vueuse/core";
 import { sendEmailGetCode, register } from "@/api/user";
 import { showSuccessToast } from "vant";
 import { useRouter } from "vue-router";
+import {useI18n} from "vue-i18n"
 const router = useRouter();
 const passwordVisible = ref(false);
 const username = ref("");
@@ -109,6 +110,7 @@ const shareCode = useStorage("inviteCode", '');
 const email = ref("");
 const emailCode = ref("");
 const countDownTime = ref(0);
+const {t} = useI18n()
 const loading = ref(false);
 
 const validate = computed(() => {
