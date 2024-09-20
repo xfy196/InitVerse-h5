@@ -17,8 +17,8 @@
       >{{ $t("tab.tab2") }}</van-tabbar-item
     >
     <van-tabbar-item
-      to="/assets"
-      :icon="isActive(['/assets']) ? tabIcon3Active : tabIcon3"
+      to="/property"
+      :icon="isActive(['/property']) ? tabIcon3Active : tabIcon3"
       >{{ $t("tab.tab3") }}</van-tabbar-item
     >
     <van-tabbar-item

@@ -47,7 +47,7 @@ const routes = [
     },
   },
   {
-    path: "/assets",
+    path: "/property",
     component: () => import("./pages/assets.vue"),
     meta: {
       layout: Layout,
