@@ -8,7 +8,8 @@ import { useStorage } from "@vueuse/core";
 import { useRouter } from "vue-router"; 
 const route = useRoute();
 const router = useRouter();
-useStorage("inviteCode", route.params.code);
+const inviteCode = useStorage("inviteCode", route.params.code);
+inviteCode.value = route.params.code || '';
 router.replace("/register");
 </script>
 <style lang="scss" scoped>
