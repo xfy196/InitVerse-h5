@@ -25,6 +25,9 @@
           />
         </div>
         <div class="level-icon">
+          <span v-if="userInfo.nodeLevel === 1" class="level-text">{{ $t("my.goldNode") }}</span>
+          <span v-else-if="userInfo.nodeLevel === 2" class="level-text">{{ $t("my.kingNode") }}</span>
+          <span v-else-if="userInfo.nodeLevel === 3" class="level-text">{{ $t("my.emperorNode") }}</span>
           <img
             v-if="userInfo.nodeLevel === 1"
             src="@/assets/images/icons/level1.svg"
@@ -242,10 +245,10 @@ onMounted(async () => {
     duration: 0,
   });
   try {
-    await userStore.updateUserInfo();
-    const res = await getGroupList();
-    groupTotalPower.value = res.data.minRegionComputingPower;
-    groupList.value = res.data.groupRelationList;
+    // await userStore.updateUserInfo();
+    // const res = await getGroupList();
+    // groupTotalPower.value = res.data.minRegionComputingPower;
+    // groupList.value = res.data.groupRelationList;
   } catch (error) {
     console.log("🚀 ~ onMounted ~ error:", error);
   } finally {
@@ -303,6 +306,16 @@ onMounted(async () => {
         }
       }
       .level-icon {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .level-text {
+          font-weight: 400;
+          font-size: 28px;
+          color: #ffffff;
+          line-height: 33px;
+          margin-right: 8px;
+        }
         img {
           width: 36px;
           height: 36px;

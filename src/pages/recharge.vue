@@ -103,6 +103,7 @@ const handleCopy = async (value) => {
     padding: 30px;
     .tabs {
       display: flex;
+      justify-content: center;
       .tab-item {
         margin-right: 20px;
         .c-button {

@@ -15,10 +15,13 @@ import { useUserStore } from "@/stores/user";
 import Head from "./head.vue";
 import TabBar from "./tab-bar.vue";
 import { useRoute } from "vue-router";
+import { useSettingStore } from "@/stores/setting";
 const route = useRoute();
 const userStore = useUserStore();
+const settingStore = useSettingStore();
 onBeforeMount(async () => {
   await userStore.updateUserInfo();
+  await settingStore.updateSetting();
 });
 </script>
 <style lang="scss" scoped>

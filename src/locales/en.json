@@ -115,7 +115,10 @@
     "placeholderWithdrawalAddress": "Please enter your new withdrawal address",
     "code": "Email Verification Code",
     "modifyWithdrawalAddress": "Modify",
-    "modifySafePassword": "Modify"
+    "modifySafePassword": "Modify",
+    "goldNode": "Gold Node",
+    "kingNode": "King Node",
+    "emperorNode": "Emperor Node"
   },
   "retanlRecords": {
     "title": "Rental Records",

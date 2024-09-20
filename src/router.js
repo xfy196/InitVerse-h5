@@ -108,7 +108,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
-const whiteList = ["/login", "/register", "/forget"];
+const whiteList = ["/login", "/register", "/forget",];
 router.beforeEach(async (to, _from, next) => {
   const userStore = useUserStore();
   if (userStore.token) {

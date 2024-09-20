@@ -10,6 +10,15 @@
         />
 
         <div class="title">{{ $t("my.setWithdrawalAddress") }}</div>
+        <div class="address-type">
+          <!-- <div class="address-type-text">
+            提现地址类型
+          </div> -->
+          <van-radio-group class="radio-group" icon-size="0.48rem" checked-color="#5e75ff" v-model="addressType" direction="horizontal">
+            <van-radio name="BSC">BSC</van-radio>
+            <van-radio name="Tron">Tron</van-radio>
+          </van-radio-group>
+        </div>
         <c-input
           v-model:value="newAddress"
           :label="$t('my.withdrawalAddress')"
@@ -22,17 +31,15 @@
           :placeholder="$t('my.placeholderCode')"
         >
           <template #button>
-            <div
-              @click="sendEmail"
-              v-if="!countDownTime"
-              class="get-code-btn"
-            >
+            <div @click="sendEmail" v-if="!countDownTime" class="get-code-btn">
               {{ $t("my.getCode") }}
             </div>
             <div v-else class="count-down-text">
-              <van-count-down @finish="handleCountDownFinish" format="sss" :time="countDownTime" />{{
-                $t("register.afterGetCode")
-              }}
+              <van-count-down
+                @finish="handleCountDownFinish"
+                format="sss"
+                :time="countDownTime"
+              />{{ $t("register.afterGetCode") }}
             </div>
           </template>
         </c-input>
@@ -65,6 +72,7 @@ const { address } = defineProps({
 
 const code = ref("");
 const newAddress = ref("");
+const addressType = ref("BSC");
 const userStore = useUserStore();
 const show = defineModel("show", { default: false });
 const countDownTime = ref(0);
@@ -93,7 +101,7 @@ const handleSubmit = async () => {
       withdrawalAddress: newAddress.value,
       emailCode: code.value,
     });
-    await userStore.updateUserInfo()
+    await userStore.updateUserInfo();
     showSuccessToast(res.msg);
     show.value = false;
   } catch (error) {
@@ -139,6 +147,21 @@ watch(show, (val) => {
       color: #ffffff;
       line-height: 38px;
       margin-bottom: 20px;
+    }
+    .address-type{
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      margin-bottom: 20px;
+      .address-type-text{
+        font-size: 30px;
+        color: #ffffff;
+        line-height: 35px;
+      }
+      .radio-group{
+        margin-top: 12px;
+        font-size: 28px;
+      }
     }
     .get-code-btn {
       font-size: 24px;
