@@ -257,7 +257,7 @@ const initChart = () => {
     series: [
       {
         data: yData.value,
-        type: "line",
+        type: "candlestick",
         smooth: true,
       },
     ],
@@ -294,10 +294,8 @@ const initData = async () => {
       requestBtcAndEth();
     }, 5000);
     const historyRes = await getCoinHistoryPrice(30);
-    historyRes.data.forEach((item) => {
-      xData.value.push(item.dayDate);
-      yData.value.push(item.price);
-    });
+    xData.value = historyRes.data.xAxis ?? []
+    yData.value = historyRes.data.yAxis ?? [];
     initChart();
     onTouch();
     window.addEventListener("resize", () => {

@@ -11,10 +11,15 @@
 
         <div class="title">{{ $t("my.setWithdrawalAddress") }}</div>
         <div class="address-type">
-          <!-- <div class="address-type-text">
-            提现地址类型
-          </div> -->
-          <van-radio-group @change="handleChangeAddressType" class="radio-group" icon-size="0.48rem" checked-color="#5e75ff" v-model="withdrawalAddressType" direction="horizontal">
+          <div class="address-type-text">地址类型</div>
+          <van-radio-group
+            @change="handleChangeAddressType"
+            class="radio-group"
+            icon-size="0.48rem"
+            checked-color="#5e75ff"
+            v-model="withdrawalAddressType"
+            direction="horizontal"
+          >
             <van-radio name="bsc">BSC</van-radio>
             <van-radio name="tron">Tron</van-radio>
           </van-radio-group>
@@ -57,23 +62,19 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { nextTick, ref, watch } from "vue";
 import { sendEmailGetCode } from "@/api/user";
+import { storeToRefs } from "pinia";
 import { useUserStore } from "@/stores/user";
 import CInput from "@/components/c-input.vue";
 import { putUserWithdrawalAddress } from "@/api/user";
 import { showSuccessToast } from "vant";
-const { address } = defineProps({
-  address: {
-    type: String,
-    default: "",
-  },
-});
 
 const code = ref("");
-const newAddress = ref("");
-const withdrawalAddressType = ref("bsc");
 const userStore = useUserStore();
+const { userInfo } = storeToRefs(userStore);
+const newAddress = ref("");
+const withdrawalAddressType = ref("");
 const show = defineModel("show", { default: false });
 const countDownTime = ref(0);
 const loading = ref(false);
@@ -89,14 +90,14 @@ const sendEmail = async () => {
     await sendEmailGetCode({
       type: "MODIFY_WITHDRAWAL_ADDRESS",
     });
-    countDownTime.value = 3 * 60 * 1000;
+    countDownTime.value = 60 * 1000;
   } catch (error) {
     console.log("🚀 ~ sendEmail ~ error:", error);
   }
 };
 const handleChangeAddressType = (val) => {
-  newAddress.value = ''
-}
+  newAddress.value = "";
+};
 const handleSubmit = async () => {
   try {
     loading.value = true;
@@ -117,10 +118,16 @@ const handleSubmit = async () => {
 watch(show, (val) => {
   if (val) {
     code.value = "";
-    newAddress.value = address;
+    nextTick(() => {
+      newAddress.value = userInfo.value.withdrawalAddress;
+    });
+    withdrawalAddressType.value = userInfo.value.withdrawalAddressType ?? "bsc";
   } else {
-    newAddress.value = "";
     code.value = "";
+    nextTick(() => {
+      newAddress.value = "";
+    });
+    withdrawalAddressType.value = "";
   }
 });
 </script>
@@ -152,17 +159,17 @@ watch(show, (val) => {
       line-height: 38px;
       margin-bottom: 20px;
     }
-    .address-type{
+    .address-type {
       display: flex;
       justify-content: space-between;
       flex-direction: column;
       margin-bottom: 20px;
-      .address-type-text{
+      .address-type-text {
         font-size: 30px;
         color: #ffffff;
         line-height: 35px;
       }
-      .radio-group{
+      .radio-group {
         margin-top: 12px;
         font-size: 28px;
       }

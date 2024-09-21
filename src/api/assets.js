@@ -107,3 +107,10 @@ export const postWithdrawal = (data) => {
     data,
   });
 };
+export const postTransfer = (data) => {
+  return request({
+    url: "/h5/user/assert/transfer/",
+    method: "POST",
+    data,
+  });
+};

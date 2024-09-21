@@ -25,9 +25,7 @@
           />
         </div>
         <div class="level-icon">
-          <span v-if="userInfo.nodeLevel === 1" class="level-text">{{ $t("my.goldNode") }}</span>
-          <span v-else-if="userInfo.nodeLevel === 2" class="level-text">{{ $t("my.kingNode") }}</span>
-          <span v-else-if="userInfo.nodeLevel === 3" class="level-text">{{ $t("my.emperorNode") }}</span>
+          
           <img
             v-if="userInfo.nodeLevel === 1"
             src="@/assets/images/icons/level1.svg"
@@ -50,7 +48,9 @@
           {{ $t("my.vipLevel") }}：V{{ userInfo.groupLevel }}
         </div>
         <div class="node-level">
-          {{ $t("my.nodeLevel") }}：V{{ userInfo.nodeLevel }}
+          {{ $t("my.nodeLevel") }}：<span v-if="userInfo.nodeLevel === 1" class="level-text">{{ $t("my.goldNode") }}</span>
+          <span v-else-if="userInfo.nodeLevel === 2" class="level-text">{{ $t("my.kingNode") }}</span>
+          <span v-else-if="userInfo.nodeLevel === 3" class="level-text">{{ $t("my.emperorNode") }}</span>
         </div>
       </div>
     </div>
@@ -198,8 +198,8 @@
         </template>
       </div>
     </div>
-    <ModifyTransactionPassword v-model:show="showModifyTransactionPassword" />
-    <ModifyTransactionAddress v-model:show="showModifyTransactionAddress" />
+    <ModifyTransactionPassword  v-model:show="showModifyTransactionPassword" />
+    <ModifyTransactionAddress  v-model:show="showModifyTransactionAddress" />
   </div>
 </template>
 

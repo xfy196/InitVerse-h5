@@ -10,7 +10,7 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 fastclick(document.body);
 setToastDefaultOptions({
     position: "top",
-    wordBreak: "normal"
+    wordBreak: "normal",
   });
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);

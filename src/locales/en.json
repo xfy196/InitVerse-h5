@@ -180,7 +180,7 @@
     "status": "Status",
     "showAll": "Hidden Completed Computing Power Orders, Show All",
     "processing": "Processing",
-    "rechargeAssets": "Recharge Assets",
+    "rechargeAssets": "Cash Assets",
     "day": "Day",
     "lockCount": "Lock Count",
     "transfer": "Transfer",
@@ -197,7 +197,8 @@
     "powerEmpty": "You haven't rented any computing power yet,",
     "rentalPower": "Rent Computing Power",
     "nodeEmpty": "You are not a node",
-    "iniOrder": "INI Order"
+    "iniOrder": "INI Order",
+    "transfer1": "Transfer"
   },
   "assetsDetail": {
     "title": "Asset Details",
@@ -248,5 +249,12 @@
     "tip": "Withdrawal will arrive in 24 hours",
     "notEnoughTip": "Withdrawal amount is insufficient, please recharge first",
     "withdrawalBtn": "Withdraw"
+  },
+  "transfer": {
+    "title": "INI Transfer",
+    "balanceLabel": "INI Available Balance",
+    "placeholder": "Please enter the INI quantity you want to transfer",
+    "expected": "Expected to consume fee:",
+    "transferBtn": "Transfer"
   }
 }

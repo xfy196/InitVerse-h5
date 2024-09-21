@@ -60,7 +60,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from "vue";
+import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import Back from "../components/back.vue";
 import EmptyBg from "@/assets/images/empty.png";
@@ -95,7 +95,7 @@ const tabs = computed(() => {
     },
   ];
 });
-const active = ref("static-usdt");
+const active = ref("recharge");
 watch(active, (val, oldVal) => {
   if (val !== oldVal) {
     list.value = [];

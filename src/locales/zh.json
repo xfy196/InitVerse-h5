@@ -182,7 +182,7 @@
     "status": "状态",
     "showAll": "已隐藏已完成算力订单，展示全部",
     "processing": "进行中",
-    "rechargeAssets": "充值资产",
+    "rechargeAssets": "现金资产",
     "day": "天",
     "lockCount": "锁定数量",
     "transfer": "转账",
@@ -199,7 +199,8 @@
     "powerEmpty": "您还没租赁过算力，去",
     "rentalPower": "租赁算力",
     "nodeEmpty": "您还不是节点",
-    "iniOrder": "INI订单"
+    "iniOrder": "INI订单",
+    "transfer1": "划转"
   },
   "assetsDetail": {
     "title": "资产明细",
@@ -250,5 +251,12 @@
     "tip": "提现将于24小时内到账",
     "notEnoughTip": "提现金额不足，请先充值",
     "withdrawalBtn": "提现"
+  },
+  "transfer": {
+    "title": "划转",
+    "balanceLabel": "INI可用余额",
+    "placeholder": "请输入您要转账的INI数量",
+    "expected": "预计消耗手续费：",
+    "transferBtn": "划转"
   }
 }

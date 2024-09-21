@@ -29,7 +29,9 @@
               <div class="cell">
                 <div class="label">{{ $t("assets.releaseRate") }}</div>
                 <div class="right">
-                  <div class="value">{{ BigNumber(item.releaseRate).multipliedBy(100) }}%/D</div>
+                  <div class="value">
+                    {{ BigNumber(item.releaseRate).multipliedBy(100) }}%/D
+                  </div>
                 </div>
               </div>
               <div class="cell">
@@ -50,7 +52,7 @@
                 </div>
                 <div class="right">
                   <div class="value">
-                    {{ BigNumber(item.notReleased).div(100) }} POR≈{{
+                    {{ BigNumber(item.notReleased).div(100).toFixed(1) }} POR≈{{
                       item.notReleased
                     }}
                     USDT
@@ -75,9 +77,8 @@
           </template>
           <template v-else>
             <div class="empty">
-              {{ $t("assets.powerEmpty") }}<router-link to="/">{{
-                $t("assets.rentalPower")
-              }}</router-link>
+              {{ $t("assets.powerEmpty")
+              }}<router-link to="/">{{ $t("assets.rentalPower") }}</router-link>
             </div>
           </template>
         </div>
@@ -227,9 +228,8 @@
           </template>
           <template v-else>
             <div class="empty">
-              {{ $t("assets.powerEmpty") }}<router-link to="/">{{
-                $t("assets.rentalPower")
-              }}</router-link>
+              {{ $t("assets.powerEmpty")
+              }}<router-link to="/">{{ $t("assets.rentalPower") }}</router-link>
             </div>
           </template>
         </div>
@@ -371,9 +371,7 @@
               <div
                 v-if="item.assetType != 5"
                 :style="{
-                  'justify-content': [2, 3].includes(item.assetType)
-                    ? 'center'
-                    : 'space-between',
+                  'justify-content': 'space-between',
                 }"
                 class="btns cell-item"
               >
@@ -387,6 +385,13 @@
                         ? $t("assets.withdrawal")
                         : $t("assets.transfer")
                     }}</CButton
+                  >
+                  <CButton
+                    v-if="[2, 3].includes(item.assetType)"
+                    @click="
+                      handleShowTransfer(item.assetType, item.userAssetId)
+                    "
+                    >{{ $t("assets.transfer1") }}</CButton
                   >
                   <CButton
                     @click="handleFlashExchange"
@@ -421,6 +426,9 @@
       v-if="showTransferAccount"
       v-model:show="showTransferAccount"
     />
+    <Transfer 
+    :assetType="assetType"
+    @refresh="initData" v-if="showTransfer" v-model:show="showTransfer"/>
   </div>
 </template>
 
@@ -431,6 +439,7 @@ import { onMounted, onUnmounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import Withdrawal from "./components/withdrawal.vue";
 import TransferAccount from "./components/transfer-account.vue";
+import Transfer from "./components/transfer.vue";
 import {
   getIneffectNodeOrderList,
   getCommission,
@@ -451,6 +460,7 @@ const nodeAssets = ref([]);
 const iniAssets = ref([]);
 const showWithdrawal = ref(false);
 const showTransferAccount = ref(false);
+const showTransfer = ref(false);
 const commission = ref();
 const handleToOrderList = (type) => {
   router.push({
@@ -504,6 +514,11 @@ const handleShowWithdrawal = (type, usId) => {
   } else if (type === 4) {
     showTransferAccount.value = true;
   }
+};
+const handleShowTransfer = (type, usId) => {
+  userAssetId.value = usId
+  assetType.value = type
+  showTransfer.value = true
 };
 const handleFlashExchange = () => {
   // 闪兑

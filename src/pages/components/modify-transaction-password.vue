@@ -61,6 +61,7 @@ import { ref, watch } from "vue";
 import CInput from "@/components/c-input.vue";
 import { putUserTransactionPassword, sendEmailGetCode } from "@/api/user";
 import { useUserStore } from "@/stores/user";
+import { isEmail } from "@/utils/validate";
 const userStore = useUserStore();
 const { password } = defineProps({
   password: {
@@ -82,7 +83,7 @@ const sendEmail = async () => {
     await sendEmailGetCode({
       type: "CHANGE_PAYMENT_PASSWORD",
     });
-    countDownTime.value = 3 * 60 * 1000;
+    countDownTime.value = 60 * 1000;
   } catch (error) {
     console.log("🚀 ~ sendEmail ~ error:", error);
   }
@@ -152,6 +153,9 @@ watch(show, (val) => {
       background: linear-gradient(90deg, #9160ff 0%, #5e75ff 100%);
       border-radius: 20px 20px 20px 20px;
       padding: 8px 20px;
+      &.disabled {
+        opacity: 0.5;
+      }
     }
     .count-down-text {
       font-size: 26px;

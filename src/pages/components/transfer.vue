@@ -1,27 +1,14 @@
 <template>
   <van-overlay v-model:show="show" @click.stop="handleClose">
     <div class="wrapper">
-      <div class="form" v-if="!passwordLock" @click.stop>
+      <div class="form" @click.stop>
         <van-icon
           name="cross"
           color="#ffffff"
           class="close-icon"
           @click.stop="handleClose"
         />
-        <div class="title">
-          USDT<span v-if="withdrawalType === 'static'">{{
-            $t("withdrawal.static")
-          }}</span
-          ><span v-if="withdrawalType === 'dynamic'">{{
-            $t("withdrawal.dynamic")
-          }}</span
-          >{{ $t("withdrawal.title") }}
-        </div>
-        <!-- 静态展示 toptip -->
-        <div v-if="withdrawalType === 'static'" class="top-tip">
-          <div class="tip">{{ $t("withdrawal.staticTip") }}</div>
-        </div>
-        <!-- 余额 -->
+        <div class="title">{{ $t("transfer.title") }}</div>
         <div class="balance">
           <div class="label">{{ $t("withdrawal.balanceLabel") }}</div>
           <div class="value">
@@ -32,26 +19,11 @@
         <van-divider class="divider" />
         <div class="input-box">
           <CInput
-            :label="$t('withdrawal.passwordLabel')"
-            :type="passwordVisible ? 'text' : 'password'"
-            :placeholder="$t('withdrawal.passwordPlaceholder')"
-            v-model:value="safePassword"
-          >
-            <template #right-icon>
-              <van-icon
-                :name="passwordVisible ? 'eye-o' : 'closed-eye'"
-                @click="passwordVisible = !passwordVisible"
-              />
-            </template>
-          </CInput>
-        </div>
-        <div class="input-box">
-          <CInput
-            @update:value="handleUpdateWithdrawalNum"
-            :label="$t('withdrawal.numLabel')"
+            @update:value="handleUpdateValue"
+            :label="''"
+            :placeholder="$t('transfer.placeholder')"
             v-model:value="value"
             type="digit"
-            :placeholder="$t('withdrawal.numPlaceholder')"
             :border="false"
             clearable
           >
@@ -64,68 +36,58 @@
           </CInput>
         </div>
         <div class="expected">
-          <div class="left">{{ $t("withdrawal.expectedLabel") }}</div>
+          <div class="left">{{ $t("transfer.expected") }}</div>
           <div class="right van-ellipsis">{{ expectedIni }} INI</div>
         </div>
         <div class="expected">
-          <div class="left">{{ $t("withdrawal.balanceLabel") }}</div>
+          <div class="left">{{ $t("transfer.balanceLabel") }}</div>
           <div class="right van-ellipsis">{{ balanceIni }} INI</div>
         </div>
         <div class="withdrawal-btn">
-          <CButton @click.stop="handleWithdrawal" :disabled="disabled">{{
-            $t("withdrawal.withdrawalBtn")
-          }}</CButton>
-        </div>
-        <div class="tips">
-          <div v-if="value > balance" class="not-enough-tip">
-            {{ $t("withdrawal.notEnoughTip") }}
-          </div>
+          <CButton
+            :loading="loading"
+            @click.stop="handleWithdrawal"
+            :disabled="disabled"
+            >划转</CButton
+          >
         </div>
       </div>
-      <PasswordLock v-else @close="handleClose" />
     </div>
   </van-overlay>
 </template>
 
 <script setup>
-import { computed, nextTick, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import CInput from "@/components/c-input.vue";
-import PasswordLock from "./password-lock.vue";
-import { getWithdrawalNeedINI, postWithdrawal } from "@/api/assets";
-import { useDebounceFn } from "@vueuse/core";
-import BigNumber from "bignumber.js";
+import { postTransfer, getWithdrawalNeedINI } from "@/api/assets";
 import { getAssetDetail } from "@/api/trade";
 import { useI18n } from "vue-i18n";
-import { showToast } from "vant";
+import BigNumber from "bignumber.js";
+import {useDebounceFn} from "@vueuse/core"
 const { t } = useI18n();
-const { withdrawalType, assetType, userAssetId } = defineProps({
-  withdrawalType: {
-    type: String,
-    // 静态提现 动态提现 dynamic
-    default: "",
-  },
+const show = defineModel("show", { default: false });
+const emit = defineEmits(["refresh"]);
+const value = ref("");
+const loading = ref(false);
+const expectedIni = ref(0);
+const balance = ref(0);
+const balanceIni = ref(0);
+const disabled = computed(() => {
+  return !value.value || !expectedIni.value;
+});
+const {  assetType } = defineProps({
   assetType: {
     default: 1,
     type: Number,
   },
-  userAssetId: {
-    default: 0,
-    type: Number,
-  },
 });
-const show = defineModel("show", { default: false });
-const emit = defineEmits(["refresh"]);
-const value = ref();
-const safePassword = ref("");
-const passwordVisible = ref(false);
-const passwordLock = ref(false);
-const balance = ref(0);
-const balanceIni = ref(0);
-const expectedIni = ref(0);
-const disabled = computed(() => {
-  return !value.value || !safePassword.value || !expectedIni.value;
-});
-
+const handleClose = () => {
+  show.value = false;
+};
+const handleMaxNum = () => {
+  value.value = balance.value;
+  handleUpdateValue(value.value)
+};
 watch(
   show,
   async (newVal) => {
@@ -147,32 +109,27 @@ watch(
     immediate: true,
   }
 );
-
-const handleClose = () => {
-  show.value = false;
-};
-const handleMaxNum = () => {
-  value.value = balance.value;
-  handleUpdateWithdrawalNum(value.value)
-};
 const handleWithdrawal = async () => {
   try {
-    const res = await postWithdrawal({
-      userAssetId,
+    loading.value = true;
+    const res = await postTransfer({
       outNum: value.value,
-      safePassWord: safePassword.value,
+      assetType
     });
-    showToast(res.msg)
-    show.value = false;
-    emit("refresh");
+    showToast({
+      message: res.msg,
+      duration: 1000,
+      onClose: () => {
+        show.value = false;
+        emit("refresh");
+      }
+    })
   } catch (error) {
-    console.log("🚀 ~ handleWithdrawal ~ error:", error);
-    if(error.code === '550' ){
-      passwordLock.value = true;
-    }
+  } finally {
+    loading.value = false;
   }
 };
-const handleUpdateWithdrawalNum = useDebounceFn(async (val) => {
+const handleUpdateValue = useDebounceFn(async (val) => {
   if (new BigNumber(val).gt(new BigNumber(balance.value))) {
     nextTick(() => {
       handleMaxNum();
@@ -265,6 +222,7 @@ const handleUpdateWithdrawalNum = useDebounceFn(async (val) => {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      margin-top: 20px;
       .max {
         font-weight: 400;
         font-size: 24px;
