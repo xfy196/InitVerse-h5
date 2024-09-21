@@ -74,6 +74,10 @@ const list = ref([]);
 const tabs = computed(() => {
   return [
     {
+      title: t("assetsDetail.recharge"),
+      name: "recharge",
+    },
+    {
       title: t("assetsDetail.usdtStatic"),
       name: "static-usdt",
     },
@@ -103,7 +107,12 @@ const onChange = async (val) => {
     let res = null;
     loading.value = true;
     finished.value = false;
-    if (val === "static-usdt") {
+    if(val === 'recharge') {
+      res = await getAssetRecords(1, {
+        pageNo: pageNo.value,
+        pageSize: pageSize.value,
+      });
+    } else if (val === "static-usdt") {
       res = await getAssetRecords(2, {
         pageNo: pageNo.value,
         pageSize: pageSize.value,

@@ -40,7 +40,7 @@ export default defineConfig(({ mode }) => {
           target: env.VITE_BASE_URL,
           changeOrigin: true,
           rewrite: (path) => {
-            return path.replace(/\/api/, "");
+            return path.replace(/\/api/, "/api");
           },
         },
       },

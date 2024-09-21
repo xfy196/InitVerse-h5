@@ -165,8 +165,8 @@
             <img src="@/assets/images/icons/ini-order.svg" alt="" />
           </div>
           <template
-            v-if="nodeAssets.length > 0"
-            v-for="(item, index) in nodeAssets"
+            v-if="iniAssets.length > 0"
+            v-for="(item, index) in iniAssets"
             :key="index"
           >
             <div class="cell-box">

@@ -204,7 +204,8 @@
     "usdtStatic": "USDT Static",
     "usdtDynamic": "USDT Dynamic",
     "iniUnlock": "INI Unlock",
-    "iniLock": "INI Lock"
+    "iniLock": "INI Lock",
+    "recharge": "USDT Recharge"
   },
   "orderList": {
     "computingPowerOrder": "Computing Power Order",

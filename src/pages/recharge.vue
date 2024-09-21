@@ -50,7 +50,7 @@ const tab = ref("BSC");
 const userStore = useUserStore();
 const { t } = useI18n();
 const address = ref("");
-const { bnbAddress = "", tronAddress = "" } = storeToRefs(userStore);
+const { userInfo } = storeToRefs(userStore);
 onMounted(async () => {
   changeTab(tab.value);
 });
@@ -64,11 +64,13 @@ const generateQR = async (text) => {
 const changeTab = async (value) => {
   tab.value = value;
   if (tab.value === "BSC") {
-    address.value = bnbAddress;
+    address.value = userInfo.value.bnbAddress;
   } else {
-    address.value = tronAddress;
+    address.value = userInfo.value.tronAddress;
   }
+  console.log("🚀 ~ changeTab ~ address.value:", address.value)
   imgUrl.value = address.value ? await generateQR(address.value) : "";
+  console.log("🚀 ~ changeTab ~ imgUrl.value:", imgUrl.value)
 };
 const handleCopy = async (value) => {
   await copy(value);

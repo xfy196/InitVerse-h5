@@ -206,7 +206,8 @@
     "usdtStatic": "USDT静态",
     "usdtDynamic": "USDT动态",
     "iniUnlock": "INI解锁",
-    "iniLock": "INI锁定"
+    "iniLock": "INI锁定",
+    "recharge": "USDT充值"
   },
   "orderList": {
     "computingPowerOrder": "算力订单",

@@ -14,9 +14,9 @@
           <!-- <div class="address-type-text">
             提现地址类型
           </div> -->
-          <van-radio-group class="radio-group" icon-size="0.48rem" checked-color="#5e75ff" v-model="addressType" direction="horizontal">
-            <van-radio name="BSC">BSC</van-radio>
-            <van-radio name="Tron">Tron</van-radio>
+          <van-radio-group @change="handleChangeAddressType" class="radio-group" icon-size="0.48rem" checked-color="#5e75ff" v-model="withdrawalAddressType" direction="horizontal">
+            <van-radio name="bsc">BSC</van-radio>
+            <van-radio name="tron">Tron</van-radio>
           </van-radio-group>
         </div>
         <c-input
@@ -72,7 +72,7 @@ const { address } = defineProps({
 
 const code = ref("");
 const newAddress = ref("");
-const addressType = ref("BSC");
+const withdrawalAddressType = ref("bsc");
 const userStore = useUserStore();
 const show = defineModel("show", { default: false });
 const countDownTime = ref(0);
@@ -94,12 +94,16 @@ const sendEmail = async () => {
     console.log("🚀 ~ sendEmail ~ error:", error);
   }
 };
+const handleChangeAddressType = (val) => {
+  newAddress.value = ''
+}
 const handleSubmit = async () => {
   try {
     loading.value = true;
     const res = await putUserWithdrawalAddress({
       withdrawalAddress: newAddress.value,
       emailCode: code.value,
+      withdrawalAddressType: withdrawalAddressType.value,
     });
     await userStore.updateUserInfo();
     showSuccessToast(res.msg);

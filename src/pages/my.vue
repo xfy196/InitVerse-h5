@@ -245,10 +245,10 @@ onMounted(async () => {
     duration: 0,
   });
   try {
-    // await userStore.updateUserInfo();
-    // const res = await getGroupList();
-    // groupTotalPower.value = res.data.minRegionComputingPower;
-    // groupList.value = res.data.groupRelationList;
+    await userStore.updateUserInfo();
+    const res = await getGroupList();
+    groupTotalPower.value = res.data.minRegionComputingPower;
+    groupList.value = res.data.groupRelationList;
   } catch (error) {
     console.log("🚀 ~ onMounted ~ error:", error);
   } finally {
