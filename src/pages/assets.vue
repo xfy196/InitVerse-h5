@@ -112,7 +112,7 @@
               <div class="cell">
                 <div class="label">{{ $t("assets.releaseRate") }}</div>
                 <div class="right">
-                  <div class="value">{{ item.releaseRate }}%/D</div>
+                  <div class="value">{{ BigNumber(item.releaseRate).multipliedBy(100) }}%/D</div>
                 </div>
               </div>
               <div class="cell">
@@ -186,7 +186,7 @@
               <div class="cell">
                 <div class="label">{{ $t("assets.releaseRate") }}</div>
                 <div class="right">
-                  <div class="value">{{ item.releaseRate }}%/D</div>
+                  <div class="value">{{ BigNumber(item.releaseRate).multipliedBy(100) }}%/D</div>
                 </div>
               </div>
               <div class="cell">
@@ -441,11 +441,11 @@ import Withdrawal from "./components/withdrawal.vue";
 import TransferAccount from "./components/transfer-account.vue";
 import Transfer from "./components/transfer.vue";
 import {
+  getPowerInEffect,
   getIneffectNodeOrderList,
   getCommission,
   getInEffectIniOrderList,
 } from "@/api/assets";
-import { getPowerAllList } from "@/api/rental";
 import { useI18n } from "vue-i18n";
 import { closeToast } from "vant";
 const router = useRouter();
@@ -481,7 +481,7 @@ const initData = async () => {
     computingPowerAssets.value = res.data.slice(1, res.data.length);
     const commissionRes = await getCommission();
     commission.value = new BigNumber(commissionRes.data).multipliedBy(100);
-    const powerRes = await getPowerAllList();
+    const powerRes = await getPowerInEffect();
     powerAssets.value = powerRes.data;
     const nodeRes = await getIneffectNodeOrderList();
     nodeAssets.value = nodeRes.data;
