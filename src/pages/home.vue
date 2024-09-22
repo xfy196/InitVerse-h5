@@ -61,7 +61,8 @@
           <div class="top">
             <div class="left">{{ $t("home.expectTitle") }}</div>
             <div class="right">
-              {{ expectPrice }} {{ $t("home.expectValue") }}
+              {{ BigNumber(expectPrice).div(100) }} POR ({{ $t("home.expectValue") }}
+              {{ expectPrice }} USDT)
             </div>
           </div>
           <div class="ini">{{ expectIni }} INI</div>

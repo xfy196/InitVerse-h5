@@ -83,7 +83,7 @@ const sendEmail = async () => {
     await sendEmailGetCode({
       type: "CHANGE_PAYMENT_PASSWORD",
     });
-    countDownTime.value = 60 * 1000;
+    countDownTime.value = 5 * 60 * 1000;
   } catch (error) {
     console.log("🚀 ~ sendEmail ~ error:", error);
   }

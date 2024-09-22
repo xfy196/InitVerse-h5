@@ -25,7 +25,6 @@
           />
         </div>
         <div class="level-icon">
-          
           <img
             v-if="userInfo.nodeLevel === 1"
             src="@/assets/images/icons/level1.svg"
@@ -48,9 +47,17 @@
           {{ $t("my.vipLevel") }}：V{{ userInfo.groupLevel }}
         </div>
         <div class="node-level">
-          {{ $t("my.nodeLevel") }}：<span v-if="userInfo.nodeLevel === 1" class="level-text">{{ $t("my.goldNode") }}</span>
-          <span v-else-if="userInfo.nodeLevel === 2" class="level-text">{{ $t("my.kingNode") }}</span>
-          <span v-else-if="userInfo.nodeLevel === 3" class="level-text">{{ $t("my.emperorNode") }}</span>
+          {{ $t("my.nodeLevel") }}：<span
+            v-if="userInfo.nodeLevel === 1"
+            class="level-text"
+            >{{ $t("my.goldNode") }}</span
+          >
+          <span v-else-if="userInfo.nodeLevel === 2" class="level-text">{{
+            $t("my.kingNode")
+          }}</span>
+          <span v-else-if="userInfo.nodeLevel === 3" class="level-text">{{
+            $t("my.emperorNode")
+          }}</span>
         </div>
       </div>
     </div>
@@ -127,10 +134,10 @@
           style="margin: 0; border-color: rgba(39, 39, 43, 1)"
         ></van-divider>
         <div class="cell-item">
-          <div class="label van-ellipsis">
-            {{ $t("my.myCommunity") }}：{{ groupTotalPower }} USDT（{{
-              $t("my.totalPower")
-            }}-{{ $t("my.regionPower") }}）
+          <div class="label">
+            {{ $t("my.myCommunity") }}：{{ $t("my.totalPerformance")
+            }} {{ totalPower }} USDT（{{ $t("my.quarters")
+            }} {{ groupTotalPower }}USDT）
           </div>
         </div>
       </div>
@@ -198,8 +205,8 @@
         </template>
       </div>
     </div>
-    <ModifyTransactionPassword  v-model:show="showModifyTransactionPassword" />
-    <ModifyTransactionAddress  v-model:show="showModifyTransactionAddress" />
+    <ModifyTransactionPassword v-model:show="showModifyTransactionPassword" />
+    <ModifyTransactionAddress v-model:show="showModifyTransactionAddress" />
   </div>
 </template>
 
@@ -221,6 +228,7 @@ const invideUrl = computed(
   () => `${import.meta.env.VITE_SITE_DOMAIN}/invite/${userInfo.value.shareCode}`
 );
 const groupList = ref([]);
+const totalPower = ref(0);
 const groupTotalPower = ref(0);
 const { copy, isSupported } = useClipboard();
 const showModifyTransactionPassword = ref(false);
@@ -247,6 +255,7 @@ onMounted(async () => {
   try {
     await userStore.updateUserInfo();
     const res = await getGroupList();
+    totalPower.value = res.data.groupPower;
     groupTotalPower.value = res.data.minRegionComputingPower;
     groupList.value = res.data.groupRelationList;
   } catch (error) {
@@ -350,21 +359,21 @@ onMounted(async () => {
     .cell-item {
       &:not(:first-child) {
         .label {
-        display: flex;
-        align-items: center;
-        .region {
-          width: 64px;
-          height: 34px;
-          background: #00c377;
-          border-radius: 0px 0px 0px 0px;
-          font-weight: 400;
-          font-size: 20px;
-          color: #ffffff;
-          line-height: 34px;
-          text-align: center;
-          margin-left: 8px;
+          display: flex;
+          align-items: center;
+          .region {
+            width: 64px;
+            height: 34px;
+            background: #00c377;
+            border-radius: 0px 0px 0px 0px;
+            font-weight: 400;
+            font-size: 20px;
+            color: #ffffff;
+            line-height: 34px;
+            text-align: center;
+            margin-left: 8px;
+          }
         }
-      }
         .right {
           .status {
             font-weight: 400;

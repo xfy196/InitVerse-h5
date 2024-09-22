@@ -194,7 +194,7 @@ const handleGetCode = async () => {
       type: "REGISTERED",
       email: email.value,
     });
-    countDownTime.value =  60 * 1000;
+    countDownTime.value =  5 * 60 * 1000;
   } catch (error) {
     console.log(error);
   }

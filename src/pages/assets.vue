@@ -52,8 +52,8 @@
                 </div>
                 <div class="right">
                   <div class="value">
-                    {{ BigNumber(item.notReleased).div(100).toFixed(1) }} POR≈{{
-                      item.notReleased
+                    {{ BigNumber(item.notReleased).multipliedBy(2).div(100).toFixed(1) }} POR≈{{
+                      BigNumber(item.notReleased).multipliedBy(2)
                     }}
                     USDT
                   </div>
@@ -119,8 +119,8 @@
                 <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
                 <div class="right">
                   <div class="value">
-                    {{ new BigNumber(item.total).div(100).toFixed(1) }} POR≈{{
-                      item.total
+                    {{ new BigNumber(item.total).multipliedBy(2).div(100).toFixed(1) }} POR≈{{
+                      BigNumber(item.total).multipliedBy(2)
                     }}
                     USDT
                   </div>
@@ -146,10 +146,6 @@
                   <div class="status">{{ $t("assets.processing") }}</div>
                 </div>
               </div>
-            </div>
-            <div @click.stop="handleToOrderList('nodeOrder')" class="show-all">
-              <div class="text">{{ $t("assets.showAll") }}</div>
-              <van-icon name="arrow-down" />
             </div>
           </template>
           <template v-else>
@@ -193,8 +189,8 @@
                 <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
                 <div class="right">
                   <div class="value">
-                    {{ new BigNumber(item.total).div(100).toFixed(1) }} POR≈{{
-                      item.total
+                    {{ new BigNumber(item.total).multipliedBy(2).div(100).toFixed(1) }} POR≈{{
+                      BigNumber(item.total).multipliedBy(2)
                     }}
                     USDT
                   </div>
@@ -222,7 +218,7 @@
               </div>
             </div>
             <div @click.stop="handleToOrderList('iniOrder')" class="show-all">
-              <div class="text">{{ $t("assets.showAll") }}</div>
+              <div class="text">{{ $t("assets.showAllIni") }}</div>
               <van-icon name="arrow-down" />
             </div>
           </template>

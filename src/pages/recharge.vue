@@ -126,8 +126,9 @@ const handleCopy = async (value) => {
         display: flex;
         align-items: center;
         justify-content: center;
-        &.active{
-          border-color: #9160FF;
+        &.active {
+          color: #9160ff;
+          border-color: #9160ff;
         }
       }
     }

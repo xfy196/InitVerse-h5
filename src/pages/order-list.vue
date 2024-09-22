@@ -21,16 +21,19 @@
             <div class="cell">
               <div class="label">{{ $t("orderList.releaseRate") }}</div>
               <div class="right">
-                <div class="value">{{ item.releaseRate }}%/D</div>
+                <div class="value">
+                  {{ BigNumber(item.releaseRate).multipliedBy(100) }}%/D
+                </div>
               </div>
             </div>
             <div class="cell">
               <div class="label">{{ $t("orderList.computingPowerTotal") }}</div>
               <div class="right">
                 <div class="value">
-                  {{ new BigNumber(item.total).div(100) }} POR≈{{
-                    item.total
+                  {{
+                    new BigNumber(item.total).multipliedBy(2).div(100)
                   }}
+                  POR≈{{ BigNumber(item.total).multipliedBy(2) }}
                   USDT
                 </div>
                 <img src="@/assets/images/icons/power.svg" alt="" />

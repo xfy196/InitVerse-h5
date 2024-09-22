@@ -120,7 +120,9 @@
     "modifySafePassword": "修改交易密码",
     "goldNode": "黄金节点",
     "kingNode": "王者节点",
-    "emperorNode": "至尊节点"
+    "emperorNode": "至尊节点",
+    "totalPerformance": "总业绩",
+    "quarters": "小区"
   },
   "retanlRecords": {
     "title": "算力租赁记录",
@@ -181,10 +183,11 @@
     "unreleasedComputingPower": "未释放算力",
     "status": "状态",
     "showAll": "已隐藏已完成算力订单，展示全部",
+    "showAllIni": "已隐藏已完成INI订单，展示全部",
     "processing": "进行中",
     "rechargeAssets": "现金资产",
     "day": "天",
-    "lockCount": "锁定数量",
+    "lockCount": "锁定笔数",
     "transfer": "转账",
     "flashExchange": "闪兑",
     "fee": "手续费",
@@ -208,7 +211,7 @@
     "usdtDynamic": "USDT动态",
     "iniUnlock": "INI解锁",
     "iniLock": "INI锁定",
-    "recharge": "USDT充值"
+    "recharge": "现金充值"
   },
   "orderList": {
     "computingPowerOrder": "算力订单",

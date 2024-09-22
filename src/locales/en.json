@@ -118,7 +118,9 @@
     "modifySafePassword": "Modify",
     "goldNode": "Gold Node",
     "kingNode": "King Node",
-    "emperorNode": "Emperor Node"
+    "emperorNode": "Emperor Node",
+    "totalPerformance": "Total Performance",
+    "quarters": "Quarters"
   },
   "retanlRecords": {
     "title": "Rental Records",
@@ -179,10 +181,11 @@
     "unreleasedComputingPower": "Unreleased Power",
     "status": "Status",
     "showAll": "Hidden Completed Computing Power Orders, Show All",
+    "showAllIni": "Hidden Completed INI Orders, Show All",
     "processing": "Processing",
     "rechargeAssets": "Cash Assets",
     "day": "Day",
-    "lockCount": "Lock Count",
+    "lockCount": "Lock Number",
     "transfer": "Transfer",
     "flashExchange": "Exchange",
     "fee": "Fee",
@@ -206,7 +209,7 @@
     "usdtDynamic": "USDT Dynamic",
     "iniUnlock": "INI Unlock",
     "iniLock": "INI Lock",
-    "recharge": "USDT Recharge"
+    "recharge": "Cash Recharge"
   },
   "orderList": {
     "computingPowerOrder": "Computing Power Order",
