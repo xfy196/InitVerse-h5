@@ -294,8 +294,8 @@ const initData = async () => {
       requestBtcAndEth();
     }, 5000);
     const historyRes = await getCoinHistoryPrice(30);
-    xData.value = historyRes.data.xAxis ?? []
-    yData.value = historyRes.data.yAxis ?? [];
+    xData.value = historyRes.data.xAlis ?? []
+    yData.value = historyRes.data.yValue ?? [];
     initChart();
     onTouch();
     window.addEventListener("resize", () => {

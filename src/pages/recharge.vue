@@ -5,11 +5,19 @@
     <div class="tips">{{ $t("recharge.tips") }}</div>
     <div class="address-container">
       <div class="tabs">
-        <div class="tab-item" @click="changeTab('BSC')">
-          <CButton :disabled="tab !== 'BSC'">BSC(BEP20)</CButton>
+        <div
+          class="tab-item"
+          :class="{ active: tab === 'BSC' }"
+          @click="changeTab('BSC')"
+        >
+          BSC(BEP20)
         </div>
-        <div class="tab-item" @click="changeTab('Tron')">
-          <CButton :disabled="tab !== 'Tron'">Tron(TRC20)</CButton>
+        <div
+          class="tab-item"
+          :class="{ active: tab === 'Tron' }"
+          @click="changeTab('Tron')"
+        >
+          Tron(TRC20)
         </div>
       </div>
       <van-divider />
@@ -68,9 +76,9 @@ const changeTab = async (value) => {
   } else {
     address.value = userInfo.value.tronAddress;
   }
-  console.log("🚀 ~ changeTab ~ address.value:", address.value)
+  console.log("🚀 ~ changeTab ~ address.value:", address.value);
   imgUrl.value = address.value ? await generateQR(address.value) : "";
-  console.log("🚀 ~ changeTab ~ imgUrl.value:", imgUrl.value)
+  console.log("🚀 ~ changeTab ~ imgUrl.value:", imgUrl.value);
 };
 const handleCopy = async (value) => {
   await copy(value);
@@ -108,16 +116,18 @@ const handleCopy = async (value) => {
       justify-content: center;
       .tab-item {
         margin-right: 20px;
-        .c-button {
-          min-width: 190px;
-          height: 50px;
-          width: 142px;
-          font-size: 26px;
-          color: #ffffff;
-        }
-        &:last-child {
-          min-width: 228px;
-          margin-right: 0;
+        min-width: 190px;
+        height: 50px;
+        width: 142px;
+        font-size: 26px;
+        color: #ffffff;
+        border: 2px solid #626176;
+        border-radius: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &.active{
+          border-color: #9160FF;
         }
       }
     }

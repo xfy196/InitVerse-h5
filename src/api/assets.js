@@ -114,3 +114,14 @@ export const postTransfer = (data) => {
     data,
   });
 };
+/**
+ * 获取有效算力订单
+ * @param {*} data
+ * @returns
+ */
+export const getPowerInEffect = () => {
+  return request({
+    url: "/h5/power/inEffect",
+    method: "get",
+  });
+};
