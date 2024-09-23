@@ -1,6 +1,6 @@
 <template>
   <div class="layout-container">
-    <AppDownload v-if="route.path === '/' || route.path === '/rental-power' || !isClient" />
+    <AppDownload v-if="(route.path === '/' || route.path === '/rental-power') && !isClient" />
     <Head />
     <div class="main">
       <RouterView />
