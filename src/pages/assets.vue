@@ -52,8 +52,8 @@
                 </div>
                 <div class="right">
                   <div class="value">
-                    {{ BigNumber(item.notReleased).multipliedBy(2).div(100).toFixed(1) }} POR≈{{
-                      BigNumber(item.notReleased).multipliedBy(2)
+                    {{ BigNumber(item.notReleased).div(100).toFixed(1) }} POR≈{{
+                      BigNumber(item.notReleased)
                     }}
                     USDT
                   </div>
