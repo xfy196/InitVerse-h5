@@ -38,8 +38,8 @@
                 <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
                 <div class="right">
                   <div class="value">
-                    {{ BigNumber(item.total).div(100).toFixed(1) }} POR≈{{
-                      item.total
+                    {{ BigNumber(item.total).multipliedBy(2).div(100).toFixed(1) }} POR≈{{
+                      BigNumber(item.total).multipliedBy(2)
                     }}
                     USDT
                   </div>
@@ -119,7 +119,7 @@
                 <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
                 <div class="right">
                   <div class="value">
-                    {{ new BigNumber(item.total).multipliedBy(2).div(100).toFixed(1) }} POR≈{{
+                    {{ BigNumber(item.total).multipliedBy(2).div(100).toFixed(1) }} POR≈{{
                       BigNumber(item.total).multipliedBy(2)
                     }}
                     USDT
