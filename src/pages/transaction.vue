@@ -231,7 +231,7 @@ const initChart = () => {
       data: xData.value,
       axisLabel: {
         formatter: (value) => {
-          return useDateFormat(value, "MM-DD").value;
+          return useDateFormat(value, "M/DD").value;
         },
       },
     },
@@ -293,7 +293,7 @@ const initData = async () => {
     interval = useIntervalFn(() => {
       requestBtcAndEth();
     }, 5000);
-    const historyRes = await getCoinHistoryPrice(30);
+    const historyRes = await getCoinHistoryPrice(7);
     xData.value = historyRes.data.xAlis ?? []
     yData.value = historyRes.data.yValue ?? [];
     initChart();
