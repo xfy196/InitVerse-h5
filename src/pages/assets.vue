@@ -38,9 +38,10 @@
                 <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
                 <div class="right">
                   <div class="value">
-                    {{ BigNumber(item.total).multipliedBy(2).div(100).toFixed(1) }} POR≈{{
-                      BigNumber(item.total).multipliedBy(2)
+                    {{
+                      BigNumber(item.total).multipliedBy(2).div(100).toFixed(1)
                     }}
+                    POR≈{{ BigNumber(item.total).multipliedBy(2) }}
                     USDT
                   </div>
                   <img src="@/assets/images/icons/power.svg" alt="" />
@@ -53,7 +54,7 @@
                 <div class="right">
                   <div class="value">
                     {{ BigNumber(item.notReleased).div(100).toFixed(1) }} POR≈{{
-                      BigNumber(item.notReleased)
+                      item.notReleased
                     }}
                     USDT
                   </div>
@@ -112,16 +113,19 @@
               <div class="cell">
                 <div class="label">{{ $t("assets.releaseRate") }}</div>
                 <div class="right">
-                  <div class="value">{{ BigNumber(item.releaseRate).multipliedBy(100) }}%/D</div>
+                  <div class="value">
+                    {{ BigNumber(item.releaseRate).multipliedBy(100) }}%/D
+                  </div>
                 </div>
               </div>
               <div class="cell">
                 <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
                 <div class="right">
                   <div class="value">
-                    {{ BigNumber(item.total).multipliedBy(2).div(100).toFixed(1) }} POR≈{{
-                      BigNumber(item.total).multipliedBy(2)
+                    {{
+                      BigNumber(item.total).multipliedBy(2).div(100).toFixed(1)
                     }}
+                    POR≈{{ BigNumber(item.total).multipliedBy(2) }}
                     USDT
                   </div>
                   <img src="@/assets/images/icons/power.svg" alt="" />
@@ -182,16 +186,22 @@
               <div class="cell">
                 <div class="label">{{ $t("assets.releaseRate") }}</div>
                 <div class="right">
-                  <div class="value">{{ BigNumber(item.releaseRate).multipliedBy(100) }}%/D</div>
+                  <div class="value">
+                    {{ BigNumber(item.releaseRate).multipliedBy(100) }}%/D
+                  </div>
                 </div>
               </div>
               <div class="cell">
                 <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
                 <div class="right">
                   <div class="value">
-                    {{ new BigNumber(item.total).multipliedBy(2).div(100).toFixed(1) }} POR≈{{
-                      BigNumber(item.total).multipliedBy(2)
+                    {{
+                      new BigNumber(item.total)
+                        .multipliedBy(2)
+                        .div(100)
+                        .toFixed(1)
                     }}
+                    POR≈{{ BigNumber(item.total).multipliedBy(2) }}
                     USDT
                   </div>
                   <img src="@/assets/images/icons/power.svg" alt="" />
@@ -422,9 +432,12 @@
       v-if="showTransferAccount"
       v-model:show="showTransferAccount"
     />
-    <Transfer 
-    :assetType="assetType"
-    @refresh="initData" v-if="showTransfer" v-model:show="showTransfer"/>
+    <Transfer
+      :assetType="assetType"
+      @refresh="initData"
+      v-if="showTransfer"
+      v-model:show="showTransfer"
+    />
   </div>
 </template>
 
@@ -512,9 +525,9 @@ const handleShowWithdrawal = (type, usId) => {
   }
 };
 const handleShowTransfer = (type, usId) => {
-  userAssetId.value = usId
-  assetType.value = type
-  showTransfer.value = true
+  userAssetId.value = usId;
+  assetType.value = type;
+  showTransfer.value = true;
 };
 const handleFlashExchange = () => {
   // 闪兑
