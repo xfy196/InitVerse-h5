@@ -102,6 +102,13 @@ const routes = [
       layout: BaseLayout,
     },
   },
+  {
+    path: "/download",
+    component: () => import("./pages/download.vue"),
+    meta: {
+      layout: "div",
+    }
+  }
 ];
 
 const router = createRouter({
