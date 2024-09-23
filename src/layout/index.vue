@@ -1,6 +1,6 @@
 <template>
   <div class="layout-container">
-    <AppDownload v-if="route.path === '/' || route.path === '/rental-power'" />
+    <AppDownload v-if="route.path === '/' || route.path === '/rental-power' || !isClient" />
     <Head />
     <div class="main">
       <RouterView />
@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount } from "vue";
+import { computed, onBeforeMount } from "vue";
 import { useUserStore } from "@/stores/user";
 import Head from "./head.vue";
 import TabBar from "./tab-bar.vue";
@@ -23,6 +23,7 @@ onBeforeMount(async () => {
   await userStore.updateUserInfo();
   await settingStore.updateSetting();
 });
+const isClient = computed(() => window?.isClient ?? false)
 </script>
 <style lang="scss" scoped>
 .layout-container {
