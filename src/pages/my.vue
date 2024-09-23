@@ -40,6 +40,11 @@
             src="@/assets/images/icons/level3.svg"
             alt=""
           />
+          <img
+            v-else
+            src="@/assets/images/icons/no-level.svg"
+            alt=""
+          />
         </div>
       </div>
       <div class="bottom">
@@ -58,6 +63,7 @@
           <span v-else-if="userInfo.nodeLevel === 3" class="level-text">{{
             $t("my.emperorNode")
           }}</span>
+          <span v-else>无节点</span>
         </div>
       </div>
     </div>
