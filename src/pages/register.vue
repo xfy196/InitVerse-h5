@@ -1,6 +1,7 @@
 <template>
   <div class="register-container">
     <Head />
+    <Back />
     <div class="content">
       <div class="title">{{ $t("register.title") }}</div>
       <div class="form">
@@ -93,6 +94,7 @@
 
 <script setup>
 import Head from "@/layout/head.vue";
+import Back from "@/components/back.vue";
 import { computed, ref } from "vue";
 import { isEmail } from "@/utils/validate";
 import { useStorage } from "@vueuse/core";

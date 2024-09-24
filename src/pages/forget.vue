@@ -1,6 +1,7 @@
 <template>
   <div class="forget-container">
     <Head />
+    <Back/>
     <div class="content">
       <div class="title">{{ $t("forget.title") }}</div>
       <div class="form">
@@ -86,6 +87,7 @@
 
 <script setup>
 import Head from "@/layout/head.vue";
+import Back from "@/components/back.vue";
 import { ref, computed } from "vue";
 import { putUserPassword, sendEmailGetCode } from "@/api/user";
 import { showSuccessToast } from "vant";

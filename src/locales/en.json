@@ -36,7 +36,7 @@
     "username": "Username",
     "placeholderUsername": "Please enter your username",
     "password": "Password",
-    "placeholderPassword": "Please enter your password",
+    "placeholderPassword": "Please enter a password with at least 8 characters, including uppercase and lowercase letters, numbers, and special characters",
     "confirmPassword": "Confirm Password",
     "placeholderConfirmPassword": "Please enter your password again",
     "inviteCode": "Invite Code",

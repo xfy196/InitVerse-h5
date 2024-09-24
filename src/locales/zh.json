@@ -49,7 +49,7 @@
     "username": "用户名",
     "placeholderUsername": "请输入用户名",
     "password": "密码",
-    "placeholderPassword": "请输入密码",
+    "placeholderPassword": "请输入8位以上密码，且必须包含大小写、数字、特殊字符",
     "confirmPassword": "确认密码",
     "placeholderConfirmPassword": "请再次输入密码",
     "inviteCode": "邀请码",

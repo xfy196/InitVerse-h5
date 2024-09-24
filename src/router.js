@@ -29,7 +29,7 @@ const routes = [
     path: "/register",
     component: () => import("./pages/register.vue"),
     meta: {
-      layout: "div",
+      layout: 'div',
     },
   },
   {

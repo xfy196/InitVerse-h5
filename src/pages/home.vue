@@ -150,8 +150,12 @@ const rentalPower = async () => {
     const res = await purchaseComputingPower({
       powerUSDT: fee.value,
     });
-    showSuccessToast(res.msg);
-    initData();
+    showSuccessToast({
+      message: res.msg,
+      onClose: () => {
+        router.push("/property")
+      }
+    });
   } catch (error) {
     console.log("🚀 ~ rentalPower ~ error:", error);
   }
