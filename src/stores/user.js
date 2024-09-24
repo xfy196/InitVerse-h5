@@ -8,16 +8,24 @@ export const useUserStore = defineStore("user", {
       shareCode: "",
       withdrawalAddress: "",
       safePassword: "",
-      tronAddress: '',
-      bnbAddress: '',
+      tronAddress: "",
+      bnbAddress: "",
       groupLevel: 0,
-      nodeLevel: 0
+      nodeLevel: 0,
     },
     token: "",
   }),
   persist: {
     storage: localStorage,
     pick: ["userInfo", "token"],
+    debug: import.meta.env.DEV,
+    afterHydrate: async (ctx) => {
+      if (window.isClient) {
+        // 如果是客户端
+        ctx.store.setToken("123456");
+        await ctx.store.updateUserInfo();
+      }
+    },
   },
   actions: {
     setToken(token) {
@@ -38,6 +46,9 @@ export const useUserStore = defineStore("user", {
     },
     setUserInfo(userInfo) {
       this.userInfo = userInfo;
+      if(window.isClient){
+        // 还需要传给客户端
+      }
     },
   },
 });

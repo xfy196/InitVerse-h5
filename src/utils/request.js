@@ -43,6 +43,7 @@ request.interceptors.request.use((config) => {
 */
 request.interceptors.response.use(
   (response) => {
+  const userStore = useUserStore();
     if (response.status == 200 && response.data.code == 200) {
       return Promise.resolve(response.data);
     } else if (response.data.code == 401) {
@@ -50,7 +51,7 @@ request.interceptors.response.use(
       showToast({
         message: response.data.msg,
       });
-      router.push("/login");
+      userStore.logout()
       return Promise.reject(response.data);
     } else {
       showFailToast({
