@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "buildh5": "vite build",
+    "buildapp": "vite build --mode app",
     "preview": "vite preview"
   },
   "dependencies": {
