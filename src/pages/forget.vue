@@ -61,7 +61,7 @@
         <c-input
           :label="$t('forget.confirmPassword')"
           clearable
-          :type="passwordVisible ? 'text' : 'password'"
+          :type="confirmPasswordVisible ? 'text' : 'password'"
           :border="false"
           :placeholder="$t('forget.confirmPassword')"
           v-model:value="confirmPassword"
@@ -76,7 +76,7 @@
 
         <div class="submit-btn-container">
           <!-- <van-button class="submit-btn" round type="primary"> 提交 </van-button> -->
-          <CButton @click="handleSubmit" :disabled="validate">
+          <CButton :loading="loading" @click="handleSubmit" :disabled="validate">
             {{ $t("forget.submit") }}
           </CButton>
         </div>
@@ -94,14 +94,15 @@ import { showSuccessToast } from "vant";
 import { isEmail } from "@/utils/validate";
 import { useRouter } from "vue-router";
 const router = useRouter();
-const passwordVisible = ref(true);
-const confirmPasswordVisible = ref(true);
+const passwordVisible = ref(false);
+const confirmPasswordVisible = ref(false);
 const username = ref("");
 const password = ref("");
 const confirmPassword = ref("");
 const email = ref("");
 const emailCode = ref("");
 const countDownTime = ref(0);
+const loading = ref(false)
 const validate = computed(() => {
   return (
     username.value.length === 0 ||
@@ -130,6 +131,7 @@ const sendEmail = async () => {
 };
 const handleSubmit = async () => {
   try {
+    loading.value = true
     const res = await putUserPassword({
       userName: username.value,
       passWord: password.value,
@@ -141,6 +143,8 @@ const handleSubmit = async () => {
     router.push("/login");
   } catch (error) {
     console.log("🚀 ~ handleSubmit ~ error:", error);
+  }finally{
+    loading.value = false
   }
 };
 </script>
