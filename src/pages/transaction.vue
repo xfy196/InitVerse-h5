@@ -78,7 +78,7 @@
             <van-col span="8">
               <div
                 :style="{
-                  color: item.chg >= 0 ? '#ED5C42' : '#00C377',
+                  color: item.chg < 0 ? '#ED5C42' : '#00C377',
                   'justify-content': 'flex-end',
                 }"
                 class="value van-ellipsis"
@@ -259,6 +259,12 @@ const initChart = () => {
         data: yData.value,
         type: "candlestick",
         smooth: true,
+        itemStyle: {
+          color: "rgb(0, 195, 119)", // 阳线（涨）的颜色
+          color0: "rgb(237, 92, 66)", // 阴线（跌）的颜色
+          borderColor: "rgb(0, 195, 119)", // 阳线（涨）的边框颜色
+          borderColor0: "rgb(237, 92, 66)", // 阴线（跌）的边框颜色
+        },
       },
     ],
   };
@@ -294,7 +300,7 @@ const initData = async () => {
       requestBtcAndEth();
     }, 5000);
     const historyRes = await getCoinHistoryPrice(7);
-    xData.value = historyRes.data.xAlis ?? []
+    xData.value = historyRes.data.xAlis ?? [];
     yData.value = historyRes.data.yValue ?? [];
     initChart();
     onTouch();
@@ -352,9 +358,9 @@ onUnmounted(() => {
   closeToast();
 });
 const handleUpdateIniNum = (value) => {
-  expectedIni.value = value ? BigNumber(value)
-    .multipliedBy(iniData.value.price)
-    .toString() : 0;
+  expectedIni.value = value
+    ? BigNumber(value).multipliedBy(iniData.value.price).toString()
+    : 0;
 };
 </script>
 <style lang="scss" scoped>

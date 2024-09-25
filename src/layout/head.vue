@@ -84,5 +84,4 @@ const goHome = () => {
     height: 100%;
   }
 }
-
 </style>
