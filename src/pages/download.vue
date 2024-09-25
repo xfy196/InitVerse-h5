@@ -175,16 +175,21 @@ const appDownloadUrl = ref(import.meta.env.VITE_APP_DOWNLOAD_URL);
         }
       }
     }
-    .link-list {
-        margin-top: 180px;
-        display: flex;
-        li {
-            margin-left: 60px;
-            &:first-child{
-                margin-left: 0;
-            }
-        }
+  .link-list {
+    display: flex;
+    margin-top: 180px;
+    margin-bottom: 40px;
+    justify-content: center;
+    li {
+      margin-left: 40px;
+      &:first-child {
+        margin-left: 0;
+      }
+      img {
+        width: 40px;
+      }
     }
+  }
   }
 }
 </style>

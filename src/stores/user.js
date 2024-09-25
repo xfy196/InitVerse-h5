@@ -19,13 +19,13 @@ export const useUserStore = defineStore("user", {
     storage: localStorage,
     pick: ["userInfo", "token"],
     debug: import.meta.env.DEV,
-    afterHydrate: async (ctx) => {
-      if (window.isClient) {
-        // 如果是客户端
-        ctx.store.setToken("123456");
-        await ctx.store.updateUserInfo();
-      }
-    },
+    // afterHydrate: async (ctx) => {
+    //   if (window.isClient) {
+    //     // 如果是客户端
+    //     ctx.store.setToken("123456");
+    //     await ctx.store.updateUserInfo();
+    //   }
+    // },
   },
   actions: {
     setToken(token) {
@@ -46,9 +46,9 @@ export const useUserStore = defineStore("user", {
     },
     setUserInfo(userInfo) {
       this.userInfo = userInfo;
-      if(window.isClient){
-        // 还需要传给客户端
-      }
+      // if(window.isClient){
+      //   // 还需要传给客户端
+      // }
     },
   },
 });
