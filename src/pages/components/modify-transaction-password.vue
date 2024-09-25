@@ -83,7 +83,7 @@ const sendEmail = async () => {
     await sendEmailGetCode({
       type: "CHANGE_PAYMENT_PASSWORD",
     });
-    countDownTime.value = 5 * 60 * 1000;
+    countDownTime.value = 60 * 1000;
   } catch (error) {
     console.log("🚀 ~ sendEmail ~ error:", error);
   }
@@ -99,7 +99,7 @@ const handleSubmit = async () => {
       safePassWord: newPassword.value,
       emailCode: code.value,
     });
-    await userStore.updateUserInfo()
+    await userStore.updateUserInfo();
     showSuccessToast(res.msg);
     show.value = false;
   } catch (error) {

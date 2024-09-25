@@ -27,30 +27,48 @@
               </div>
             </div>
             <div class="cell">
-              <div class="label">{{ $t("orderList.computingPowerTotal") }}</div>
+              <div class="label">
+                {{
+                  type === "iniOrder"
+                    ? $t("assets.computingPowerTotal")
+                    : $t("orderList.computingPowerTotal")
+                }}
+              </div>
               <div class="right">
                 <div class="value">
-                  {{
-                    new BigNumber(item.total).multipliedBy(2).div(100)
-                  }}
+                  {{ BigNumber(item.total).multipliedBy(2).div(100) }}
                   POR≈{{ BigNumber(item.total).multipliedBy(2) }}
-                  USDT
+                  {{ type === "iniOrder" ? "INI" : "USDT" }}
                 </div>
-                <img src="@/assets/images/icons/power.svg" alt="" />
+                <img
+                  v-if="type === 'iniOrder'"
+                  src="@/assets/images/icons/ini.svg"
+                  alt=""
+                />
+                <img v-else src="@/assets/images/icons/power.svg" alt="" />
               </div>
             </div>
             <div class="cell">
               <div class="label">
-                {{ $t("orderList.unreleasedComputingPower") }}
+                {{
+                  type === "iniOrder"
+                    ? $t("assets.unreleasedComputingPower")
+                    : $t("orderList.unreleasedComputingPower")
+                }}
               </div>
               <div class="right">
                 <div class="value">
-                  {{ new BigNumber(item.notReleased).div(100) }} POR≈{{
+                  {{ BigNumber(item.notReleased).div(100) }} POR≈{{
                     item.notReleased
                   }}
-                  USDT
+                  {{ type === "iniOrder" ? "INI" : "USDT" }}
                 </div>
-                <img src="@/assets/images/icons/power.svg" alt="" />
+                <img
+                  v-if="type === 'iniOrder'"
+                  src="@/assets/images/icons/ini.svg"
+                  alt=""
+                />
+                <img v-else src="@/assets/images/icons/power.svg" alt="" />
               </div>
             </div>
             <div class="cell">

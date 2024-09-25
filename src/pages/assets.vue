@@ -195,11 +195,11 @@
                 <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
                 <div class="right">
                   <div class="value">
-                    {{ new BigNumber(item.total).div(100).toFixed(1) }}
+                    {{ BigNumber(item.total).div(100).toFixed(1) }}
                     POR≈{{ item.total }}
-                    USDT
+                    INI
                   </div>
-                  <img src="@/assets/images/icons/power.svg" alt="" />
+                  <img src="@/assets/images/icons/ini.svg" alt="" />
                 </div>
               </div>
               <div class="cell">
@@ -210,9 +210,9 @@
                   <div class="value">
                     {{ BigNumber(item.notReleased).div(100).toFixed(1) }}
                     POR≈{{ item.notReleased }}
-                    USDT
+                    INI
                   </div>
-                  <img src="@/assets/images/icons/power.svg" alt="" />
+                  <img src="@/assets/images/icons/ini.svg" alt="" />
                 </div>
               </div>
               <div class="cell">

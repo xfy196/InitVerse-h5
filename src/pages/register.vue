@@ -74,16 +74,22 @@
               {{ $t("register.getCode") }}
             </div>
             <div v-else class="count-down-text">
-              <van-count-down @finish="handleCountDownFinish" format="sss" :time="countDownTime" />{{
-                $t("register.afterGetCode")
-              }}
+              <van-count-down
+                @finish="handleCountDownFinish"
+                format="sss"
+                :time="countDownTime"
+              />{{ $t("register.afterGetCode") }}
             </div>
           </template>
         </c-input>
 
         <div class="submit-btn-container">
           <!-- <van-button class="submit-btn" round type="primary"> 提交 </van-button> -->
-          <CButton :loading="loading" @click="handleSubmit" :disabled="validate">
+          <CButton
+            :loading="loading"
+            @click="handleSubmit"
+            :disabled="validate"
+          >
             {{ $t("register.submit") }}
           </CButton>
         </div>
@@ -101,18 +107,18 @@ import { useStorage } from "@vueuse/core";
 import { sendEmailGetCode, register } from "@/api/user";
 import { showSuccessToast } from "vant";
 import { useRouter } from "vue-router";
-import {useI18n} from "vue-i18n"
+import { useI18n } from "vue-i18n";
 const router = useRouter();
 const passwordVisible = ref(false);
 const username = ref("");
 const password = ref("");
 const confirmPassword = ref("");
 const confirmPasswordVisible = ref(false);
-const shareCode = useStorage("inviteCode", '');
+const shareCode = useStorage("inviteCode", "");
 const email = ref("");
 const emailCode = ref("");
 const countDownTime = ref(0);
-const {t} = useI18n()
+const { t } = useI18n();
 const loading = ref(false);
 
 const validate = computed(() => {
@@ -123,7 +129,8 @@ const validate = computed(() => {
     confirmPassword.value.length === 0 ||
     shareCode.value.length === 0 ||
     email.value.length === 0 ||
-    emailCode.value.length === 0 || !isEmail(email.value)
+    emailCode.value.length === 0 ||
+    !isEmail(email.value)
   );
 });
 
@@ -195,7 +202,7 @@ const handleGetCode = async () => {
       type: "REGISTERED",
       email: email.value,
     });
-    countDownTime.value =  5 * 60 * 1000;
+    countDownTime.value = 60 * 1000;
   } catch (error) {
     console.log(error);
   }
