@@ -106,6 +106,7 @@
     "inviteCode": "邀请码",
     "copyLink": "复制链接",
     "socialLink": "社交链接",
+    "email": "邮箱",
     "officialEmail": "官服邮箱：",
     "totalPower": "总算力",
     "regionPower": "大区算力",
@@ -265,5 +266,8 @@
     "placeholder": "请输入您要转账的INI数量",
     "expected": "预计消耗手续费：",
     "transferBtn": "划转"
+  },
+  "noticeList": {
+    "title": "公告列表"
   }
 }

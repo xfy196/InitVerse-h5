@@ -96,6 +96,7 @@
     "noNode": "No Node",
     "profile": "My ID",
     "region": "Region",
+    "email": "Email",
     "teamPower": "Team Power",
     "setWithdrawalAddress": "Set Withdrawal Address",
     "setTransactionPassword": "Set Transaction Password",
@@ -263,5 +264,8 @@
     "placeholder": "Please enter the INI quantity you want to transfer",
     "expected": "Expected to consume fee:",
     "transferBtn": "Transfer"
+  },
+  "noticeList": {
+    "title": "Notice List"
   }
 }

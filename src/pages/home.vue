@@ -13,6 +13,7 @@
       :scrollable="false"
       mode="link"
       color="#ffffff"
+      @click.stop="handleToNoticeList"
       background="linear-gradient( 90deg, rgba(39,39,43,0) 0%, rgba(145,96,255,0.5) 33%, rgba(94,117,255,0.5) 66%, rgba(39,39,43,0) 100%)"
       class="notice-bar"
       left-icon="volume-o"
@@ -197,6 +198,14 @@ const rentalPower = async () => {
     console.log("🚀 ~ rentalPower ~ error:", error);
   }
 };
+
+const handleToNoticeList = () => {
+  console.log(1111);
+  router.push({
+    path: "/notice-list",
+  });
+};
+
 const toRentalRecords = () => {
   router.push("/rental-records");
 };

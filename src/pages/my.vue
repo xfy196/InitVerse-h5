@@ -40,11 +40,7 @@
             src="@/assets/images/icons/level3.svg"
             alt=""
           />
-          <img
-            v-else
-            src="@/assets/images/icons/no-level.svg"
-            alt=""
-          />
+          <img v-else src="@/assets/images/icons/no-level.svg" alt="" />
         </div>
       </div>
       <div class="bottom">
@@ -104,6 +100,23 @@
             />
           </div>
         </div>
+        <van-divider
+          style="margin: 0; border-color: rgba(39, 39, 43, 1)"
+        ></van-divider>
+        <div class="cell-item">
+          <div class="label">{{ $t("my.email") }}</div>
+          <div class="right">
+            <div class="status">
+              {{ userInfo.email }}
+            </div>
+            <img
+              @click="handleCopy(userInfo.email)"
+              class="icon"
+              src="@/assets/images/icons/copy.svg"
+              alt=""
+            />
+          </div>
+        </div>
       </div>
     </div>
     <!-- 我的团队 -->
@@ -129,7 +142,7 @@
         >
           <div class="label van-ellipsis">
             U{{ item.userId }}
-            <div v-if="index === 0" class="region">{{$t("my.region")}}</div>
+            <div v-if="index === 0" class="region">{{ $t("my.region") }}</div>
           </div>
           <div class="right">
             <div class="status">{{ item.groupPower }} USDT</div>
@@ -141,9 +154,9 @@
         ></van-divider>
         <div class="cell-item">
           <div class="label">
-            {{ $t("my.myCommunity") }}：{{ $t("my.totalPerformance")
-            }} {{ totalPower }} USDT（{{ $t("my.quarters")
-            }} {{ groupTotalPower }}USDT）
+            {{ $t("my.myCommunity") }}：{{ $t("my.totalPerformance") }}
+            {{ totalPower }} USDT（{{ $t("my.quarters") }}
+            {{ groupTotalPower }}USDT）
           </div>
         </div>
       </div>
@@ -248,7 +261,7 @@ const handleSetTransactionPassword = () => {
 const handleCopy = async (text) => {
   try {
     await copy(text);
-    showToast(t('copySuccessText'));
+    showToast(t("copySuccessText"));
   } catch (error) {
     console.log("🚀 ~ handleCopy ~ error:", error);
   }
