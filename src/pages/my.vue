@@ -248,7 +248,7 @@ const handleSetTransactionPassword = () => {
 const handleCopy = async (text) => {
   try {
     await copy(text);
-    showToast("复制成功");
+    showToast(t('copySuccessText'));
   } catch (error) {
     console.log("🚀 ~ handleCopy ~ error:", error);
   }

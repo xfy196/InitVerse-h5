@@ -12,6 +12,7 @@
     "title": "下载应用到手机",
     "btn": "下载APP"
   },
+  "copySuccessText": "复制成功",
   "loadingText": "加载中...",
   "finishedText": "没有更多数据了",
   "passwordLock": {
