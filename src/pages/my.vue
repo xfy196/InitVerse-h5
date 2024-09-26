@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="profile">
-      <div class="label">我的ID</div>
+      <div class="label">{{ $t("my.profile") }}</div>
       <div class="profile-id">
         {{ userInfo.uid }}
         <img
@@ -63,7 +63,7 @@
           <span v-else-if="userInfo.nodeLevel === 3" class="level-text">{{
             $t("my.emperorNode")
           }}</span>
-          <span v-else>无节点</span>
+          <span v-else>{{ $t("my.noNode") }}</span>
         </div>
       </div>
     </div>
@@ -129,7 +129,7 @@
         >
           <div class="label van-ellipsis">
             U{{ item.userId }}
-            <div v-if="index === 0" class="region">大区</div>
+            <div v-if="index === 0" class="region">{{$t("my.region")}}</div>
           </div>
           <div class="right">
             <div class="status">{{ item.groupPower }} USDT</div>

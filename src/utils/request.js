@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useUserStore } from "../stores/user";
-import router from "../router"
 import { showToast } from "vant";
 const CancelToken = axios.CancelToken;
 const baseURL = import.meta.env.VITE_BASE_PREFIX;
@@ -29,6 +28,7 @@ const removePending = (config) => {
 };
 request.interceptors.request.use((config) => {
   const userStore = useUserStore();
+  config.headers['lang'] = localStorage.getItem('lang') || 'zh'
   if (userStore.token) {
     config.headers.Authorization = `Bearer ${userStore.token}`;
   }

@@ -11,7 +11,7 @@
       background="linear-gradient( 90deg, rgba(39,39,43,0) 0%, rgba(145,96,255,0.5) 33%, rgba(94,117,255,0.5) 66%, rgba(39,39,43,0) 100%)"
       class="notice-bar"
       left-icon="volume-o"
-      :text="$t('home.notice')"
+      :text="notify"
     >
       <template #left-icon>
         <img
@@ -100,7 +100,16 @@ const fee = ref();
 const expectPrice = ref(0);
 const expectIni = ref(0);
 const router = useRouter();
-const { t } = useI18n();
+const notify = ref('');
+const { t,locale } = useI18n();
+
+watch(locale, (val) => {
+  console.log("🚀 ~ watch ~ val:", val)
+  notify.value = "关于开启算力租赁活动的通知"
+  
+}, {
+  immediate: true
+})
 const disabledFee = computed(() => {
   return (
     new BigNumber(fee.value).lt(100) ||
