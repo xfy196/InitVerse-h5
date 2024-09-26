@@ -40,6 +40,19 @@ export const getProjectedRevenue = (data) => {
   return request({
     url: "/h5/power/pre/pay",
     method: "post",
-    data
+    data,
+  });
+};
+
+export const getBanners = () => {
+  return request({
+    url: "/h5/carousel/list",
+    method: "get",
+  });
+};
+export const getNotices = () => {
+  return request({
+    url: "/h5/notice/news",
+    method: "get",
   });
 };

@@ -1,18 +1,33 @@
 <template>
   <div class="home-container px-30">
-    <van-swipe :show-indicators="false">
-      <van-swipe-item>
-        <img class="img" src="@/assets/images/banner.png" alt="" />
+    <van-swipe class="banner-box" :autoplay="3000" :show-indicators="false">
+      <van-swipe-item
+        class="banner-item"
+        v-for="banner in banners"
+        :key="banner.carouselId"
+      >
+        <img class="img" :src="banner.carouselPic" alt="" />
       </van-swipe-item>
     </van-swipe>
     <van-notice-bar
+      :scrollable="false"
       mode="link"
       color="#ffffff"
       background="linear-gradient( 90deg, rgba(39,39,43,0) 0%, rgba(145,96,255,0.5) 33%, rgba(94,117,255,0.5) 66%, rgba(39,39,43,0) 100%)"
       class="notice-bar"
       left-icon="volume-o"
-      :text="notify"
     >
+      <van-swipe
+        class="notice-swipe"
+        vertical
+        :autoplay="3000"
+        :touchable="false"
+        :show-indicators="false"
+      >
+        <van-swipe-item v-for="notice in notify" :key="notice.noticeId">{{
+          notice.message
+        }}</van-swipe-item>
+      </van-swipe>
       <template #left-icon>
         <img
           class="notice-left-icon"
@@ -61,7 +76,9 @@
           <div class="top">
             <div class="left">{{ $t("home.expectTitle") }}</div>
             <div class="right">
-              {{ BigNumber(expectPrice).div(100) }} POR ({{ $t("home.expectValue") }}
+              {{ BigNumber(expectPrice).div(100) }} POR ({{
+                $t("home.expectValue")
+              }}
               {{ expectPrice }} USDT)
             </div>
           </div>
@@ -92,7 +109,12 @@ import { links } from "@/config";
 import BigNumber from "bignumber.js";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { purchaseComputingPower, getProjectedRevenue } from "@/api/rental";
+import {
+  purchaseComputingPower,
+  getProjectedRevenue,
+  getBanners,
+  getNotices,
+} from "@/api/rental";
 import { getAssetDetail } from "@/api/trade";
 import { showLoadingToast } from "vant";
 const balance = ref(0);
@@ -100,16 +122,22 @@ const fee = ref();
 const expectPrice = ref(0);
 const expectIni = ref(0);
 const router = useRouter();
-const notify = ref('');
-const { t,locale } = useI18n();
+const notify = ref([]);
+const banners = ref([]);
+const { t, locale } = useI18n();
 
-watch(locale, (val) => {
-  console.log("🚀 ~ watch ~ val:", val)
-  notify.value = "关于开启算力租赁活动的通知"
-  
-}, {
-  immediate: true
-})
+watch(
+  locale,
+  async () => {
+    const bannerRes = await getBanners();
+    banners.value = bannerRes.data;
+    const res = await getNotices();
+    notify.value = res.data;
+  },
+  {
+    immediate: true,
+  }
+);
 const disabledFee = computed(() => {
   return (
     new BigNumber(fee.value).lt(100) ||
@@ -162,8 +190,8 @@ const rentalPower = async () => {
     showSuccessToast({
       message: res.msg,
       onClose: () => {
-        router.push("/property")
-      }
+        router.push("/property");
+      },
     });
   } catch (error) {
     console.log("🚀 ~ rentalPower ~ error:", error);
@@ -178,16 +206,31 @@ const toRecharge = () => {
 </script>
 <style lang="scss" scoped>
 .home-container {
-  .img {
-    width: 100%;
+  .banner-box {
+    border-radius: 20px;
+    overflow: hidden;
+    height: 320px;
+    .banner-item {
+      .img {
+        width: 100%;
+      }
+    }
   }
   .notice-bar {
     height: 64px;
+    margin-top: 30px;
+    .notice-swipe {
+      height: 64px;
+      line-height: 64px;
+    }
     .notice-left-icon {
       width: 40px;
       height: 40px;
       margin-right: 12px;
     }
+    // .van-swipe-item{
+    //   height: 64px;
+    // }
   }
   .rental-container {
     width: 690px;
