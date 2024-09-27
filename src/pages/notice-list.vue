@@ -12,12 +12,12 @@
             :key="notice.noticeId"
           >
             <div class="left">
-              <div class="message">
+              <div :class="{ istop: notice.istop === '1' }" class="message">
                 <div class="txt van-ellipsis">
-                  {{ notice.message }}
+                  {{ notice.title }}
                 </div>
               </div>
-              <div class="date">{{ notice.createTime }}</div>
+              <div class="date">{{ notice.pushTime }}</div>
             </div>
             <div class="right">
               <van-icon size="0.4rem" color="#ffffff" name="arrow" />
@@ -30,8 +30,8 @@
 </template>
 
 <script setup>
-import { getNotices } from "@/api/rental";
-import { onBeforeMount, ref, watch } from "vue";
+import { getNoticeList } from "@/api/rental";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import Back from "../components/back.vue";
 import { useI18n } from "vue-i18n";
@@ -48,8 +48,9 @@ watch(
       duration: 0,
     });
     try {
-      const res = await getNotices();
-      notices.value = res.data;
+      const res = await getNoticeList();
+      console.log("🚀 ~ res:", res);
+      notices.value = res.rows;
     } catch (error) {
       console.log("🚀 ~ onBeforeMount ~ error:", error);
     } finally {
@@ -99,16 +100,23 @@ const handleToDetail = (data) => {
           justify-content: space-between;
           align-items: center;
           .left {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
             .message {
               font-weight: 400;
               font-size: 28px;
               color: #ffffff;
               line-height: 33px;
-              margin-left: 24px;
               position: relative;
+
               .txt {
                 width: 500px;
               }
+            }
+            .istop {
+              margin-left: 24px;
               &::before {
                 content: "";
                 display: block;

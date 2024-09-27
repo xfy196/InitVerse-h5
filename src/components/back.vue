@@ -19,7 +19,7 @@ const back = () => {
   display: flex;
   align-items: center;
   padding: 0 30px;
-  height: 54px;
+  min-height: 54px;
   .back-btn {
     display: flex;
     align-items: center

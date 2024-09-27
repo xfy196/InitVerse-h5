@@ -50,9 +50,21 @@ export const getBanners = () => {
     method: "get",
   });
 };
-export const getNotices = () => {
+export const getNotice = () => {
   return request({
     url: "/h5/notice/news",
     method: "get",
   });
 };
+export const getNoticeList = () => {
+  return request({
+    url: "/h5/notice/list",
+    method: "get",
+  })
+}
+export const getNoticeDetail = (id) => {
+  return request({
+    url: "/h5/notice/detail/" + id,
+    method: "get",
+  })
+}

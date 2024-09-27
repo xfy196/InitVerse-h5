@@ -269,5 +269,8 @@
   },
   "noticeList": {
     "title": "公告列表"
+  },
+  "noticeDetail": {
+    "title": "公告详情"
   }
 }

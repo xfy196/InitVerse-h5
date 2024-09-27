@@ -267,5 +267,8 @@
   },
   "noticeList": {
     "title": "Notice List"
+  },
+  "noticeDetail": {
+    "title": "Notice Detail"
   }
 }

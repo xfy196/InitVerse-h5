@@ -10,25 +10,14 @@
       </van-swipe-item>
     </van-swipe>
     <van-notice-bar
-      :scrollable="false"
       mode="link"
       color="#ffffff"
       @click.stop="handleToNoticeList"
       background="linear-gradient( 90deg, rgba(39,39,43,0) 0%, rgba(145,96,255,0.5) 33%, rgba(94,117,255,0.5) 66%, rgba(39,39,43,0) 100%)"
       class="notice-bar"
       left-icon="volume-o"
+      :text="notify.title"
     >
-      <van-swipe
-        class="notice-swipe"
-        vertical
-        :autoplay="3000"
-        :touchable="false"
-        :show-indicators="false"
-      >
-        <van-swipe-item v-for="notice in notify" :key="notice.noticeId">{{
-          notice.message
-        }}</van-swipe-item>
-      </van-swipe>
       <template #left-icon>
         <img
           class="notice-left-icon"
@@ -114,7 +103,7 @@ import {
   purchaseComputingPower,
   getProjectedRevenue,
   getBanners,
-  getNotices,
+  getNotice,
 } from "@/api/rental";
 import { getAssetDetail } from "@/api/trade";
 import { showLoadingToast } from "vant";
@@ -123,7 +112,7 @@ const fee = ref();
 const expectPrice = ref(0);
 const expectIni = ref(0);
 const router = useRouter();
-const notify = ref([]);
+const notify = ref({title: ""});
 const banners = ref([]);
 const { t, locale } = useI18n();
 
@@ -132,7 +121,7 @@ watch(
   async () => {
     const bannerRes = await getBanners();
     banners.value = bannerRes.data;
-    const res = await getNotices();
+    const res = await getNotice();
     notify.value = res.data;
   },
   {
