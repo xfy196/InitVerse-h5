@@ -119,7 +119,7 @@
                 </div>
               </div>
               <div class="cell">
-                <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
+                <div class="label">{{ $t("assets.iniTotal") }}</div>
                 <div class="right">
                   <div class="value">
                     {{
@@ -133,7 +133,7 @@
               </div>
               <div class="cell">
                 <div class="label">
-                  {{ $t("assets.unreleasedComputingPower") }}
+                  {{ $t("assets.unreleasedIni") }}
                 </div>
                 <div class="right">
                   <div class="value">
@@ -192,7 +192,7 @@
                 </div>
               </div>
               <div class="cell">
-                <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
+                <div class="label">{{ $t("assets.iniTotal") }}</div>
                 <div class="right">
                   <div class="value">
                     {{ BigNumber(item.total).div(100).toFixed(1) }}
@@ -204,7 +204,7 @@
               </div>
               <div class="cell">
                 <div class="label">
-                  {{ $t("assets.unreleasedComputingPower") }}
+                  {{ $t("assets.unreleasedIni") }}
                 </div>
                 <div class="right">
                   <div class="value">
