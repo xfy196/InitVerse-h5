@@ -119,7 +119,7 @@
                 </div>
               </div>
               <div class="cell">
-                <div class="label">{{ $t("assets.iniTotal") }}</div>
+                <div class="label">{{ $t("assets.computingPowerTotal") }}</div>
                 <div class="right">
                   <div class="value">
                     {{
@@ -133,7 +133,7 @@
               </div>
               <div class="cell">
                 <div class="label">
-                  {{ $t("assets.unreleasedIni") }}
+                  {{ $t("assets.unreleasedComputingPower") }}
                 </div>
                 <div class="right">
                   <div class="value">
