@@ -49,7 +49,7 @@
                 <img
                   class="icon"
                   v-if="item.type === 'BTC'"
-                  src="@/assets/images/icons/power.svg"
+                  src="@/assets/images/icons/btc.svg"
                   alt=""
                 />
                 <img
