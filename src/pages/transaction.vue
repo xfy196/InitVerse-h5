@@ -253,6 +253,10 @@ const initChart = () => {
     yAxis: {
       splitLine: { show: false },
       type: "value",
+      splitNumber: 8,
+      max: (val) => {
+        return BigNumber(val.max).multipliedBy(1.5).toFixed(1);
+      }
     },
     series: [
       {
