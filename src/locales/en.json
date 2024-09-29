@@ -64,11 +64,11 @@
     "forgetPassword": "Forget Password, Find Back",
     "register": "No Account, Register Now",
     "username": "Username",
-    "placeholderUsername": "Please enter your username",
+    "placeholderUsername": "Please enter your username or email login",
     "password": "Password",
     "placeholderPassword": "Please enter your password",
     "submit": "Confirm Login",
-    "pleaseEnterUsername": "Please enter your username",
+    "pleaseEnterUsername": "Please enter your username or email login",
     "pleaseEnterPassword": "Please enter your password",
     "loginSuccess": "Login Success"
   },
