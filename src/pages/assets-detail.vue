@@ -67,7 +67,7 @@ import EmptyBg from "@/assets/images/empty.png";
 import { getAssetRecords } from "@/api/assets";
 const finished = ref(false);
 const loading = ref(false);
-let pageNo = ref(0);
+let pageNum = ref(0);
 let pageSize = ref(10);
 const { t } = useI18n();
 const list = ref([]);
@@ -108,27 +108,27 @@ const requestList = async () => {
     finished.value = false;
     if (active.value === "recharge") {
       res = await getAssetRecords(1, {
-        pageNo: pageNo.value,
+        pageNum: pageNum.value,
         pageSize: pageSize.value,
       });
     } else if (active.value === "static-usdt") {
       res = await getAssetRecords(2, {
-        pageNo: pageNo.value,
+        pageNum: pageNum.value,
         pageSize: pageSize.value,
       });
     } else if (active.value === "dynamic-usdt") {
       res = await getAssetRecords(3, {
-        pageNo: pageNo.value,
+        pageNum: pageNum.value,
         pageSize: pageSize.value,
       });
     } else if (active.value === "ini-unlocked") {
       res = await getAssetRecords(4, {
-        pageNo: pageNo.value,
+        pageNum: pageNum.value,
         pageSize: pageSize.value,
       });
     } else if (active.value === "ini-locked") {
       res = await getAssetRecords(5, {
-        pageNo: pageNo.value,
+        pageNum: pageNum.value,
         pageSize: pageSize.value,
       });
     }
@@ -144,12 +144,12 @@ const requestList = async () => {
 };
 const onChange = async (val) => {
   active.value = val;
-  pageNo.value = 1;
+  pageNum.value = 1;
   pageSize.value = 10;
   requestList();
 };
 const onLoad = async () => {
-  pageNo.value += 1;
+  pageNum.value += 1;
   requestList();
 };
 </script>
