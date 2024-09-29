@@ -48,7 +48,9 @@ watch(
       duration: 0,
     });
     try {
-      const res = await getNoticeList();
+      const res = await getNoticeList({
+        pageSize: 100
+      });
       console.log("🚀 ~ res:", res);
       notices.value = res.rows;
     } catch (error) {

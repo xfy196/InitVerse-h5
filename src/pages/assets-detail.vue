@@ -67,8 +67,8 @@ import EmptyBg from "@/assets/images/empty.png";
 import { getAssetRecords } from "@/api/assets";
 const finished = ref(false);
 const loading = ref(false);
-const pageNo = ref(1);
-const pageSize = ref(10);
+let pageNo = ref(0);
+let pageSize = ref(10);
 const { t } = useI18n();
 const list = ref([]);
 const tabs = computed(() => {
@@ -101,42 +101,39 @@ watch(active, (val, oldVal) => {
     list.value = [];
   }
 });
-const onChange = async (val) => {
-  active.value = val;
+const requestList = async () => {
   try {
     let res = null;
     loading.value = true;
     finished.value = false;
-    if(val === 'recharge') {
+    if (active.value === "recharge") {
       res = await getAssetRecords(1, {
         pageNo: pageNo.value,
         pageSize: pageSize.value,
       });
-    } else if (val === "static-usdt") {
+    } else if (active.value === "static-usdt") {
       res = await getAssetRecords(2, {
         pageNo: pageNo.value,
         pageSize: pageSize.value,
       });
-    } else if (val === "dynamic-usdt") {
+    } else if (active.value === "dynamic-usdt") {
       res = await getAssetRecords(3, {
         pageNo: pageNo.value,
         pageSize: pageSize.value,
       });
-    } else if (val === "ini-unlocked") {
+    } else if (active.value === "ini-unlocked") {
       res = await getAssetRecords(4, {
         pageNo: pageNo.value,
         pageSize: pageSize.value,
       });
-    } else if (val === "ini-locked") {
+    } else if (active.value === "ini-locked") {
       res = await getAssetRecords(5, {
         pageNo: pageNo.value,
         pageSize: pageSize.value,
       });
     }
 
-    list.value.push(
-      ...res.rows
-    );
+    list.value.push(...res.rows);
     loading.value = false;
     if (list.value.length >= res.total) {
       finished.value = true;
@@ -145,8 +142,15 @@ const onChange = async (val) => {
     console.log("🚀 ~ onChange ~ error:", error);
   }
 };
+const onChange = async (val) => {
+  active.value = val;
+  pageNo.value = 1;
+  pageSize.value = 10;
+  requestList();
+};
 const onLoad = async () => {
-  onChange(active.value);
+  pageNo.value += 1;
+  requestList();
 };
 </script>
 <style lang="scss" scoped>
@@ -186,7 +190,7 @@ const onLoad = async () => {
         background: linear-gradient(223deg, #353342 0%, #383b52 100%);
         border-radius: 20px 20px 20px 20px;
         margin-top: 20px;
-        padding: 0 30px;
+        padding: 6px 30px;
         .top {
           display: flex;
           justify-content: space-between;
@@ -214,13 +218,15 @@ const onLoad = async () => {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          height: 56px;
+          min-height: 56px;
 
           .form {
             font-weight: 400;
             font-size: 24px;
             color: #ffffff;
             line-height: 28px;
+            white-space: nowrap;
+            margin-right: 12px;
           }
           .detail {
             font-weight: 400;

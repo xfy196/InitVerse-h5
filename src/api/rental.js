@@ -56,10 +56,11 @@ export const getNotice = () => {
     method: "get",
   });
 };
-export const getNoticeList = () => {
+export const getNoticeList = (parmas) => {
   return request({
     url: "/h5/notice/list",
     method: "get",
+    parmas
   })
 }
 export const getNoticeDetail = (id) => {
