@@ -5,18 +5,10 @@
     <div class="tips">{{ $t("recharge.tips") }}</div>
     <div class="address-container">
       <div class="tabs">
-        <div
-          class="tab-item"
-          :class="{ active: tab === 'BSC' }"
-          @click="changeTab('BSC')"
-        >
+        <div class="tab-item" :class="{ active: tab === 'BSC' }" @click="changeTab('BSC')">
           BSC(BEP20)
         </div>
-        <div
-          class="tab-item"
-          :class="{ active: tab === 'Tron' }"
-          @click="changeTab('Tron')"
-        >
+        <div class="tab-item" :class="{ active: tab === 'Tron' }" @click="changeTab('Tron')">
           Tron(TRC20)
         </div>
       </div>
@@ -27,12 +19,7 @@
             {{ $t("recharge.receiveAddress") }}
           </div>
           <div class="address-title-copy">
-            <img
-              v-if="isSupported"
-              @click.stop="handleCopy(address)"
-              src="@/assets/images/icons/copy.svg"
-              alt=""
-            />
+            <img v-if="isSupported" @click.stop="handleCopy(address)" src="@/assets/images/icons/copy.svg" alt="" />
           </div>
         </div>
         <div class="address">{{ address }}</div>
@@ -59,6 +46,7 @@ const userStore = useUserStore();
 const { t } = useI18n();
 const address = ref("");
 const { userInfo } = storeToRefs(userStore);
+
 onMounted(async () => {
   changeTab(tab.value);
 });
@@ -90,6 +78,7 @@ const handleCopy = async (value) => {
 <style lang="scss" scoped>
 .container {
   padding: 0 30px 30px;
+
   .title {
     font-weight: 500;
     font-size: 34px;
@@ -97,6 +86,7 @@ const handleCopy = async (value) => {
     margin-top: 30px;
     text-align: center;
   }
+
   .tips {
     font-weight: 400;
     font-size: 28px;
@@ -104,6 +94,7 @@ const handleCopy = async (value) => {
     text-align: center;
     margin-top: 10px;
   }
+
   .address-container {
     margin-top: 30px;
     width: 690px;
@@ -111,9 +102,11 @@ const handleCopy = async (value) => {
     background: linear-gradient(223deg, #353342 0%, #383b52 100%);
     border-radius: 20px 20px 20px 20px;
     padding: 30px;
+
     .tabs {
       display: flex;
       justify-content: center;
+
       .tab-item {
         margin-right: 20px;
         min-width: 190px;
@@ -126,23 +119,27 @@ const handleCopy = async (value) => {
         display: flex;
         align-items: center;
         justify-content: center;
+
         &.active {
           color: #9160ff;
           border-color: #9160ff;
         }
       }
     }
+
     .address-content {
       .address-title {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         .address-title-text {
           font-weight: 400;
           font-size: 28px;
           color: #ffffff;
           height: 50px;
         }
+
         .address-title-copy {
           img {
             width: 44px;
@@ -150,6 +147,7 @@ const handleCopy = async (value) => {
           }
         }
       }
+
       .address {
         font-weight: 400;
         font-size: 28px;
@@ -157,12 +155,14 @@ const handleCopy = async (value) => {
         line-height: 33px;
         word-break: break-all;
       }
+
       .qrcode {
         width: 329px;
         height: 329px;
         background: #ffffff;
         margin: 0 auto;
         margin-top: 30px;
+
         img {
           width: 100%;
           height: 100%;

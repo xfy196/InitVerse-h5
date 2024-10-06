@@ -10,7 +10,9 @@
   },
   "download": {
     "title": "下载应用到手机",
-    "btn": "下载APP"
+    "btn": "下载APP",
+    "clickDownload": "点击下载",
+    "AppTitle": "App更新"
   },
   "copySuccessText": "复制成功",
   "loadingText": "加载中...",

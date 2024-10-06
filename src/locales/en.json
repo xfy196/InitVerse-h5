@@ -10,7 +10,9 @@
   },
   "download": {
     "title": "Download App to Phone",
-    "btn": "Download APP"
+    "btn": "Download APP",
+    "clickDownload": "Click Download",
+    "AppTitle": "AppUpdate"
   },
   "copySuccessText": "Success Copied",
   "loadingText": "Loading...",

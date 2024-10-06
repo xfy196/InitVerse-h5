@@ -89,16 +89,21 @@
         </a>
       </li>
     </ul>
+    <AppUpdate v-model:show="showAppUpdate" />
+
   </div>
 </template>
 
 <script setup>
 import { onBeforeMount, ref, computed, watch } from "vue";
 import { useDebounceFn } from "@vueuse/core";
+import AppUpdate from "../components/app-update.vue";
+
 import { links } from "@/config";
 import BigNumber from "bignumber.js";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
+import dayjs from "dayjs"
 import {
   purchaseComputingPower,
   getProjectedRevenue,
@@ -115,7 +120,7 @@ const router = useRouter();
 const notify = ref({title: ""});
 const banners = ref([]);
 const { t, locale } = useI18n();
-
+const showAppUpdate = ref(false)
 watch(
   locale,
   async () => {
@@ -150,6 +155,10 @@ const initData = async () => {
   }
 };
 onBeforeMount(async () => {
+  const times = dayjs("2024-10-06").add(3, "day").valueOf()
+  if(times >= Date.now()){
+    showAppUpdate.value = true
+  }
   initData();
 });
 watch(
