@@ -9,9 +9,9 @@
             <div class="txt">{{ downloadUrl }}</div>
             <img v-if="isSupported" @click.stop="handleCopy" src="@/assets/images/icons/copy.svg" alt="" />
           </div>
-          <CButton @click.stop="handleClickDownApk" class="downloadBtn">
+          <!-- <CButton @click.stop="handleClickDownApk" class="downloadBtn">
             {{ $t('download.clickDownload') }}
-          </CButton>
+          </CButton> -->
         </div>
       </div>
     </div>
@@ -40,9 +40,9 @@ const handleCopy = async () => {
     console.log(error)
   }
 }
-const handleClickDownApk = () => {
-  window.open(downloadUrl.value, '_blank')
-}
+// const handleClickDownApk = () => {
+//   window.open(downloadUrl.value, '_blank')
+// }
 </script>
 <style lang="scss" scoped>
 .wrapper {
