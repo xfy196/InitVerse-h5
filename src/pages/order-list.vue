@@ -36,8 +36,16 @@
               </div>
               <div class="right">
                 <div class="value">
-                  {{ BigNumber(item.total).multipliedBy(2).div(100) }}
-                  POR≈{{ BigNumber(item.total).multipliedBy(2) }}
+                  {{
+                    BigNumber(item.total)
+                      .multipliedBy(type === "iniOrder" ? 1 : 2)
+                      .div(100)
+                  }}
+                  POR≈{{
+                    BigNumber(item.total).multipliedBy(
+                      type === "iniOrder" ? 1 : 2
+                    )
+                  }}
                   {{ type === "iniOrder" ? "INI" : "USDT" }}
                 </div>
                 <img
