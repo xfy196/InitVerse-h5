@@ -5,6 +5,7 @@ const CancelToken = axios.CancelToken;
 const baseURL = import.meta.env.VITE_BASE_PREFIX;
 const request = axios.create({
   baseURL,
+  timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   }

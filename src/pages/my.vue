@@ -152,11 +152,16 @@
         <van-divider
           style="margin: 0; border-color: rgba(39, 39, 43, 1)"
         ></van-divider>
-        <div class="cell-item">
+        <div class="cell-item no-flex-6">
           <div class="label">
             {{ $t("my.myCommunity") }}：{{ $t("my.totalPerformance") }}
             {{ totalPower }} USDT（{{ $t("my.quarters") }}
             {{ groupTotalPower }}USDT）
+          </div>
+        </div>
+        <div class="cell-item no-flex-6">
+          <div class="label">
+            {{$t("my.groupTotal")}}：{{ groupSize }}
           </div>
         </div>
       </div>
@@ -247,6 +252,7 @@ const invideUrl = computed(
   () => `${import.meta.env.VITE_SITE_DOMAIN}/invite/${userInfo.value.shareCode}`
 );
 const groupList = ref([]);
+const groupSize = ref(0)
 const totalPower = ref(0);
 const groupTotalPower = ref(0);
 const { copy, isSupported } = useClipboard();
@@ -277,6 +283,7 @@ onMounted(async () => {
     totalPower.value = res.data.groupPower;
     groupTotalPower.value = res.data.minRegionComputingPower;
     groupList.value = res.data.groupRelationList;
+    groupSize.value = res.data.groupSize || 0
   } catch (error) {
     console.log("🚀 ~ onMounted ~ error:", error);
   } finally {
@@ -406,7 +413,7 @@ onMounted(async () => {
           }
         }
       }
-      &:last-child {
+      &.no-flex-6 {
         .label {
           flex: 1;
         }
