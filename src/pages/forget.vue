@@ -12,7 +12,7 @@
           :placeholder="$t('forget.placeholderUsername')"
           v-model:value="username"
         />
-        <c-input
+        <!-- <c-input
           :label="$t('forget.email')"
           clearable
           :border="false"
@@ -42,7 +42,7 @@
               }}
             </div>
           </template>
-        </c-input>
+        </c-input> -->
         <c-input
           :label="$t('forget.password')"
           :type="passwordVisible ? 'text' : 'password'"
@@ -91,7 +91,7 @@ import Back from "@/components/back.vue";
 import { ref, computed } from "vue";
 import { putUserPassword, sendEmailGetCode } from "@/api/user";
 import { showSuccessToast } from "vant";
-import { isEmail } from "@/utils/validate";
+// import { isEmail } from "@/utils/validate";
 import { useRouter } from "vue-router";
 const router = useRouter();
 const passwordVisible = ref(false);
@@ -99,36 +99,37 @@ const confirmPasswordVisible = ref(false);
 const username = ref("");
 const password = ref("");
 const confirmPassword = ref("");
-const email = ref("");
-const emailCode = ref("");
-const countDownTime = ref(0);
+// const email = ref("");
+// const emailCode = ref("");
+// const countDownTime = ref(0);
 const loading = ref(false)
 const validate = computed(() => {
+  // ||
+  //   email.value.length === 0 ||
+  //   emailCode.value.length === 0 || !isEmail(email.value)
   return (
     username.value.length === 0 ||
     password.value.length === 0 ||
-    confirmPassword.value.length === 0 ||
-    email.value.length === 0 ||
-    emailCode.value.length === 0 || !isEmail(email.value)
+    confirmPassword.value.length === 0
   );
 });
 
-const handleCountDownFinish = () => {
-  countDownTime.value = 0;
-};
-const sendEmail = async () => {
-  try {
-    if (!isEmail(email.value)) return;
-    await sendEmailGetCode({
-      username: username.value,
-      email: email.value,
-      type: "FORGOT_PASSWORD"
-    });
-    countDownTime.value = 60 * 1000;
-  } catch (error) {
-    console.log("🚀 ~ sendEmail ~ error:", error);
-  }
-};
+// const handleCountDownFinish = () => {
+//   countDownTime.value = 0;
+// };
+// const sendEmail = async () => {
+//   try {
+//     if (!isEmail(email.value)) return;
+//     await sendEmailGetCode({
+//       username: username.value,
+//       email: email.value,
+//       type: "FORGOT_PASSWORD"
+//     });
+//     countDownTime.value = 60 * 1000;
+//   } catch (error) {
+//     console.log("🚀 ~ sendEmail ~ error:", error);
+//   }
+// };
 const handleSubmit = async () => {
   try {
     loading.value = true
@@ -136,8 +137,8 @@ const handleSubmit = async () => {
       userName: username.value,
       passWord: password.value,
       confirmPassword: confirmPassword.value,
-      email: email.value,
-      emailCode: emailCode.value,
+      // email: email.value,
+      // emailCode: emailCode.value,
     });
     showSuccessToast(res.msg);
     router.push("/login");

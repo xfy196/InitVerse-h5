@@ -49,7 +49,7 @@
           :placeholder="$t('register.placeholderInviteCode')"
           v-model:value.trim="shareCode"
         />
-        <c-input
+        <!-- <c-input
           :label="$t('register.email')"
           clearable
           :border="false"
@@ -81,7 +81,7 @@
               />{{ $t("register.afterGetCode") }}
             </div>
           </template>
-        </c-input>
+        </c-input> -->
 
         <div class="submit-btn-container">
           <!-- <van-button class="submit-btn" round type="primary"> 提交 </van-button> -->
@@ -102,7 +102,7 @@
 import Head from "@/layout/head.vue";
 import Back from "@/components/back.vue";
 import { computed, ref } from "vue";
-import { isEmail } from "@/utils/validate";
+// import { isEmail } from "@/utils/validate";
 import { useStorage } from "@vueuse/core";
 import { sendEmailGetCode, register } from "@/api/user";
 import { showSuccessToast } from "vant";
@@ -115,28 +115,28 @@ const password = ref("");
 const confirmPassword = ref("");
 const confirmPasswordVisible = ref(false);
 const shareCode = useStorage("inviteCode", "");
-const email = ref("");
-const emailCode = ref("");
-const countDownTime = ref(0);
+// const email = ref("");
+// const emailCode = ref("");
+// const countDownTime = ref(0);
 const { t } = useI18n();
 const loading = ref(false);
 
 const validate = computed(() => {
-  console.log(password.value === confirmPassword.value);
+  // ||
+  //   email.value.length === 0 ||
+  //   emailCode.value.length === 0 ||
+  //   !isEmail(email.value)
   return (
     username.value.length === 0 ||
     password.value.length === 0 ||
     confirmPassword.value.length === 0 ||
-    shareCode.value.length === 0 ||
-    email.value.length === 0 ||
-    emailCode.value.length === 0 ||
-    !isEmail(email.value)
+    shareCode.value.length === 0
   );
 });
 
-const handleCountDownFinish = () => {
-  countDownTime.value = 0;
-};
+// const handleCountDownFinish = () => {
+//   countDownTime.value = 0;
+// };
 const handleSubmit = async () => {
   if (username.value.length === 0) {
     showToast(t("register.pleaseEnterUsername"));
@@ -158,18 +158,18 @@ const handleSubmit = async () => {
     showToast(t("register.pleaseEnterInviteCode"));
     return;
   }
-  if (email.value.length === 0) {
-    showToast(t("register.pleaseEnterEmail"));
-    return;
-  }
-  if (!isEmail(email.value)) {
-    showToast(t("register.emailFormatError"));
-    return;
-  }
-  if (emailCode.value.length === 0) {
-    showToast(t("register.pleaseEnterCode"));
-    return;
-  }
+  // if (email.value.length === 0) {
+  //   showToast(t("register.pleaseEnterEmail"));
+  //   return;
+  // }
+  // if (!isEmail(email.value)) {
+  //   showToast(t("register.emailFormatError"));
+  //   return;
+  // }
+  // if (emailCode.value.length === 0) {
+  //   showToast(t("register.pleaseEnterCode"));
+  //   return;
+  // }
   loading.value = true;
   try {
     await register({
@@ -177,8 +177,8 @@ const handleSubmit = async () => {
       password: password.value,
       confirmPassword: confirmPassword.value,
       shareCode: shareCode.value,
-      email: email.value,
-      emailCode: emailCode.value,
+      // email: email.value,
+      // emailCode: emailCode.value,
     });
     showSuccessToast(t("register.registerSuccess"));
     router.push("/login");
@@ -191,22 +191,20 @@ const handleSubmit = async () => {
     username.value,
     password.value,
     confirmPassword.value,
-    shareCode.value,
-    email.value,
-    emailCode.value
+    shareCode.value
   );
 };
-const handleGetCode = async () => {
-  try {
-    const res = await sendEmailGetCode({
-      type: "REGISTERED",
-      email: email.value,
-    });
-    countDownTime.value = 60 * 1000;
-  } catch (error) {
-    console.log(error);
-  }
-};
+// const handleGetCode = async () => {
+//   try {
+//     const res = await sendEmailGetCode({
+//       type: "REGISTERED",
+//       email: email.value,
+//     });
+//     countDownTime.value = 60 * 1000;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 </script>
 <style lang="scss" scoped>
 .register-container {

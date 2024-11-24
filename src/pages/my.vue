@@ -103,7 +103,7 @@
         <van-divider
           style="margin: 0; border-color: rgba(39, 39, 43, 1)"
         ></van-divider>
-        <div class="cell-item">
+        <!-- <div class="cell-item">
           <div class="label">{{ $t("my.email") }}</div>
           <div class="right">
             <div class="status">
@@ -116,7 +116,7 @@
               alt=""
             />
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- 我的团队 -->

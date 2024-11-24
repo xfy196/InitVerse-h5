@@ -66,7 +66,7 @@
     "forgetPassword": "Forget Password, Find Back",
     "register": "No Account, Register Now",
     "username": "Username",
-    "placeholderUsername": "Please enter your username or email login",
+    "placeholderUsername": "Please enter your username login",
     "password": "Password",
     "placeholderPassword": "Please enter your password",
     "submit": "Confirm Login",

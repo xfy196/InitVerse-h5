@@ -26,9 +26,9 @@
         </template>
       </c-input>
       <div class="forget-password">
-        <div class="forget-password-item" @click.stop="handleForgetPassword">
+        <!-- <div class="forget-password-item" @click.stop="handleForgetPassword">
           {{ $t("login.forgetPassword") }}
-        </div>
+        </div> -->
         <router-link class="register-link" to="/register">{{
           $t("login.register")
         }}</router-link>

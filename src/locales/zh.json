@@ -39,7 +39,7 @@
     "forgetPassword": "忘记密码，去找回",
     "register": "暂无账号，立即注册",
     "username": "用户名",
-    "placeholderUsername": "请输入用户名或者邮箱登录",
+    "placeholderUsername": "请输入用户名登录",
     "password": "密码",
     "placeholderPassword": "请输入密码",
     "submit": "确认登录",

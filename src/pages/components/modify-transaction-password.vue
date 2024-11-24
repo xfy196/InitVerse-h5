@@ -22,7 +22,7 @@
             />
           </template>
         </c-input>
-        <c-input
+        <!-- <c-input
           v-model:value="code"
           :label="$t('my.code')"
           :placeholder="$t('my.placeholderCode')"
@@ -43,11 +43,12 @@
               />{{ $t("my.afterGetCode") }}
             </div>
           </template>
-        </c-input>
+        </c-input> -->
         <div class="submit-btn-container">
           <c-button
+          :loading="loading"
             @click.stop="handleSubmit"
-            :disabled="!code || !newPassword"
+            :disabled="!newPassword"
             >{{ $t("my.submit") }}</c-button
           >
         </div>
@@ -61,7 +62,7 @@ import { ref, watch } from "vue";
 import CInput from "@/components/c-input.vue";
 import { putUserTransactionPassword, sendEmailGetCode } from "@/api/user";
 import { useUserStore } from "@/stores/user";
-import { isEmail } from "@/utils/validate";
+// import { isEmail } from "@/utils/validate";
 const userStore = useUserStore();
 const { password } = defineProps({
   password: {
@@ -70,34 +71,34 @@ const { password } = defineProps({
   },
 });
 const passwordVisible = ref(false);
-const code = ref("");
+// const code = ref("");
 const newPassword = ref("");
 const show = defineModel("show", { default: false });
-const countDownTime = ref(0);
+// const countDownTime = ref(0);
 const loading = ref(false);
 const handleClose = () => {
   show.value = false;
 };
-const sendEmail = async () => {
-  try {
-    await sendEmailGetCode({
-      type: "CHANGE_PAYMENT_PASSWORD",
-    });
-    countDownTime.value = 60 * 1000;
-  } catch (error) {
-    console.log("🚀 ~ sendEmail ~ error:", error);
-  }
-};
+// const sendEmail = async () => {
+//   try {
+//     await sendEmailGetCode({
+//       type: "CHANGE_PAYMENT_PASSWORD",
+//     });
+//     countDownTime.value = 60 * 1000;
+//   } catch (error) {
+//     console.log("🚀 ~ sendEmail ~ error:", error);
+//   }
+// };
 
-const handleCountDownFinish = () => {
-  countDownTime.value = 0;
-};
+// const handleCountDownFinish = () => {
+//   countDownTime.value = 0;
+// };
 const handleSubmit = async () => {
   try {
     loading.value = true;
     const res = await putUserTransactionPassword({
       safePassWord: newPassword.value,
-      emailCode: code.value,
+      // emailCode: code.value,
     });
     await userStore.updateUserInfo();
     showSuccessToast(res.msg);
@@ -110,11 +111,11 @@ const handleSubmit = async () => {
 };
 watch(show, (val) => {
   if (val) {
-    code.value = "";
+    // code.value = "";
     newPassword.value = password;
   } else {
     newPassword.value = "";
-    code.value = "";
+    // code.value = "";
   }
 });
 </script>

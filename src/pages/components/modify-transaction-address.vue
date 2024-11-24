@@ -30,7 +30,7 @@
           type="text"
           :placeholder="$t('my.placeholderWithdrawalAddress')"
         />
-        <c-input
+        <!-- <c-input
           v-model:value="code"
           :label="$t('my.code')"
           :placeholder="$t('my.placeholderCode')"
@@ -47,12 +47,12 @@
               />{{ $t("register.afterGetCode") }}
             </div>
           </template>
-        </c-input>
+        </c-input> -->
         <div class="submit-btn-container">
           <c-button
             :loading="loading"
             @click.stop="handleSubmit"
-            :disabled="!code || !newAddress"
+            :disabled="!newAddress"
             >{{ $t("my.submit") }}</c-button
           >
         </div>
@@ -63,38 +63,38 @@
 
 <script setup>
 import { nextTick, ref, watch } from "vue";
-import { sendEmailGetCode } from "@/api/user";
+// import { sendEmailGetCode } from "@/api/user";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/stores/user";
 import CInput from "@/components/c-input.vue";
 import { putUserWithdrawalAddress } from "@/api/user";
 import { showSuccessToast } from "vant";
 
-const code = ref("");
+// const code = ref("");
 const userStore = useUserStore();
 const { userInfo } = storeToRefs(userStore);
 const newAddress = ref("");
 const withdrawalAddressType = ref("");
 const show = defineModel("show", { default: false });
-const countDownTime = ref(0);
+// const countDownTime = ref(0);
 const loading = ref(false);
 const handleClose = () => {
   show.value = false;
 };
 
-const handleCountDownFinish = () => {
-  countDownTime.value = 0;
-};
-const sendEmail = async () => {
-  try {
-    await sendEmailGetCode({
-      type: "MODIFY_WITHDRAWAL_ADDRESS",
-    });
-    countDownTime.value = 60 * 1000;
-  } catch (error) {
-    console.log("🚀 ~ sendEmail ~ error:", error);
-  }
-};
+// const handleCountDownFinish = () => {
+//   countDownTime.value = 0;
+// };
+// const sendEmail = async () => {
+//   try {
+//     await sendEmailGetCode({
+//       type: "MODIFY_WITHDRAWAL_ADDRESS",
+//     });
+//     countDownTime.value = 60 * 1000;
+//   } catch (error) {
+//     console.log("🚀 ~ sendEmail ~ error:", error);
+//   }
+// };
 const handleChangeAddressType = (val) => {
   newAddress.value = "";
 };
@@ -103,7 +103,7 @@ const handleSubmit = async () => {
     loading.value = true;
     const res = await putUserWithdrawalAddress({
       withdrawalAddress: newAddress.value,
-      emailCode: code.value,
+      // emailCode: code.value,
       withdrawalAddressType: withdrawalAddressType.value,
     });
     await userStore.updateUserInfo();
@@ -117,13 +117,13 @@ const handleSubmit = async () => {
 };
 watch(show, (val) => {
   if (val) {
-    code.value = "";
+    // code.value = "";
     nextTick(() => {
       newAddress.value = userInfo.value.withdrawalAddress;
     });
     withdrawalAddressType.value = userInfo.value.withdrawalAddressType ?? "bsc";
   } else {
-    code.value = "";
+    // code.value = "";
     nextTick(() => {
       newAddress.value = "";
     });
