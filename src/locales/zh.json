@@ -242,12 +242,14 @@
   },
   "transferAccount": {
     "title": "INI转账",
+    "title2": "现金转账",
     "passwordLabel": "交易密码:",
     "passwordPlaceholder": "请输入交易密码",
     "uidPlaceholder": "请输入目标ID",
     "numLabel": "转账数量:",
     "numPlaceholder": "请输入转账数量",
     "balanceLabel": "INI可用余额",
+    "balanceLabel2": "USDT可用余额",
     "transferBtn": "转账"
   },
   "withdrawal": {

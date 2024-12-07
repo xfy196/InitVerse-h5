@@ -125,3 +125,15 @@ export const getPowerInEffect = () => {
     method: "get",
   });
 };
+/**
+ * 转账USDT
+ * @param {*} data 
+ * @returns 
+ */
+export const postTransferAssets = (data) => {
+  return request({
+    url: "/h5/assert/trans/",
+    method: "POST",
+    data
+  })
+}

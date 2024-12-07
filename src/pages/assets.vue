@@ -267,9 +267,12 @@
             </div>
 
             <div class="btns cell-item">
-              <CButton @click="handleToRecharge">{{
-                $t("assets.recharge")
-              }}</CButton>
+              <CButton
+                @click="
+                  handleTransferAccounts(item.assetType, item.userAssetId)
+                "
+                >{{ $t("assets.transfer") }}</CButton
+              >
               <CButton
                 @click="handleShowWithdrawal(item.assetType, item.userAssetId)"
                 >{{ $t("assets.withdrawal") }}</CButton
@@ -424,6 +427,7 @@
     />
     <TransferAccount
       @refresh="initData"
+      :assetType="assetType"
       v-if="showTransferAccount"
       v-model:show="showTransferAccount"
     />
@@ -502,6 +506,11 @@ const handleToRecharge = () => {
 };
 const handleToAssetsDetail = () => {
   router.push("/assets-detail");
+};
+const handleTransferAccounts = (type, usId) => {
+  assetType.value = type;
+  userAssetId.value = usId;
+  showTransferAccount.value = true;
 };
 const handleShowWithdrawal = (type, usId) => {
   assetType.value = type;

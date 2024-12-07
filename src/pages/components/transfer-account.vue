@@ -8,7 +8,13 @@
           class="close-icon"
           @click.stop="handleClose"
         />
-        <div class="title">{{ $t("transferAccount.title") }}</div>
+        <div class="title">
+          {{
+            assetType == 4
+              ? $t("transferAccount.title")
+              : $t("transferAccount.title2")
+          }}
+        </div>
         <div class="input-box">
           <CInput
             :label="$t('transferAccount.passwordLabel')"
@@ -46,13 +52,15 @@
               <div @click.stop="handleMaxNum" class="max">Max</div>
             </template>
             <template #unit>
-              <div class="unit">INI</div>
+              <div class="unit">{{ assetType == 4 ? "INI" : "USDT" }}</div>
             </template>
           </CInput>
         </div>
         <div class="expected">
-          <div class="left">{{ $t("transferAccount.balanceLabel") }}</div>
-          <div class="right van-ellipsis">{{ expectedIni }} INI</div>
+          <div class="left">{{ assetType === 4 ?  $t("transferAccount.balanceLabel"):  $t("transferAccount.balanceLabel2") }}</div>
+          <div class="right van-ellipsis">
+            {{ expectedIni }} {{ assetType == 4 ? "INI" : "USDT" }}
+          </div>
         </div>
         <div class="withdrawal-btn">
           <CButton
@@ -69,15 +77,22 @@
 </template>
 
 <script setup>
-import { computed, ref, watch, nextTick } from "vue";
+import { computed, ref, watch } from "vue";
 import CInput from "@/components/c-input.vue";
 import PasswordLock from "./password-lock.vue";
-import { transferAccount } from "@/api/assets";
+import { transferAccount, postTransferAssets } from "@/api/assets";
 import { getAssetDetail } from "@/api/trade";
 import { useI18n } from "vue-i18n";
 import BigNumber from "bignumber.js";
 const { t } = useI18n();
 const show = defineModel("show", { default: false });
+
+const { assetType } = defineProps({
+  assetType: {
+    default: 1,
+    type: Number,
+  },
+});
 const emit = defineEmits(["refresh"]);
 const value = ref("");
 const safePassword = ref("");
@@ -104,7 +119,7 @@ watch(
         message: t("loadingText"),
         duration: 0,
       });
-      const iniRes = await getAssetDetail(4);
+      const iniRes = await getAssetDetail(assetType);
       expectedIni.value = iniRes.data.balance;
       loadinbgToast.close();
     }
@@ -116,12 +131,21 @@ watch(
 const handleWithdrawal = async () => {
   try {
     loading.value = true;
-    const res = await transferAccount({
-      outNum: value.value,
-      transferUid: transferUid.value,
-      safePwd: safePassword.value,
-    });
-    showToast(res.msg)
+    if (assetType === 4) {
+      const res = await transferAccount({
+        outNum: value.value,
+        transferUid: transferUid.value,
+        safePwd: safePassword.value,
+      });
+      showToast(res.msg);
+    } else if (assetType === 1) {
+      const res = await postTransferAssets({
+        outNum: value.value,
+        transferUid: transferUid.value,
+        safePwd: safePassword.value,
+      });
+      showToast(res.msg);
+    }
     show.value = false;
     emit("refresh");
   } catch (error) {
